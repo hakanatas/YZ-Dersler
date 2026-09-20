@@ -16,6 +16,7 @@ GitHub Pages ile yayınlanır: <https://hakanatas.github.io/YZ-Dersler/>
 | 02 | Ezber mi, öğrenme mi? | <https://hakanatas.github.io/YZ-Dersler/ezber-mi-ogrenme-mi/> |
 | 03 | Bıdık kimin mantısını tattı? | <https://hakanatas.github.io/YZ-Dersler/adil-mi/> |
 | 04 | Sohbet robotu neden uydurur? | <https://hakanatas.github.io/YZ-Dersler/neden-uydurur/> |
+| 06 | Bıdık ödülle öğreniyor | <https://hakanatas.github.io/YZ-Dersler/odulle-ogrenmek/> |
 
 `.github/workflows/pages.yml` iş akışı `main` dalına her gönderimde siteyi
 yeniden yayınlar.
@@ -102,6 +103,24 @@ kitabındaki ikili ve üçlü kelime dizileri sayılır (`js/ngram.js`, geri
 | 4. Uydurma | Bilmediği soruya da akıcı cümle: halüsinasyon; "kitapta var/yok" gerçek arama |
 | 5. Kontrol et | Doğru / uydurma / kaynağa bak oyunu |
 | 6. Büyük modeller | Ölçek farkı, insan geri bildirimi, uydurma neden bitmez |
+| 7. Bilgi testi | Altı soru |
+
+## Ders 06 · Bıdık ödülle öğreniyor
+
+`odulle-ogrenmek/`. Pekiştirmeli öğrenme: 10 kollu bir haydut (1–10
+dakika), ödül müşterinin alkışı (mantı kıvamındaysa 1, değilse 0), değer
+tahmini alkış ortalaması, seçim epsilon-açgözlü (`js/bandit.js`). Her
+mantının boyu ±0,2 oynadığı için alkış olasılıklı; orta boyda 6 dakika
+%100, 5 ve 7 dakika %71.
+
+| Bölüm | Fikir |
+| --- | --- |
+| 1. Etiket yok, alkış var | Ajan, eylem, ödül |
+| 2. Sen dene | Dakikayı sen seç, alkışı gör; çubuklar ortalamayı tutar |
+| 3. Bıdık kendi deniyor | 300 deneme, ε = 0,1: 6 dakikaya yakınsar (259 alkış) |
+| 4. Keşfet mi, kullan mı? | ε = 0 → 5 dakikada takılır (209 alkış), ε = 0,05 → 283, ε = 0,5 → 197 |
+| 5. Boy değişince | Küçük ve büyük mantı için ayrı defter: 4 dk ve 8 dk (254 alkış, tek defterle 120) |
+| 6. Yanlış alkış | Müşteri hıza alkışlarsa Bıdık çiğ mantı servis eder: ödül hilesi (CoastRunners, 2016) |
 | 7. Bilgi testi | Altı soru |
 
 ## Yeni ders eklemek
