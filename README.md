@@ -156,6 +156,13 @@ modeliyle boyanır.
 | 5. Final testi | Her dersten en az bir soru, toplam on |
 | 6. Tamamlama | Adına hazırlanan kart; tarayıcıda kalır, hiçbir yere gönderilmez |
 
+## Öğretmen kılavuzu
+
+`ogretmen/` (<https://hakanatas.github.io/YZ-Dersler/ogretmen/>): her ders
+için kazanımlar, 40 dakikalık akış ve durak noktaları, tartışma soruları,
+sık yanılgılar, beş soruluk çalışma kâğıdı ve cevap anahtarı. Yazdırılabilir;
+her ders ayrı sayfaya düşer.
+
 ## Yeni ders eklemek
 
 Ders 02'den itibaren dersler `js/shell.js` ortak çalışma zamanını kullanır.
@@ -169,6 +176,7 @@ Kalıp ve API için `docs/yeni-ders.md` dosyasına bakın.
 | `YZ-nasil-calisir/`, `ezber-mi-ogrenme-mi/`, … | Dersler: sayfa ve ders kodu |
 | `js/` | Paylaşılan modüller: ders çalışma zamanı (`shell.js`), sinir ağı (`mlp.js`), masa (`board.js`), 3B ağ (`network.js`), Bıdık, yüz, konfeti, sesler, dokular |
 | `css/lesson.css` | Tüm derslerin ortak stili |
+| `ogretmen/` | Öğretmen kılavuzu (ders planları, çalışma kâğıtları) |
 | `docs/` | Yeni ders ekleme kılavuzu |
 | `vendor/three/` | Three.js r170 (MIT) |
 | `assets/` | Yazı tipleri (SIL Open Font License) ve simge |

@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Öğretmen Kılavuzu — YZ Dersler</title>
+  <meta name="description" content="YZ Dersler serisi için öğretmen kılavuzu: kazanımlar, 40 dakikalık ders planları, durak noktaları, tartışma soruları, sık yanılgılar, çalışma kâğıtları ve cevap anahtarları." />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <style>
+    @font-face { font-family: 'Fraunces'; src: url('../assets/fonts/Fraunces-Variable.ttf') format('truetype'); font-weight: 100 900; font-display: swap; }
+    @font-face { font-family: 'Instrument Sans'; src: url('../assets/fonts/InstrumentSans-Variable.ttf') format('truetype'); font-weight: 400 700; font-display: swap; }
+    :root { --cream: #f5eee3; --ink: #2b211b; --ink-soft: #6b5a4d; --terracotta: #c4623d; --terracotta-deep: #9c472a; --line: rgba(43,33,27,0.14); --paper: #fffaf1; --serif: 'Fraunces', Georgia, serif; --sans: 'Instrument Sans', Helvetica, Arial, sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--cream); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.55; }
+    .wrap { max-width: 860px; margin: 0 auto; padding: 24px 24px 80px; }
+    .topbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 28px; }
+    .brand { font-family: var(--serif); font-weight: 600; font-size: 21px; text-decoration: none; color: inherit; }
+    .pill { border: 1px solid var(--line); background: var(--paper); border-radius: 999px; padding: 8px 14px; font-size: 14px; text-decoration: none; color: inherit; }
+    h1 { font-family: var(--serif); font-weight: 500; font-size: clamp(34px, 5vw, 52px); line-height: 1.02; letter-spacing: -0.02em; margin: 0 0 12px; }
+    h1 em { font-style: italic; color: var(--terracotta); font-weight: 400; }
+    .lede { font-size: 18px; color: var(--ink-soft); max-width: 60ch; margin: 0 0 20px; }
+    h2 { font-family: var(--serif); font-weight: 500; font-size: 30px; letter-spacing: -0.015em; margin: 48px 0 6px; }
+    h2 small { display: block; font-family: var(--sans); font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta-deep); font-weight: 600; margin-bottom: 6px; }
+    h3 { font-family: var(--serif); font-weight: 500; font-size: 20px; margin: 22px 0 6px; }
+    .lesson { background: var(--paper); border: 1px solid var(--line); border-radius: 20px; padding: 22px 26px 26px; margin-top: 16px; }
+    .lesson .link { font-size: 14px; color: var(--ink-soft); }
+    table { width: 100%; border-collapse: collapse; font-size: 15px; margin: 8px 0 4px; }
+    th, td { text-align: left; vertical-align: top; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+    th { font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); font-weight: 600; }
+    td:first-child { white-space: nowrap; color: var(--terracotta-deep); font-weight: 600; }
+    ul, ol { margin: 6px 0 0; padding-left: 22px; }
+    li { margin: 4px 0; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }
+    .box { border: 1px dashed rgba(196,98,61,0.5); border-radius: 14px; padding: 12px 16px; margin-top: 14px; }
+    .box h3 { margin-top: 4px; }
+    .key { font-size: 14.5px; color: var(--ink-soft); }
+    .toc { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 8px; margin: 18px 0 0; padding: 0; list-style: none; }
+    .toc a { display: block; padding: 10px 14px; border-radius: 12px; background: var(--paper); border: 1px solid var(--line); text-decoration: none; color: inherit; font-size: 15px; }
+    .toc a b { color: var(--terracotta-deep); }
+    .print { margin-left: auto; }
+    footer { margin-top: 48px; font-size: 14px; color: var(--ink-soft); }
+    @media (max-width: 700px) { .grid2 { grid-template-columns: 1fr; } .wrap { padding: 18px 16px 60px; } .lesson { padding: 18px 18px 22px; border-radius: 16px; } }
+    @media print {
+      body { background: #fff; font-size: 12.5px; }
+      .wrap { max-width: none; padding: 0; }
+      .topbar, .toc, .print { display: none; }
+      .lesson { break-before: page; border: none; padding: 0; background: #fff; box-shadow: none; }
+      .lesson:first-of-type { break-before: auto; }
+      h2 { margin-top: 0; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="topbar">
+      <a class="brand" href="../">YZ Dersler</a>
+      <a class="pill" href="../">Derslere dön</a>
+      <button class="pill print" type="button" onclick="window.print()">Yazdır / PDF</button>
+    </header>
+
+    <h1>Öğretmen kılavuzu:<br /><em>sınıfta YZ Dersler</em></h1>
+    <p class="lede">Yedi etkileşimli ders, her biri 40 dakikalık bir ders saatine göre planlandı. Her ders için kazanımlar, dakika dakika akış, ekranı durdurup soru soracağınız yerler, tartışma soruları, sık yanılgılar, beş soruluk çalışma kâğıdı ve cevap anahtarı var.</p>
+
+    <div class="box">
+      <h3>Nasıl kullanılır</h3>
+      <ul>
+        <li><b>Donanım:</b> Dersler tarayıcıda çalışır; kurulum ve hesap gerekmez. Projeksiyonla tek ekrandan ya da öğrenci tabletlerinde bireysel oynanabilir. Chromium, Firefox ve Safari'nin güncel sürümlerinde çalışır; WebGL gerekir.</li>
+        <li><b>Model:</b> "Tek ekran + tahmin ettirme" en verimli kullanım: her düğmeye basmadan önce sınıfa "ne olacak?" diye sorun, sonra basın. Planlardaki "Durak" satırları bu anları gösterir.</li>
+        <li><b>Öğretmen notları:</b> Her bölümün altındaki katlanır "Öğretmen notu" gerçek terimleri ve modelin tam olarak ne yaptığını yazar. Öğrencilere göstermek zorunlu değildir; meraklı öğrenciler için açılabilir.</li>
+        <li><b>Testler:</b> Her dersin sonundaki bilgi testi ve Ders 07'deki final tarayıcıda kalır, hiçbir yere gönderilmez. Not vermek isterseniz çalışma kâğıtlarını kullanın.</li>
+        <li><b>Sıra:</b> 01 → 02 → 03 birbirine dayanır. 04, 05 ve 06 birbirinden bağımsızdır; 07 hepsini toplar. Zaman kısıtlıysa 01, 02, 04 ve 07 dört saatlik çekirdek bir set oluşturur.</li>
+      </ul>
+    </div>
+
+    <ul class="toc">
+      <li><a href="#d01"><b>01</b> Yapay zeka nasıl çalışır?</a></li>
+      <li><a href="#d02"><b>02</b> Ezber mi, öğrenme mi?</a></li>
+      <li><a href="#d03"><b>03</b> Bıdık kimin mantısını tattı?</a></li>
+      <li><a href="#d04"><b>04</b> Sohbet robotu neden uydurur?</a></li>
+      <li><a href="#d05"><b>05</b> Bıdık görüyor</a></li>
+      <li><a href="#d06"><b>06</b> Bıdık ödülle öğreniyor</a></li>
+      <li><a href="#d07"><b>07</b> Ne yapabilir, ne yapamaz?</a></li>
+    </ul>
+
+    <!-- ============================================================ 01 -->
+    <section class="lesson" id="d01">
+      <h2><small>Ders 01 · 40 dk</small>Yapay zeka nasıl çalışır?</h2>
+      <p class="link">Adres: <a href="../YZ-nasil-calisir/">/YZ-nasil-calisir/</a> · 8 bölüm · Ön bilgi gerekmez</p>
+      <h3>Kazanımlar</h3>
+      <ul>
+        <li>Yapay zekanın kural ezberleyerek değil, örneklerden öğrendiğini açıklar.</li>
+        <li>"Tahmin et, hatayı ölç, düzelt, tekrarla" döngüsünü kendi sözleriyle anlatır.</li>
+        <li>Sohbet robotlarının "sıradaki kelime" oyunuyla eğitildiğini söyler.</li>
+      </ul>
+      <h3>Ders akışı</h3>
+      <table>
+        <tr><th>Dakika</th><th>Etkinlik</th></tr>
+        <tr><td>0–5</td><td>Giriş sorusu (ekran kapalı): "Bir robota mantı pişirmeyi nasıl öğretirdiniz?" Cevapları tahtaya yazın; çoğu "kural söylerim" der. Ders bunu test edecek.</td></tr>
+        <tr><td>5–12</td><td>Bölüm 1–2. <b>Durak:</b> masa göründüğünde "pembelerle sarıları ayıran bir çizgi var mı?" Çapraz şeridi öğrenciler bulsun. Bölüm 2'de "İpleri karıştır" düğmesine iki kez basıp iplerin rastgele olduğunu gösterin.</td></tr>
+        <tr><td>12–18</td><td>Bölüm 3 (oyun). Üç tur oynatın; her turda önce sınıf oylasın, sonra Bıdık. Eğitilmemiş Bıdık'ın çoğunlukla yanıldığını vurgulayın: "daha öğrenmedi, ona kızmayın".</td></tr>
+        <tr><td>18–24</td><td>Bölüm 4. <b>Durak:</b> "Hadi düzelt"e basmadan önce "hata puanı artar mı, azalır mı?" diye sorun. Üç kez basın; her seferinde azıcık düştüğünü izleyin.</td></tr>
+        <tr><td>24–30</td><td>Bölüm 5 (antrenman). <b>Durak:</b> başlatmadan "örtü nasıl boyanacak?" tahmini. Antrenman biterken çapraz şeridin belirdiğini gösterin: "Kimse ona büyük mantı uzun pişer demedi."</td></tr>
+        <tr><td>30–35</td><td>Bölüm 6–7. Sınavda örtüye tıklayıp yeni mantı koyun; kenara yakın bir mantıda %55 gibi kararsız bir cevap yakalamaya çalışın. Bölüm 7'de "sıradaki kelime" oyununu iki kez oynatın.</td></tr>
+        <tr><td>35–40</td><td>Bölüm 8 bilgi testi sınıfça; giriş sorusuna dönün: "Kural söyleyen var mıydı? Ne değişti?"</td></tr>
+      </table>
+      <div class="grid2">
+        <div>
+          <h3>Tartışma soruları</h3>
+          <ul>
+            <li>Bıdık'a 6 yerine 6000 mantı gösterseydik ne değişirdi?</li>
+            <li>Bisiklete binmeyi öğrenmekle Bıdık'ın öğrenmesi neden benziyor, nerede ayrılıyor?</li>
+            <li>Sohbet robotu "sıradaki kelime"yi tahmin ediyorsa, söylediği her şey doğru mudur?</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Sık yanılgılar</h3>
+          <ul>
+            <li>"Bıdık kuralı biliyor, sadece saklıyor." Hayır: 33 sayı var, kural cümlesi yok; şerit sayıların sonucu.</li>
+            <li>"Kiremit ip evet, mavi ip hayır demek." Renk işareti gösterir: kiremit sinyali iletir, mavi tersine çevirir.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="box">
+        <h3>Çalışma kâğıdı</h3>
+        <ol>
+          <li>Bıdık'a mantı pişirmeyi öğretirken ona ne verdik: kural mı, örnek mi? Bir cümleyle açıkla.</li>
+          <li>Bıdık'ın kafasındaki "ipler" ne işe yarar? Kalınlık ve renk neyi gösterir?</li>
+          <li>"Hata puanı" nedir? Antrenman sırasında nasıl değişmesi gerekir?</li>
+          <li>Sınav bölümünde Bıdık'a neden hiç görmediği bir mantı verdik?</li>
+          <li>Sohbet robotlarının oynadığı oyunu ve Bıdık'ın oyunuyla ortak yanını yaz.</li>
+        </ol>
+        <p class="key"><b>Cevap anahtarı:</b> 1) Örnek; masaya pişmiş mantılar dizdik, kural söylemedik. 2) Yardımcılar arasında sayı taşır; kalınlık sayının büyüklüğü, renk işareti (kiremit iletir, mavi tersine çevirir). 3) Tahminlerin ne kadar yanlış olduğunu ölçen sayı; antrenmanda düşmeli. 4) Ezberle öğrenmeyi ayırmak için; yeni mantıyı da biliyorsa gerçekten öğrenmiştir (genelleme). 5) "Sıradaki kelime ne?"; ikisi de tahmin et–yanıl–düzelt döngüsüyle öğrenir.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ 02 -->
+    <section class="lesson" id="d02">
+      <h2><small>Ders 02 · 40 dk</small>Ezber mi, öğrenme mi?</h2>
+      <p class="link">Adres: <a href="../ezber-mi-ogrenme-mi/">/ezber-mi-ogrenme-mi/</a> · 6 bölüm · Ön koşul: Ders 01</p>
+      <h3>Kazanımlar</h3>
+      <ul>
+        <li>Eğitim (antrenman) ve test (sınav) verisinin neden ayrıldığını açıklar.</li>
+        <li>Antrenmanda yüksek, sınavda düşük puanı "ezber" (aşırı öğrenme) olarak adlandırır.</li>
+        <li>Örnek sayısının ve etiket doğruluğunun öğrenmeyi nasıl etkilediğini deneyle gösterir.</li>
+      </ul>
+      <h3>Ders akışı</h3>
+      <table>
+        <tr><th>Dakika</th><th>Etkinlik</th></tr>
+        <tr><td>0–5</td><td>Giriş: "Sınavda kitaptaki soruların aynısı çıksa, kimin gerçekten öğrendiğini anlayabilir miyiz?" Kısa tartışma.</td></tr>
+        <tr><td>5–10</td><td>Bölüm 1. İki masayı tanıtın. Sınav masasının antrenmanda "görünmez" olduğunu vurgulayın.</td></tr>
+        <tr><td>10–18</td><td>Bölüm 2 (6 mantı). <b>Durak:</b> başlatmadan önce iki puanı tahmin ettirin ve tahtaya yazın. Sonuç: antrenman %100, sınav %78 civarı.</td></tr>
+        <tr><td>18–23</td><td>Bölüm 3. "Yanlışları göster": kırmızı halkaları sayın. Örtüdeki tuhaf şekli gerçek çapraz şeritle karşılaştırın: "Altı noktayı doğru bilen çok şekil var."</td></tr>
+        <tr><td>23–30</td><td>Bölüm 4 (64 mantı). <b>Durak:</b> aynı tahmin. Sonuç: iki masada da %100. Kaydırıcıyla 12, 24 gibi ara değerleri deneyin; "kaç mantı yetiyor?" sorusunu öğrenciler araştırsın.</td></tr>
+        <tr><td>30–36</td><td>Bölüm 5 (yanlış etiket). <b>Durak:</b> "Ustanın yanlış etiketleri Bıdık'ı nasıl etkiler?" Sonuç: iki puan da düşer. "Çöp girer, çöp çıkar" deyimini verin.</td></tr>
+        <tr><td>36–40</td><td>Bölüm 6 bilgi testi; giriş sorusuna dönüş.</td></tr>
+      </table>
+      <div class="grid2">
+        <div>
+          <h3>Tartışma soruları</h3>
+          <ul>
+            <li>Sınav masasını Bıdık'a antrenmanda gösterseydik puanı yükselirdi; bu neden işe yaramazdı?</li>
+            <li>Gerçek hayatta "az örnek" durumuna bir örnek verin (nadir bir hastalık, yeni bir kelime…).</li>
+            <li>Yanlış etiketleri kim, nasıl fark edebilir?</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Sık yanılgılar</h3>
+          <ul>
+            <li>"Daha çok antrenman her zaman iyidir." Az veriyle çok antrenman ezberi güçlendirir; çare veri.</li>
+            <li>"%78 fena değil." Antrenman %100 iken sınav %78 olması sorunun ta kendisi: fark ezberi gösterir.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="box">
+        <h3>Çalışma kâğıdı</h3>
+        <ol>
+          <li>Antrenman masası ile sınav masasının farkı nedir? Sınav masası neden gizli tutulur?</li>
+          <li>6 mantıyla antrenmanda iki puan ne oldu? Bu duruma ne ad verilir?</li>
+          <li>64 mantıyla ne değişti? Neden?</li>
+          <li>Dalgın usta etiketlerin dörtte birini yanlış yazınca hangi puanlar düştü?</li>
+          <li>Bir arkadaşın "modelim antrenmanda %100 aldı, bitti" diyor. Ona ne sorarsın?</li>
+        </ol>
+        <p class="key"><b>Cevap anahtarı:</b> 1) Bıdık yalnızca antrenman masasından öğrenir; sınav masası hiç görülmediği için gerçek öğrenmeyi ölçer. 2) Antrenman %100, sınav yaklaşık %78; ezber / aşırı öğrenme. 3) İkisi de %100; çok örnek ezberi zorlaştırır, kuralı öğrenmeye zorlar. 4) Hem antrenman hem sınav puanı düştü. 5) "Sınav masasında kaç aldı?"</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ 03 -->
+    <section class="lesson" id="d03">
+      <h2><small>Ders 03 · 40 dk</small>Bıdık kimin mantısını tattı?</h2>
+      <p class="link">Adres: <a href="../adil-mi/">/adil-mi/</a> · 7 bölüm · Ön koşul: Ders 02</p>
+      <h3>Kazanımlar</h3>
+      <ul>
+        <li>Eğitim verisinde bulunmayan grupta modelin kötü çalışacağını öngörür.</li>
+        <li>Ortalama başarının bir grubun sorununu gizleyebileceğini, başarının gruplara ayrı ölçülmesi gerektiğini açıklar.</li>
+        <li>Yüz analizi ve ses tanıma gibi gerçek sistemlerde veri yanlılığına örnek verir.</li>
+      </ul>
+      <h3>Ders akışı</h3>
+      <table>
+        <tr><th>Dakika</th><th>Etkinlik</th></tr>
+        <tr><td>0–5</td><td>Giriş: "Sadece küçük köpek görmüş biri, ilk kez kocaman bir köpek görünce ne der?" Kısa sohbet; "hiç görmemek" fikri.</td></tr>
+        <tr><td>5–10</td><td>Bölüm 1–2. Üç ustayı ve renkli halkaları tanıtın. Antrenman masasında mor halka olmadığını öğrenciler fark etsin. Bölüm 2'deki tahmin oylamasını yapın.</td></tr>
+        <tr><td>10–18</td><td>Bölüm 3. Antrenman ve usta usta puan: Ayşe %100, Kemal %94, Deniz %56. <b>Durak:</b> "Toplam %83, iyi mi?" Kırmızı halkaların mor halkalarda toplandığını gösterin.</td></tr>
+        <tr><td>18–24</td><td>Bölüm 4. Gerçek şeridi açın; Bıdık'ın şeridi düz uzattığını, gerçeğin kıvrıldığını gösterin. "Bıdık kötü niyetli mi?" sorusunu tartışın.</td></tr>
+        <tr><td>24–30</td><td>Bölüm 5. <b>Durak:</b> "Deniz Usta'dan kaç mantı yeter?" tahmini; kaydırıcıyla 4, 8, 24'ü deneyin. 8 ve üzerinde üç usta da %100.</td></tr>
+        <tr><td>30–36</td><td>Bölüm 6. Gender Shades çalışmasını okuyun; sayıları tahtaya yazın (açık tenli erkek en fazla %0,8 hata, koyu tenli kadın %34,7'ye kadar). Sesli asistan örneğini öğrencilerin deneyimleriyle bağlayın.</td></tr>
+        <tr><td>36–40</td><td>Bölüm 7 bilgi testi; kapanış cümlesi: "Veride kim yoksa onu öğrenemez."</td></tr>
+      </table>
+      <div class="grid2">
+        <div>
+          <h3>Tartışma soruları</h3>
+          <ul>
+            <li>Okulunuzdaki bir sistemin (örneğin yüzle yoklama) hangi öğrencilerde daha çok yanılabileceğini düşünün. Bunu nasıl test edersiniz?</li>
+            <li>"Ortalama iyi" demek neden yetmez? Sınıf ortalaması örneğiyle anlatın.</li>
+            <li>Eksik grubun verisini toplarken nelere dikkat etmek gerekir (izin, gizlilik)?</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Sık yanılgılar</h3>
+          <ul>
+            <li>"Program ırkçı/kötü niyetli." Programın niyeti yok; verisi eksik. Sorumluluk veriyi seçen insanlarda.</li>
+            <li>"Daha çok veri her zaman çözer." Aynı gruptan daha çok veri eksik grubu düzeltmez; çeşitlilik gerekir.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="box">
+        <h3>Çalışma kâğıdı</h3>
+        <ol>
+          <li>Antrenman masasında hangi ustanın mantıları yoktu? Bu duruma ne denir?</li>
+          <li>Sınavda her ustanın puanı kaçtı? Toplam puan neden yanıltıcı?</li>
+          <li>Bıdık büyük mantılarda neden yanıldı? "Kötü niyet" cevabı neden yanlış?</li>
+          <li>Sorunu nasıl düzelttik? Kaç mantı yetti?</li>
+          <li>Gender Shades çalışması neyi ölçtü, ne buldu, neden?</li>
+        </ol>
+        <p class="key"><b>Cevap anahtarı:</b> 1) Deniz Usta (büyük mantılar); kapsama / örnekleme yanlılığı. 2) Ayşe %100, Kemal %94, Deniz %56; toplam %83 iyi görünürken bir grup çok kötü. 3) Hiç büyük mantı görmedi, şeridi düz uzattı; modelin niyeti yok, verisi eksik. 4) Deniz Usta'nın mantılarını masaya ekledik; 8 mantıdan itibaren üçü de %100. 5) Ticari yüz analiz sistemlerinin cinsiyet tahminini ten rengine göre ölçtü; koyu tenli kadınlarda hata %34,7'ye kadar, açık tenli erkeklerde en fazla %0,8; çünkü eğitim fotoğraflarında koyu tenli kadın çok azdı.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ 04 -->
+    <section class="lesson" id="d04">
+      <h2><small>Ders 04 · 40 dk</small>Sohbet robotu neden uydurur?</h2>
+      <p class="link">Adres: <a href="../neden-uydurur/">/neden-uydurur/</a> · 7 bölüm · Ön koşul: Ders 01 (bölüm 7)</p>
+      <h3>Kazanımlar</h3>
+      <ul>
+        <li>Dil modelinin "sıradaki kelime"yi sayım ve olasılıkla ürettiğini açıklar.</li>
+        <li>Sıcaklık ayarının çıktıyı nasıl değiştirdiğini gözlemler.</li>
+        <li>Akıcı bir cümlenin doğru olmak zorunda olmadığını (halüsinasyon) bilir ve kaynağa bakma alışkanlığını uygular.</li>
+      </ul>
+      <h3>Ders akışı</h3>
+      <table>
+        <tr><th>Dakika</th><th>Etkinlik</th></tr>
+        <tr><td>0–5</td><td>Giriş: tahtaya "Mantı en güzel ___" yazın; sınıf kelime önersin ve oylasın. Bu, dersin yapacağı şeyin insan sürümü.</td></tr>
+        <tr><td>5–12</td><td>Bölüm 1–2. Çubuklardaki yüzdelerin gerçek sayımlar olduğunu vurgulayın: "mantı en" 9 kez geçer, 4'ünde "güzel" (%44). Bölüm 2'de kitapta bağlamı aratın; "zebra" çipiyle kitapta olmayan kelimeyi deneyin.</td></tr>
+        <tr><td>12–18</td><td>Bölüm 3. <b>Durak:</b> sıcaklık 0'da "iki kez basınca aynı cümle çıkar mı?"; sonra 2'de. Çıkan saçma cümleleri tahtaya yazın; sınıf en komiğini seçsin.</td></tr>
+        <tr><td>18–25</td><td>Bölüm 4. Bıdık'a "Mantı ilk kez nerede yapıldı?" sorusunu sorun. <b>Durak:</b> "Bu cevap doğru mu? Nereden biliyoruz?" "Kitapta ara" ile cümlenin kitapta olmadığını gösterin. Halüsinasyon terimini burada verin.</td></tr>
+        <tr><td>25–31</td><td>Bölüm 5. Üç cümleyi sınıfça oylayın: doğru / uydurma / kaynağa bak. Üçüncü cümlede "bilmiyoruz" demenin de bir cevap olduğunu vurgulayın.</td></tr>
+        <tr><td>31–36</td><td>Bölüm 6. Büyük modellerin farkını (ölçek, insan geri bildirimi) ve neden yine de uydurabildiğini okuyun. Öğrencilerin kendi deneyimlerini sorun: "Bir sohbet robotu size yanlış bir şey söyledi mi?"</td></tr>
+        <tr><td>36–40</td><td>Bölüm 7 bilgi testi; kural: "Kaynağını iste."</td></tr>
+      </table>
+      <div class="grid2">
+        <div>
+          <h3>Tartışma soruları</h3>
+          <ul>
+            <li>Bıdık'ın kitabı 71 cümle. Milyonlarca kitap okumuş bir model neden hâlâ uydurabilir?</li>
+            <li>Ödevde bir sohbet robotunun verdiği kaynağı nasıl kontrol edersiniz?</li>
+            <li>Sıcaklık düşük bir model "daha doğru" mudur? (Hayır: daha tekrarlı; doğruluk sayımlara bağlı.)</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Sık yanılgılar</h3>
+          <ul>
+            <li>"Model yalan söylüyor." Niyeti yok; olası devamı üretiyor. "Uyduruyor" demek daha doğru.</li>
+            <li>"İnternete bakıyor, o yüzden doğru." Buradaki model hiçbir yere bakmıyor; gerçek modeller arama kullansa da sonucu yine kontrol etmek gerekir.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="box">
+        <h3>Çalışma kâğıdı</h3>
+        <ol>
+          <li>"Mantı en" bağlamından sonra "güzel" kelimesinin yüzdesi nasıl hesaplandı?</li>
+          <li>Sıcaklık 0 ile 2 arasında ne fark var? Her biri için bir cümle örneği yaz.</li>
+          <li>Halüsinasyon nedir? Dersten bir örnek ver.</li>
+          <li>Akıcı bir cümlenin doğru olup olmadığını nasıl anlarsın? İki yol yaz.</li>
+          <li>Büyük dil modelleri Bıdık'ın sayma modelinden hangi yönlerden farklıdır? En az iki fark yaz.</li>
+        </ol>
+        <p class="key"><b>Cevap anahtarı:</b> 1) Kitapta "mantı en" 9 kez geçer, 4'ünde ardından "güzel" gelir: 4/9 ≈ %44. 2) 0: hep en olası kelime, aynı cümle tekrar eder; 2: olasılıklar düzleşir, seyrek ve saçma kelimeler çıkar. 3) Modelin akıcı ama dayanaksız/yanlış metin üretmesi; "Mantı ilk kez ustanın köyünde yapıldı" (kitapta yok). 4) Kaynağa bakmak (kitap, güvenilir site, öğretmen); birden fazla kaynağı karşılaştırmak; modelden kaynak istemek. 5) Milyarlarca parametreli sinir ağı, çok büyük metin, token (kelime parçası), sohbet için insan geri bildirimiyle ek eğitim; ama yine de olası devam üretir.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ 05 -->
+    <section class="lesson" id="d05">
+      <h2><small>Ders 05 · 40 dk</small>Bıdık görüyor</h2>
+      <p class="link">Adres: <a href="../bidik-goruyor/">/bidik-goruyor/</a> · 7 bölüm · Ön koşul: Ders 01</p>
+      <h3>Kazanımlar</h3>
+      <ul>
+        <li>Bilgisayar için bir resmin sayılardan oluştuğunu açıklar (8×8 = 64 sayı).</li>
+        <li>Görüntü tanıyan modelin de örneklerden öğrendiğini ve piksellerin girişler olduğunu söyler.</li>
+        <li>Modelin verdiği yüzdeyi "güven" olarak yorumlar; %50'nin kararsızlık olduğunu, güvenin doğruluk anlamına gelmediğini bilir.</li>
+      </ul>
+      <h3>Ders akışı</h3>
+      <table>
+        <tr><th>Dakika</th><th>Etkinlik</th></tr>
+        <tr><td>0–5</td><td>Giriş: kareli kâğıda 8×8 bir mantı çizdirin, siyah kareleri 1, beyazları 0 yazdırın. "Bilgisayarın gördüğü bu."</td></tr>
+        <tr><td>5–12</td><td>Bölüm 1–2. "Sayıları göster"; sonra 64 girişli ağı gösterin. <b>Durak:</b> "Ders 01'de 2 giriş vardı, şimdi kaç?" Parametre sayısı 529.</td></tr>
+        <tr><td>12–17</td><td>Bölüm 3. Örnekleri çevirin; konumun, boyun ve gürültünün değiştiğini fark ettirin: "Bıdık hangi karelerin dolu olduğunu değil, deseni öğrenmeli."</td></tr>
+        <tr><td>17–24</td><td>Bölüm 4. <b>Durak:</b> "Antrenmandan önce sınav puanı kaç olur?" (yazı-tura civarı). Antrenman: 300 adım, antrenman %100, sınav %98. Yanlış bilinen tek resmi tepsiye alıp neden yanıldığını tartışın.</td></tr>
+        <tr><td>24–32</td><td>Bölüm 5. Öğrenciler sırayla çizsin: küçük mantı, büyük börek, çapraz börek, köşede mantı. Her çizimde önce sınıf tahmin etsin.</td></tr>
+        <tr><td>32–37</td><td>Bölüm 6. Kare, tek nokta, harf. <b>Durak:</b> "Bıdık 'bilmiyorum' diyebilir mi?" Hayır: iki sınıf var, hep cevap verir; %50 kararsızlık. Gerçek sistemlerde "hiçbiri" seçeneği fikrini verin.</td></tr>
+        <tr><td>37–40</td><td>Bölüm 7 bilgi testi.</td></tr>
+      </table>
+      <div class="grid2">
+        <div>
+          <h3>Tartışma soruları</h3>
+          <ul>
+            <li>Telefon fotoğrafı 12 milyon piksel ve üç renk kanalı; kaç sayı? Bıdık'ın ağıyla mümkün mü?</li>
+            <li>Mantıyı köşeye çizince Bıdık neden şaşırıyor? Ders 03'le bağ kurun (görmediği yer).</li>
+            <li>Bir sistemin "%99 eminim" demesi ile haklı olması aynı şey mi?</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Sık yanılgılar</h3>
+          <ul>
+            <li>"Bilgisayar resmi bizim gibi görür." Görmez; 64 sayıyı ağırlıklarla çarpar.</li>
+            <li>"%100 mantı dedi, o zaman mantı." Yüzde, modelin kendi çıkışı; hiç görmediği şekillerde de yüksek olabilir.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="box">
+        <h3>Çalışma kâğıdı</h3>
+        <ol>
+          <li>8×8 siyah-beyaz bir resim bilgisayar için kaç sayıdır? Bu sayılar ağda nereye gider?</li>
+          <li>Antrenmandan önce ve sonra sınav puanı ne oldu?</li>
+          <li>Mantıyı köşeye çizince Bıdık neden yanılabilir?</li>
+          <li>"%50 mantı" ne anlama gelir?</li>
+          <li>Gerçek fotoğraf tanıma sistemleri Bıdık'tan hangi yönlerden farklıdır? İki fark yaz.</li>
+        </ol>
+        <p class="key"><b>Cevap anahtarı:</b> 1) 64 sayı; her biri bir giriş düğümüne. 2) Önce yazı-tura civarı (yaklaşık %40–80, rastgele), sonra %98. 3) Antrenman resimlerinde mantılar ortaya yakındı; görmediği konumda desen tanımaz (Ders 03'teki eksik veri gibi). 4) Model kararsız; iki sınıfın tam ortası, kesinlik değil. 5) Çok daha büyük ve renkli resimler (milyonlarca sayı), milyonlarca örnek, komşu piksellere bakan katmanlar (evrişim), "hiçbiri" seçeneği ya da eşik.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ 06 -->
+    <section class="lesson" id="d06">
+      <h2><small>Ders 06 · 40 dk</small>Bıdık ödülle öğreniyor</h2>
+      <p class="link">Adres: <a href="../odulle-ogrenmek/">/odulle-ogrenmek/</a> · 7 bölüm · Ön koşul: Ders 01</p>
+      <h3>Kazanımlar</h3>
+      <ul>
+        <li>Etiket olmadan, yalnızca ödülle öğrenmenin mümkün olduğunu açıklar (pekiştirmeli öğrenme).</li>
+        <li>Keşif ile kullanım arasındaki dengeyi bir deneyle gösterir.</li>
+        <li>Yapay zekanın "ne demek istediğimizi" değil "neyi ödüllendirdiğimizi" öğrendiğini örnekle anlatır.</li>
+      </ul>
+      <h3>Ders akışı</h3>
+      <table>
+        <tr><th>Dakika</th><th>Etkinlik</th></tr>
+        <tr><td>0–5</td><td>Giriş: "Bir köpeğe oturmayı nasıl öğretirsiniz?" Ödül fikri; "kimse köpeğe kural yazmıyor".</td></tr>
+        <tr><td>5–12</td><td>Bölüm 1–2. Öğrenciler sırayla dakika seçsin (3, 6, 9…); alkış/sessizlik. Çubukların alkış ortalamasını tuttuğunu gösterin: 6 dakika hep alkış, 3 ve 9 hiç.</td></tr>
+        <tr><td>12–18</td><td>Bölüm 3. <b>Durak:</b> "300 denemede Bıdık hangi dakikaya karar verir?" Koşu: 6 dakika, yaklaşık 259 alkış.</td></tr>
+        <tr><td>18–26</td><td>Bölüm 4. Epsilon 0 → 5 dakikada takılır (6'yı hiç denemez, 209 alkış); 0,05 → 283; 0,5 → 197. Tahtaya tablo yapın. "Hep bildiğini mi yapmalı, ara sıra yeni şey mi denemeli?"</td></tr>
+        <tr><td>26–31</td><td>Bölüm 5. Küçük ve büyük mantı: iki defterle 4 ve 8 dakika (254 alkış), tek defterle 120. "Neden tek defter yetmiyor?"</td></tr>
+        <tr><td>31–37</td><td>Bölüm 6. <b>Durak:</b> "Müşteri hıza alkışlarsa Bıdık ne öğrenir?" Koşu: 187 alkış ama yalnızca 7 mantı kıvamında. CoastRunners örneğini anlatın.</td></tr>
+        <tr><td>37–40</td><td>Bölüm 7 bilgi testi; kural: "Ödülünü düşün."</td></tr>
+      </table>
+      <div class="grid2">
+        <div>
+          <h3>Tartışma soruları</h3>
+          <ul>
+            <li>Bir oyun yapay zekasına "puan" yerine "kazanma" ödülü verilse ne değişir?</li>
+            <li>Video uygulaması "izleme süresi"ni ödüllendirirse ne tür videolar önerir? Bu bizim istediğimiz mi?</li>
+            <li>Keşif yapmanın bedeli nedir? Ne zaman keşfi bırakmalı?</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Sık yanılgılar</h3>
+          <ul>
+            <li>"Bıdık hile yaptı." Hayır: tam olarak ödüllendirilen şeyi öğrendi. Sorun ödülün tanımında.</li>
+            <li>"Keşif ne kadar çok o kadar iyi." Çok keşif alkış kaybettirir (ε = 0,5 → 197); denge gerekir.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="box">
+        <h3>Çalışma kâğıdı</h3>
+        <ol>
+          <li>Bu derste etiket yoktu. Bıdık neye bakarak öğrendi?</li>
+          <li>Çubukların boyu neyi gösterir?</li>
+          <li>Epsilon 0 olunca Bıdık neden 5 dakikada takıldı?</li>
+          <li>Küçük ve büyük mantı için neden iki ayrı defter gerekti?</li>
+          <li>Hıza alkışlayan müşteri deneyinden çıkan ders nedir? Günlük hayattan bir örnek ver.</li>
+        </ol>
+        <p class="key"><b>Cevap anahtarı:</b> 1) Müşterinin alkışına (ödül: 1 ya da 0). 2) O dakikanın şimdiye kadarki alkış ortalamasını. 3) İlk alkış aldığı dakikayı hep tekrar etti, 6'yı hiç denemedi; keşif yok. 4) İdeal süre boya göre değişir (4 ve 8 dakika); tek defter ortalamayı tutar ve hiçbir dakika %50'yi geçemez. 5) Yapay zeka neyi ödüllendirirsek onu öğrenir, niyetimizi değil; örneğin izlenme süresine göre öneri yapan uygulama çarpıcı ama yararsız videolar önerebilir.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ 07 -->
+    <section class="lesson" id="d07">
+      <h2><small>Ders 07 · 40 dk</small>Ne yapabilir, ne yapamaz? (kapanış)</h2>
+      <p class="link">Adres: <a href="../kapanis/">/kapanis/</a> · 6 bölüm · Ön koşul: Ders 01–06</p>
+      <h3>Kazanımlar</h3>
+      <ul>
+        <li>Altı dersin ortak fikrini ("tahmin et, yanıl, düzelt") ve her dersin ana kavramını özetler.</li>
+        <li>Günlük hayattaki yapay zeka örneklerini öğrendiği kavramlarla eşler.</li>
+        <li>Yapay zekanın neyi yapabildiğine, neyi yapamadığına gerekçeli karar verir; dört çalışma kuralını sayar.</li>
+      </ul>
+      <h3>Ders akışı</h3>
+      <table>
+        <tr><th>Dakika</th><th>Etkinlik</th></tr>
+        <tr><td>0–5</td><td>Giriş: her öğrenci bir kelimeyle "en çok aklında kalan" şeyi söylesin; tahtaya yazın.</td></tr>
+        <tr><td>5–10</td><td>Bölüm 1. "Bıdık hatırlasın"a altı kez basın; her derste bir öğrenci o dersi bir cümleyle anlatsın.</td></tr>
+        <tr><td>10–17</td><td>Bölüm 2 eşleştirme oyunu, sınıfça oylayarak. Yanlış cevaplarda açıklamayı okuyun; birden fazla dersle bağ kuran öğrencileri ödüllendirin.</td></tr>
+        <tr><td>17–24</td><td>Bölüm 3 "yapabilir mi?" oyunu. "Duruma göre" cevaplarında tartışma açın: hangi durumda?</td></tr>
+        <tr><td>24–28</td><td>Bölüm 4 dört kural. Her kural için sınıftan bir günlük hayat örneği isteyin.</td></tr>
+        <tr><td>28–37</td><td>Bölüm 5 final testi: bireysel (tabletlerde) ya da sınıfça. On soru.</td></tr>
+        <tr><td>37–40</td><td>Bölüm 6 tamamlama kartı; isteyen öğrenci kartını ekran görüntüsüyle saklar. Giriş kelimelerine dönüp değişeni sorun.</td></tr>
+      </table>
+      <div class="grid2">
+        <div>
+          <h3>Tartışma soruları</h3>
+          <ul>
+            <li>Yedi dersten sonra "yapay zeka" tanımınız değişti mi? Nasıl?</li>
+            <li>Dört kuraldan hangisini bu hafta gerçekten kullanabilirsiniz?</li>
+            <li>Yapay zekanın yapmasını istemeyeceğiniz bir iş var mı? Neden?</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Sık yanılgılar</h3>
+          <ul>
+            <li>"Yapay zeka her şeyi bilir." Verisi ve ödülü kadar bilir.</li>
+            <li>"Yapay zeka hiçbir işe yaramaz / hep yanlış." Yeterli, çeşitli veri ve iyi tanımlanmış ödülle çok güçlüdür.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="box">
+        <h3>Çalışma kâğıdı (seri değerlendirmesi)</h3>
+        <ol>
+          <li>Altı dersin ortak döngüsünü dört adımla yaz.</li>
+          <li>Günlük hayattan bir yapay zeka örneği seç; hangi derse ait olduğunu ve neden olduğunu açıkla.</li>
+          <li>"Yapay zeka verisi kadar bilir" cümlesini iki dersten örnekle destekle.</li>
+          <li>Dört çalışma kuralını yaz; birini kendi hayatından bir örnekle açıkla.</li>
+          <li>Bir sohbet robotuna güvenip güvenmemeye nasıl karar verirsin? Üç ölçüt yaz.</li>
+        </ol>
+        <p class="key"><b>Cevap anahtarı:</b> 1) Tahmin et, hatayı ölç (ya da ödülü al), ipleri azıcık düzelt, tekrarla. 2) Açık uçlu; eşleştirme gerekçeli olmalı (örneğin öneri sistemi → Ders 01/02: geçmiş izlemelerden tahmin). 3) Ders 02 (az örnek ezber), Ders 03 (eksik grup), Ders 04 (kitapta olmayan bilgi). 4) Kaynağını iste, verisini sor, sınavını yap, ödülünü düşün. 5) Kaynak veriyor mu, kaynağı açıp doğrulayabiliyor muyum, konu modelin verisinde olabilecek bir konu mu, birden fazla kaynak aynı şeyi söylüyor mu.</p>
+      </div>
+    </section>
+
+    <footer>YZ Dersler · Öğretmen kılavuzu. Bu sayfa yazdırılabilir; "Yazdır / PDF" düğmesi her dersi ayrı sayfaya böler.</footer>
+  </div>
+</body>
+</html>
