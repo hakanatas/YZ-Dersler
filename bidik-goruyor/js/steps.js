@@ -51,7 +51,7 @@ export const STEPS = [
     label: '64 göz',
     title: '64 göz, 8 yardımcı, 1 cevap',
     body: `
-      <p>Bıdık'ın kafasının içi yine ipler ve yardımcılarla dolu. Bu sefer soldaki giriş tek başına iki sayı değil, <b>64 sayı</b>: her piksel için bir "göz". Ortada <b>8 yardımcı</b> bu 64 sayıyı dinliyor. En sağdaki yardımcı son sözü söylüyor: <i>"Yüzde kaç mantı?"</i></p>
+      <p>Bıdık'ın kafasının içi yine ipler ve yardımcılarla dolu. Bu sefer soldan giren iki sayı değil, <b>64 sayı</b>: her piksel için bir "göz". Ortada <b>8 yardımcı</b> bu 64 sayıyı dinliyor. En sağdaki yardımcı son sözü söylüyor: <i>"Yüzde kaç mantı?"</i></p>
       <p>Düğmeye bas: dolu piksellerden ışıklar çıkıp iplerden yardımcılara akıyor. Bıdık daha antrenman yapmadı, ipleri rastgele; o yüzden cevabı şimdilik yazı tura gibi. Merak etme, birazdan öğrenecek.</p>
       ${teacher('<p>Model: 64 giriş → 8 düğümlü gizli katman (tanh) → 1 sigmoid çıkış. Ağırlıklar 64·8 + 8 = 520, sapmalar 8 + 1 = 9; toplam <b>529 parametre</b>. Çıkış, "mantı" olasılığıdır; eşik 0,5. Tabloda yalnızca değeri 1 olan pikseller ışık gönderir, çünkü 0 çarpı ağırlık her zaman 0\'dır. Eğitilmemiş ağın doğruluğu bu veri setinde yazı tura düzeyindedir: rastgele başlangıca göre %38–78 arasında (13 farklı tohumla ölçüldü).</p>')}`,
     focus: 'network',

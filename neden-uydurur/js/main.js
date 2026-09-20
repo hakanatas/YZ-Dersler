@@ -31,7 +31,7 @@ createLesson({
 
     const on = () => !c.state.uiHidden;
     c.addTag('sıradaki kelime?', () => words.barTop(), () => on() && words.bars.length > 0, 'tag--big');
-    c.addTag('Bıdık’ın kitabı', () => book.localToWorld(new THREE.Vector3(0, 0.9, 0)), on, 'tag--big');
+    c.addTag('Bıdık\'ın kitabı', () => book.localToWorld(new THREE.Vector3(0, 0.9, 0)), on, 'tag--big');
 
     const ext = {
       model,
@@ -207,7 +207,7 @@ createLesson({
         const rows = c.history
           .map((h, i) => `<span class="row"><span>${i === 0 ? '<b>Son:</b> ' : ''}“${esc(h.text)}” <small>(sıcaklık ${c.fmtT(h.T)}${h.ended ? '' : ', 14 kelimede kesildi'} · ${h.inBook ? '<span class="ok">kitapta var</span>' : '<span class="warn">kitapta yok</span>'})</small></span></span>`)
           .join('');
-        c.readout(`<span class="big">Bıdık’ın cümleleri</span>${rows}`);
+        c.readout(`<span class="big">Bıdık'ın cümleleri</span>${rows}`);
       },
       /** Chapter 4: the question whose answer is not in the book. */
       ask() {
@@ -231,13 +231,13 @@ createLesson({
           .map((a, i, arr) => `<span class="row"><span>${arr.length - i}. “${esc(a.text)}” <small>(${a.T === 0 ? 'en olası kelimeler' : `sıcaklık ${c.fmtT(a.T)}`} · ${a.inBook ? '<span class="ok">kitapta var</span>' : '<span class="warn">kitapta yok</span>'})</small></span></span>`)
           .reverse()
           .join('');
-        c.readout(`<span class="big">Bıdık’ın cevabı</span>${rows}<span class="row"><span>Kulağa doğru geliyor, değil mi? Ama "kitapta yok". Bıdık bunu okumadı, dikti.</span></span>`);
+        c.readout(`<span class="big">Bıdık'ın cevabı</span>${rows}<span class="row"><span>Kulağa doğru geliyor, değil mi? Ama "kitapta yok". Bıdık bunu okumadı, dikti.</span></span>`);
       },
       searchBook() {
         const occ = model.occurrences(['ilk', 'kez']);
         c.renderCorpus(occ);
         const lines = occ.map((o) => `“${esc(model.sentences[o.sentence])}”`).join(' · ');
-        c.readout(`<span class="big">Kitapta "ilk kez" arıyorum…</span>"ilk kez" ${occ.length} cümlede geçiyor: ${lines}<span class="row"><span><span class="warn">Hiçbiri mantının ilk nerede yapıldığını söylemiyor.</span> Bıdık’ın cevabı bu parçalardan dikilmiş.</span></span>`);
+        c.readout(`<span class="big">Kitapta "ilk kez" arıyorum…</span>"ilk kez" ${occ.length} cümlede geçiyor: ${lines}<span class="row"><span><span class="warn">Hiçbiri mantının ilk nerede yapıldığını söylemiyor.</span> Bıdık'ın cevabı bu parçalardan dikilmiş.</span></span>`);
         bidik.react('worried', 2);
         c.say('Hmm… kitapta böyle bir cümle yokmuş. Ben uydurmuşum!', 4);
         sound.play('grab', { volume: 0.5 });

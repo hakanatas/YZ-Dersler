@@ -191,7 +191,7 @@ export const STEPS = [
     label: 'Boy',
     title: 'Boy değişince: her boya bir defter',
     body: `
-      <p>Şimdi usta sırayla bir küçük, bir büyük mantı gönderiyor. Küçük mantı kısa, büyük mantı uzun pişer. Tek defterle bu iş olmaz: 4 dakika küçüğe iyi, büyüğe çiğ; 8 dakika büyüğe iyi, küçüğe lapa.</p>
+      <p>Şimdi siparişler sırayla bir küçük, bir büyük mantı geliyor. Küçük mantı kısa, büyük mantı uzun pişer. Tek defterle bu iş olmaz: 4 dakika küçüğe iyi, büyüğe çiğ; 8 dakika büyüğe iyi, küçüğe lapa.</p>
       <p>Çözüm basit: <b>iki defter</b>. Bıdık önce mantıya bakıyor: küçükse küçük defterine, büyükse büyük defterine yazıyor. Önce iki defterle, sonra tek defterle 300 mantı pişirt ve alkışları karşılaştır.</p>
       ${teacher('<p>Mantının boyu burada <b>durum</b> (state) ya da <b>bağlam</b>dır (context); her durum için ayrı bir değer tablosu tutulur (bağlamsal bandit). Boylar: küçük 0,2 ± 0,2 → ideal 4,2 dk; büyük 0,8 ± 0,2 → ideal 7,8 dk. Alkış olasılıkları: küçükte 3 dk %62, <b>4 dk %100</b>, 5 dk %79, 6 dk %38; büyükte 6 dk %38, 7 dk %79, <b>8 dk %100</b>, 9 dk %62, 10 dk %21. İki defterle (ε = 0,1, 300 deneme, 1000 tohum) ortalama 244 alkış toplanır ve koşuların %72\'sinde tam olarak 4 / 8 dakika bulunur. Tek defterle hiçbir süre %50\'den fazla alkış alamaz; ortalama 128. Bu bölümdeki sabit tohumlu koşular 254 ve 120 alkış verir. Duruma göre eylem seçmeyi öğrenmek, oyun oynayan yapay zekaların (satranç, Go, Atari oyunları) temelidir: ekrandaki görüntü durum, hamle eylem, skor ödüldür.</p>')}`,
     focus: 'overview',

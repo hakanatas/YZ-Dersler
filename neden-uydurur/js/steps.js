@@ -9,7 +9,7 @@ import { START, END } from './ngram.js';
 
 const teacher = (html) => `<details class="teacher"><summary>Öğretmen notu</summary>${html}</details>`;
 
-const CORPUS_BOX = '<div class="corpus" id="corpus" aria-label="Bıdık’ın kitabı"></div>';
+const CORPUS_BOX = '<div class="corpus" id="corpus" aria-label="Bıdık\'ın kitabı"></div>';
 
 /** Chapter 5: three sentences Bıdık says. 0 = kitapta var, 1 = kitaba ters, 2 = kitap söylemiyor. */
 export const CHECK = [
@@ -23,10 +23,10 @@ export const CHECK = [
     text: 'Usta sarımsağı hiç sevmez.',
     answer: 1,
     why: 'Bildin! Kitap tam tersini söylüyor: "Usta sarımsağı çok sever."',
-    nope: 'Kitapta "Usta sarımsağı çok sever." yazıyor. Bıdık’ın cümlesi kitaba ters, yani uydurma.',
+    nope: 'Kitapta "Usta sarımsağı çok sever." yazıyor. Bıdık\'ın cümlesi kitaba ters, yani uydurma.',
   },
   {
-    text: 'Mantı ilk kez Kayseri’de yapıldı.',
+    text: 'Mantı ilk kez Kayseri\'de yapıldı.',
     answer: 2,
     why: 'Aynen! Kitapta mantının ilk nerede yapıldığına dair tek cümle bile yok. Bıdık bunu kitaptan bilemez; ansiklopedi, öğretmen ya da güvenilir bir siteye bakmak lazım.',
     nope: 'Kitapta Kayseri geçiyor ama mantının ilk nerede yapıldığını söyleyen bir cümle yok. Doğru mu yanlış mı, kitaptan anlaşılmaz: kaynağa bakmak lazım.',
@@ -100,7 +100,7 @@ export const STEPS = [
     say: 'Biraz sürpriz olsun mu? Sıcaklığı sen ayarla, ben yazayım!',
     mood: 'curious',
     action: 'Bir cümle yaz',
-    controls: `<div class="sliders"><label>Sıcaklık <input type="range" id="sl-temp" min="0" max="2" value="1" step="0.1" /><output id="out-temp">1,0</output></label></div>${chipsHtml(['Mantı', 'Bıdık', 'Usta', 'Buharlı tencere', 'Kayseri’de'], 'data-start')}`,
+    controls: `<div class="sliders"><label>Sıcaklık <input type="range" id="sl-temp" min="0" max="2" value="1" step="0.1" /><output id="out-temp">1,0</output></label></div>${chipsHtml(['Mantı', 'Bıdık', 'Usta', 'Buharlı tencere', 'Kayseri\'de'], 'data-start')}`,
     enter(c) {
       const sl = c.$('#sl-temp');
       const out = c.$('#out-temp');
@@ -142,7 +142,7 @@ export const STEPS = [
     focus: 'tokens',
     say: 'Mantı ilk kez nerede mi yapıldı? Hmm… bir saniye, cevaplıyorum!',
     mood: 'thinking',
-    action: 'Bıdık’a sor: Mantı ilk kez nerede yapıldı?',
+    action: 'Bıdık\'a sor: Mantı ilk kez nerede yapıldı?',
     secondary: 'Kitapta ara',
     controls: CORPUS_BOX,
     enter(c) {
@@ -230,10 +230,10 @@ export const QUIZ = [
   },
   {
     q: '"güzel" çubuğunun %44 olması ne demek?',
-    options: ['Bıdık güzel kelimesini %44 seviyor', '"mantı en" geçen 9 yerin 4’ünde ardından "güzel" gelmiş', 'Güzel kelimesi kitapta 44 kez geçiyor'],
+    options: ['Bıdık güzel kelimesini %44 seviyor', '"mantı en" geçen 9 yerin 4\'ünde ardından "güzel" gelmiş', 'Güzel kelimesi kitapta 44 kez geçiyor'],
     answer: 1,
     why: 'Bildin! Yüzde, bir oran: 4 bölü 9. Sayma işte, başka bir şey değil.',
-    nope: 'Yüzde bir oran: "mantı en" 9 kez geçiyor, 4’ünde sonra "güzel" geliyor. 4 / 9 = %44.',
+    nope: 'Yüzde bir oran: "mantı en" 9 kez geçiyor, 4\'ünde sonra "güzel" geliyor. 4 / 9 = %44.',
   },
   {
     q: 'Sıcaklığı yükseltince ne olur?',
@@ -257,7 +257,7 @@ export const QUIZ = [
     nope: 'Akıcı olması doğru olduğunu göstermez. Önemliyse kaynağa bakıp kontrol et.',
   },
   {
-    q: 'Büyük modellerle Bıdık’ın ortak noktası ne?',
+    q: 'Büyük modellerle Bıdık\'ın ortak noktası ne?',
     options: ['İkisi de her şeyi bilir', 'İkisi de sıradaki parçayı tahmin eder', 'İkisi de kitabı ezberler'],
     answer: 1,
     why: 'Bildin! Aynı oyun: sıradaki kelime ne? Fark, ölçek: devasa yazı ve milyarlarca ip.',
