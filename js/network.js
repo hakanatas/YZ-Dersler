@@ -13,11 +13,26 @@ export class Network3D extends THREE.Group {
     this.net = net;
     this.palette = palette;
     const H = net.hidden;
+    const N = net.inputs ?? 2;
     this.columns = [2.35, 3.15, 3.95];
     this.pos = { input: [], hidden: [], output: null };
     const span = 1.55;
     const base = 0.42;
-    this.pos.input = [new THREE.Vector3(this.columns[0], base + span * 0.68, 0), new THREE.Vector3(this.columns[0], base + span * 0.32, 0)];
+    if (N <= 4) {
+      // a short column, like the two inputs of lesson 01
+      for (let j = 0; j < N; j++) this.pos.input.push(new THREE.Vector3(this.columns[0], base + span * (0.5 + (N - 1 - 2 * j) * 0.18), 0));
+    } else {
+      // many inputs (pixels): a little grid standing on the first post
+      const cols = Math.ceil(Math.sqrt(N));
+      const rows = Math.ceil(N / cols);
+      const cell = Math.min(0.17, (span * 0.95) / rows);
+      for (let j = 0; j < N; j++) {
+        const cx = j % cols;
+        const cy = Math.floor(j / cols);
+        this.pos.input.push(new THREE.Vector3(this.columns[0], base + span * 0.5 + (rows / 2 - 0.5 - cy) * cell, (cx - cols / 2 + 0.5) * cell));
+      }
+    }
+    this.manyInputs = N > 4;
     for (let i = 0; i < H; i++) this.pos.hidden.push(new THREE.Vector3(this.columns[1], base + (span * (i + 0.5)) / H, 0));
     this.pos.output = new THREE.Vector3(this.columns[2], base + span * 0.5, 0);
 
@@ -45,20 +60,22 @@ export class Network3D extends THREE.Group {
     const nodeGeo = new THREE.SphereGeometry(0.11, 28, 20);
     this.nodes = { input: [], hidden: [], output: null };
     this.faces = [];
-    const mk = (p, r = 1) => {
+    const mk = (p, r = 1, withFace = true) => {
       const m = new THREE.Mesh(nodeGeo, this.nodeMat());
       m.position.copy(p);
       m.scale.setScalar(r);
       m.castShadow = true;
       this.add(m);
-      const face = new Face({ radius: 0.11, mouths, palette, cheek: 0.55, blink: [2, 6] });
-      face.setMood('calm');
-      m.add(face);
-      m.userData.face = face;
-      this.faces.push(face);
+      if (withFace) {
+        const face = new Face({ radius: 0.11, mouths, palette, cheek: 0.55, blink: [2, 6] });
+        face.setMood('calm');
+        m.add(face);
+        m.userData.face = face;
+        this.faces.push(face);
+      }
       return m;
     };
-    this.nodes.input = this.pos.input.map((p) => mk(p));
+    this.nodes.input = this.pos.input.map((p) => (this.manyInputs ? mk(p, 0.5, false) : mk(p)));
     this.nodes.hidden = this.pos.hidden.map((p) => mk(p, 0.85));
     this.nodes.output = mk(this.pos.output, 1.25);
 
@@ -76,24 +93,26 @@ export class Network3D extends THREE.Group {
       return l;
     };
     for (let i = 0; i < H; i++) {
-      for (let j = 0; j < 2; j++) link(this.pos.input[j], this.pos.hidden[i], 1, i, j);
+      for (let j = 0; j < N; j++) link(this.pos.input[j], this.pos.hidden[i], 1, i, j);
       link(this.pos.hidden[i], this.pos.output, 2, i, 0);
     }
+    // with many inputs the strings are drawn thinner so the board stays readable
+    this.linkScale = this.manyInputs ? 0.45 : 1;
 
     // pulses
     this.pulses = [];
     this.pulseMat = new THREE.SpriteMaterial({ map: softDot, color: '#ffd9a8', transparent: true, depthWrite: false, opacity: 0.95 });
     this.pulseMatBack = new THREE.SpriteMaterial({ map: softDot, color: palette.slate, transparent: true, depthWrite: false, opacity: 0.9 });
     this.pool = [];
-    for (let k = 0; k < 40; k++) {
+    for (let k = 0; k < (this.manyInputs ? 120 : 40); k++) {
       const s = new THREE.Sprite(this.pulseMat);
       s.visible = false;
       s.scale.setScalar(0.16);
       this.add(s);
       this.pool.push(s);
     }
-    this.glow = { input: [0, 0], hidden: new Array(H).fill(0), output: 0 };
-    this.glowTarget = { input: [0, 0], hidden: new Array(H).fill(0), output: 0 };
+    this.glow = { input: new Array(N).fill(0), hidden: new Array(H).fill(0), output: 0 };
+    this.glowTarget = { input: new Array(N).fill(0), hidden: new Array(H).fill(0), output: 0 };
     this.time = 0;
     this.weightsShown = 0;
     this.weightsShownTarget = 0;
@@ -117,7 +136,7 @@ export class Network3D extends THREE.Group {
       q.setFromUnitVectors(up, dir.clone().normalize());
       l.mesh.quaternion.copy(q);
       l.mesh.position.copy(l.a).addScaledVector(dir, 0.5);
-      const r = (0.006 + Math.min(0.045, Math.abs(l.w) * 0.024)) * this.weightsShown;
+      const r = (0.006 + Math.min(0.045, Math.abs(l.w) * 0.024)) * this.weightsShown * this.linkScale;
       l.mesh.scale.set(Math.max(0.0001, r), len, Math.max(0.0001, r));
       l.mesh.material.color.copy(l.w >= 0 ? this.posColor : this.negColor);
     }
@@ -132,6 +151,7 @@ export class Network3D extends THREE.Group {
     for (const l of this.links) {
       if (l.layer !== layer) continue;
       const v = layer === 1 ? values[l.j] : values[l.i];
+      if (this.manyInputs && layer === 1 && Math.abs(v) < 0.5) continue; // only lit pixels send a pulse
       const s = this.pool.find((p) => !p.visible);
       if (!s) continue;
       s.visible = true;
@@ -147,7 +167,7 @@ export class Network3D extends THREE.Group {
   }
 
   clearGlow() {
-    this.glowTarget.input = [0, 0];
+    this.glowTarget.input.fill(0);
     this.glowTarget.hidden.fill(0);
     this.glowTarget.output = 0;
   }
@@ -178,11 +198,12 @@ export class Network3D extends THREE.Group {
       const s = mesh.userData.base ?? (mesh.userData.base = mesh.scale.x);
       mesh.scale.setScalar(s * (1 + g * 0.18));
       const face = mesh.userData.face;
+      if (!face) return;
       const want = g > 0.55 ? 'surprised' : g > 0.22 ? 'happy' : 'calm';
       if (face.mood !== want) face.setMood(want);
       face.update(dt);
     };
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < this.nodes.input.length; i++) {
       this.glow.input[i] += (this.glowTarget.input[i] - this.glow.input[i]) * Math.min(1, dt * 6);
       apply(this.nodes.input[i], this.glow.input[i]);
     }

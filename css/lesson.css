@@ -429,3 +429,27 @@ body { font-size: 18px; }
 }
 
 .toggle, .dock .btn { white-space: nowrap; }
+
+/* ---- series additions (shared runtime) ---- */
+.lesson__stats > .stat-rows { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(auto-fit, minmax(88px, 1fr)); gap: 8px; }
+.spark[hidden] { display: none; }
+.lesson__extra { margin-top: 12px; }
+.lesson__extra[hidden] { display: none; }
+.sliders { display: grid; gap: 6px; }
+.sliders label { display: grid; grid-template-columns: 76px 1fr 44px; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; color: var(--ink-soft); }
+.sliders input { width: 100%; accent-color: var(--terracotta); }
+.sliders output { font-family: var(--serif); font-size: 16px; color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips .btn { font-size: 13px; padding: 7px 12px; }
+.chips .btn[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+.check { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--ink-soft); margin-top: 8px; }
+.check input { accent-color: var(--terracotta); width: 18px; height: 18px; }
+.btn--green { background: #3f8a5b; border-color: #3f8a5b; color: #fff; }
+.pixels { display: grid; gap: 2px; margin-top: 8px; touch-action: none; }
+.pixels button { aspect-ratio: 1; border: 1px solid var(--line); border-radius: 4px; background: #fff; padding: 0; }
+.pixels button.is-on { background: var(--ink); border-color: var(--ink); }
+.readout .row { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 4px; }
+.readout .warn { color: var(--terracotta); font-weight: 700; }
+.corpus { margin: 8px 0 0; padding: 8px 10px; border-radius: 10px; background: rgba(43, 33, 27, 0.05); font-size: 13px; line-height: 1.5; max-height: 140px; overflow: auto; }
+.corpus mark { background: #ffe1a3; border-radius: 3px; padding: 0 2px; }
+@media (min-width: 1180px) { .sliders label { font-size: 15px; } .chips .btn { font-size: 15px; } .corpus { font-size: 15px; } }

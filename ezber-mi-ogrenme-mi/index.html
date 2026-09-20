@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Yapay zeka nasıl çalışır? — YZ Dersler</title>
-  <meta name="description" content="Çırak robot aşçı Bıdık mantıyı ne kadar pişireceğini örneklerden öğreniyor: tahmin et, yanıl, düzelt, tekrar. Ortaokul için etkileşimli yapay zeka dersi: gerçek bir sinir ağı tarayıcıda öğreniyor, sonunda bilgi testi." />
+  <title>Ezber mi, öğrenme mi? — YZ Dersler</title>
+  <meta name="description" content="Bıdık az örnekle antrenman yapınca masayı ezberliyor, sınavda çuvallıyor. Antrenman ve sınav masası, aşırı öğrenme ve veri kalitesi. Ortaokul için etkileşimli yapay zeka dersi." />
   <meta name="theme-color" content="#f5eee3" />
-  <meta property="og:title" content="Yapay zeka nasıl çalışır?" />
-  <meta property="og:description" content="Çırak robot aşçı Bıdık ile yapay zekanın nasıl öğrendiğini keşfet. Sekiz kısa bölüm, oyunlar ve bilgi testi." />
+  <meta property="og:title" content="Ezber mi, öğrenme mi?" />
+  <meta property="og:description" content="Bıdık'la ezber ile öğrenmenin farkını keşfet. Altı kısa bölüm, deneyler ve bilgi testi." />
   <meta property="og:type" content="website" />
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
   <link rel="preload" href="../assets/fonts/Fraunces-Variable.ttf" as="font" type="font/ttf" crossorigin />
@@ -30,7 +30,7 @@
   <div class="loading" id="loading" aria-live="polite">
     <div class="loading__mark">YZ Dersler</div>
     <div class="loading__bar"><span id="loading-bar"></span></div>
-    <p class="loading__text" id="loading-text">Bıdık şapkasını takıyor…</p>
+    <p class="loading__text" id="loading-text">Bıdık iki masa kuruyor…</p>
   </div>
 
   <header class="topbar ui">
@@ -41,17 +41,17 @@
   </header>
 
   <section class="hero ui">
-    <p class="eyebrow">Ders 01 · Yapay zeka</p>
-    <h1 class="headline">Yapay zeka<br />nasıl çalışır?</h1>
-    <p class="lede"><em>Tahmin ederek öğrenir.</em> Gel, çırak robot aşçı Bıdık'la birlikte keşfedelim.</p>
+    <p class="eyebrow">Ders 02 · Yapay zeka</p>
+    <h1 class="headline">Ezber mi,<br />öğrenme mi?</h1>
+    <p class="lede"><em>Az örnek ezberletir, çok örnek öğretir.</em> Bıdık'la iki masada deney yapalım.</p>
   </section>
 
   <div class="intro" id="intro">
     <div class="intro__card">
-      <p class="eyebrow">Selam!</p>
-      <h2 class="intro__title">Ben Bıdık! Çırak robot aşçıyım.</h2>
-      <p class="intro__text">Küçük bir derdim var: mantılarım bazen çiğ kalıyor, bazen lapa oluyor. Ne kadar pişireceğimi bir türlü tutturamıyorum. Bana yardım eder misin? Sekiz kısa bölüm, birkaç oyun, sonunda da küçük bir bilgi testi. Söz, sıkılmayacaksın.</p>
-      <button type="button" class="btn btn--accent btn--big" id="btn-start">Tabii, hadi başlayalım!</button>
+      <p class="eyebrow">Selam, yine ben!</p>
+      <h2 class="intro__title">Geçen ders mantıyı öğrendim. Ya da öyle sanıyorum…</h2>
+      <p class="intro__text">Ustam bana sürpriz bir sınav yaptı ve fena çuvalladım. Meğer masadaki mantıları ezberlemişim, öğrenmemişim! Ezberle öğrenmenin farkını bulmama yardım eder misin? Altı kısa bölüm, üç deney, sonunda küçük bir bilgi testi.</p>
+      <button type="button" class="btn btn--accent btn--big" id="btn-start">Hadi deneyelim!</button>
     </div>
   </div>
 
@@ -68,7 +68,7 @@
 
   <aside class="lesson ui" id="lesson" aria-live="polite">
     <div class="lesson__head">
-      <span class="lesson__count" id="lesson-count">01 / 08</span>
+      <span class="lesson__count" id="lesson-count">01 / 06</span>
       <span class="score" id="score" hidden></span>
       <button type="button" class="lesson__collapse" id="btn-collapse" aria-expanded="true" aria-controls="lesson-body">Küçült</button>
     </div>
@@ -76,20 +76,10 @@
       <h2 class="lesson__title" id="lesson-title"></h2>
       <div class="lesson__text" id="lesson-text"></div>
       <div class="lesson__stats" id="lesson-stats" hidden>
-        <div class="stat"><span class="stat__label">Kaç kez baktı</span><span class="stat__value" id="stat-steps">0</span></div>
-        <div class="stat"><span class="stat__label">Hata puanı</span><span class="stat__value" id="stat-loss">–</span></div>
-        <div class="stat"><span class="stat__label">Doğru bildi</span><span class="stat__value" id="stat-acc">–</span></div>
-        <canvas class="spark" id="spark" width="220" height="44" aria-label="Hata puanı eğrisi"></canvas>
+        <canvas class="spark" id="spark" width="220" height="44" aria-label="Hata puanı eğrisi" hidden></canvas>
       </div>
-      <div class="lesson__sliders" id="lesson-sliders" hidden>
-        <label>Boy <input type="range" id="sl-sugar" min="0" max="100" value="62" /></label>
-        <label>Süre <input type="range" id="sl-salt" min="0" max="100" value="45" /></label>
-      </div>
+      <div class="lesson__extra" id="lesson-extra" hidden></div>
       <p class="readout" id="readout" hidden></p>
-      <div class="guess" id="guess" hidden>
-        <button type="button" class="btn btn--sweet" id="guess-sweet">Tam kıvamında!</button>
-        <button type="button" class="btn btn--salty" id="guess-salty">Olmamış!</button>
-      </div>
       <div class="lesson__actions">
         <button type="button" class="btn btn--accent" id="btn-action" hidden></button>
         <button type="button" class="btn" id="btn-action2" hidden></button>

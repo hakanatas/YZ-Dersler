@@ -45,16 +45,19 @@ export function makeDataset(count = 64, seed = 11) {
 }
 
 export class TinyNet {
-  constructor(hidden = 6, seed = 3) {
+  /** `inputs` features → `hidden` tanh nodes → 1 sigmoid output. */
+  constructor(hidden = 6, seed = 3, inputs = 2) {
     this.hidden = hidden;
     this.seed = seed;
+    this.inputs = inputs;
     this.reset();
   }
 
   reset() {
     const r = seeded(this.seed);
-    const rnd = () => (r() * 2 - 1) * 0.9;
-    this.W1 = Array.from({ length: this.hidden }, () => [rnd(), rnd()]);
+    const scale = this.inputs > 4 ? 0.9 / Math.sqrt(this.inputs / 2) : 0.9;
+    const rnd = () => (r() * 2 - 1) * scale;
+    this.W1 = Array.from({ length: this.hidden }, () => Array.from({ length: this.inputs }, rnd));
     this.b1 = Array.from({ length: this.hidden }, () => rnd() * 0.3);
     this.W2 = Array.from({ length: this.hidden }, () => rnd());
     this.b2 = 0;
@@ -64,7 +67,11 @@ export class TinyNet {
 
   /** Forward pass, returning every intermediate so the scene can show them. */
   forward(x) {
-    const z1 = this.W1.map((w, i) => w[0] * x[0] + w[1] * x[1] + this.b1[i]);
+    const z1 = this.W1.map((w, i) => {
+      let z = this.b1[i];
+      for (let j = 0; j < w.length; j++) z += w[j] * x[j];
+      return z;
+    });
     const h = z1.map(Math.tanh);
     const z2 = h.reduce((acc, v, i) => acc + v * this.W2[i], this.b2);
     const p = sigmoid(z2);
@@ -78,7 +85,7 @@ export class TinyNet {
   /** One full-batch gradient step. Returns loss and accuracy before the update. */
   trainStep(data, lr = 0.6) {
     const n = data.length;
-    const gW1 = this.W1.map(() => [0, 0]);
+    const gW1 = this.W1.map((w) => new Array(w.length).fill(0));
     const gb1 = new Array(this.hidden).fill(0);
     const gW2 = new Array(this.hidden).fill(0);
     let gb2 = 0;
@@ -94,15 +101,13 @@ export class TinyNet {
         gW2[i] += dz2 * h[i];
         const dh = dz2 * this.W2[i];
         const dz1 = dh * (1 - h[i] * h[i]);
-        gW1[i][0] += dz1 * x[0];
-        gW1[i][1] += dz1 * x[1];
+        for (let j = 0; j < x.length; j++) gW1[i][j] += dz1 * x[j];
         gb1[i] += dz1;
       }
       gb2 += dz2;
     }
     for (let i = 0; i < this.hidden; i++) {
-      this.W1[i][0] -= (lr * gW1[i][0]) / n;
-      this.W1[i][1] -= (lr * gW1[i][1]) / n;
+      for (let j = 0; j < this.inputs; j++) this.W1[i][j] -= (lr * gW1[i][j]) / n;
       this.b1[i] -= (lr * gb1[i]) / n;
       this.W2[i] -= (lr * gW2[i]) / n;
     }
@@ -127,7 +132,7 @@ export class TinyNet {
 
   /** Gradient direction of each weight for the "which screw to turn" animation. */
   gradients(data) {
-    const gW1 = this.W1.map(() => [0, 0]);
+    const gW1 = this.W1.map((w) => new Array(w.length).fill(0));
     const gW2 = new Array(this.hidden).fill(0);
     for (const { x, y } of data) {
       const { h, p } = this.forward(x);
@@ -135,8 +140,7 @@ export class TinyNet {
       for (let i = 0; i < this.hidden; i++) {
         gW2[i] += dz2 * h[i];
         const dz1 = dz2 * this.W2[i] * (1 - h[i] * h[i]);
-        gW1[i][0] += dz1 * x[0];
-        gW1[i][1] += dz1 * x[1];
+        for (let j = 0; j < x.length; j++) gW1[i][j] += dz1 * x[j];
       }
     }
     return { gW1, gW2 };

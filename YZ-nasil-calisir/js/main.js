@@ -4,12 +4,12 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { Tweens, Ease, rand, pick, clamp } from '../../js/tween.js';
 import { SoundKit } from '../../js/audio.js';
 import { makeSoftDotTexture, makeMouthTextures } from '../../js/textures.js';
-import { TinyNet, makeDataset, trueLabel, MINUTES } from './mlp.js';
-import { Board } from './board.js';
-import { Network3D } from './network.js';
-import { TokenDemo } from './tokens.js';
-import { Bidik } from './bidik.js';
-import { Confetti } from './confetti.js';
+import { TinyNet, makeDataset, trueLabel, MINUTES } from '../../js/mlp.js';
+import { Board } from '../../js/board.js';
+import { Network3D } from '../../js/network.js';
+import { TokenDemo } from '../../js/tokens.js';
+import { Bidik } from '../../js/bidik.js';
+import { Confetti } from '../../js/confetti.js';
 import { STEPS, QUIZ } from './steps.js';
 
 const PALETTE = {

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { createDumplingGeometry } from '../../js/dumpling-shape.js';
+import { createDumplingGeometry } from './dumpling-shape.js';
 import { Face } from './face.js';
 
 /**

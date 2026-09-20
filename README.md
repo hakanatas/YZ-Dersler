@@ -10,8 +10,10 @@ toplama yok. Herhangi bir statik dosya sunucusuyla açılır.
 
 GitHub Pages ile yayınlanır: <https://hakanatas.github.io/YZ-Dersler/>
 
-- Ders 01 · **Yapay zeka nasıl çalışır?** →
-  <https://hakanatas.github.io/YZ-Dersler/YZ-nasil-calisir/>
+| Ders | Konu | Adres |
+| --- | --- | --- |
+| 01 | Yapay zeka nasıl çalışır? | <https://hakanatas.github.io/YZ-Dersler/YZ-nasil-calisir/> |
+| 02 | Ezber mi, öğrenme mi? | <https://hakanatas.github.io/YZ-Dersler/ezber-mi-ogrenme-mi/> |
 
 `.github/workflows/pages.yml` iş akışı `main` dalına her gönderimde siteyi
 yeniden yayınlar.
@@ -51,13 +53,35 @@ katman (tanh), sigmoid çıkış, ikili çapraz entropi kaybı, tam yığın gra
 inişi (öğrenme hızı 1,2, 600 adım). Masanın gizli kuralı: ideal pişme süresi
 3 + 6·boy dakika, ±1,5 dakika tolerans.
 
+## Ders 02 · Ezber mi, öğrenme mi?
+
+`ezber-mi-ogrenme-mi/`. İki masa: Bıdık soldaki antrenman masasında
+öğrenir, sağdaki sınav masasında ölçülür (64 örneklik eğitim havuzu, 32
+örneklik test kümesi, aynı gizli kural, farklı mantılar).
+
+| Bölüm | Fikir |
+| --- | --- |
+| 1. İki masa | Eğitim ve test kümesi; sınav mantıları antrenmanda görülmez |
+| 2. Az örnek | 6 mantıyla 600 adım: antrenmanda %100, sınavda ~%78 |
+| 3. Ezber | Sınav masasındaki yanlışlar kırmızı halkayla; aşırı öğrenme |
+| 4. Çok örnek | 64 mantıyla iki masa da %100; kaydırıcıyla örnek sayısı deneyi |
+| 5. Yanlış etiket | Etiketlerin %25'i ters: iki masada da puan düşer; veri kalitesi |
+| 6. Bilgi testi | Altı soru |
+
+## Yeni ders eklemek
+
+Ders 02'den itibaren dersler `js/shell.js` ortak çalışma zamanını kullanır.
+Kalıp ve API için `docs/yeni-ders.md` dosyasına bakın.
+
 ## Klasörler
 
 | Klasör | İçerik |
 | --- | --- |
 | `index.html` | Ders listesi (giriş sayfası) |
-| `YZ-nasil-calisir/` | Ders 01: sayfa, stil ve ders kodu |
-| `js/` | Paylaşılan yardımcılar: animasyon, sentezlenmiş sesler, dokular, mantı geometrisi |
+| `YZ-nasil-calisir/`, `ezber-mi-ogrenme-mi/`, … | Dersler: sayfa ve ders kodu |
+| `js/` | Paylaşılan modüller: ders çalışma zamanı (`shell.js`), sinir ağı (`mlp.js`), masa (`board.js`), 3B ağ (`network.js`), Bıdık, yüz, konfeti, sesler, dokular |
+| `css/lesson.css` | Tüm derslerin ortak stili |
+| `docs/` | Yeni ders ekleme kılavuzu |
 | `vendor/three/` | Three.js r170 (MIT) |
 | `assets/` | Yazı tipleri (SIL Open Font License) ve simge |
 
