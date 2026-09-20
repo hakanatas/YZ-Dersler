@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Öğrenmeyen yapay zeka — YZ Dersler</title>
+  <meta name="description" content="Öğrenmeyen ama akıl yürüten yapay zeka: insanın yazdığı kurallar, labirentte en kısa yolu bulan arama ve sorular soran karar ağacı. Ortaokul için etkileşimli ek ders." />
+  <meta name="theme-color" content="#f5eee3" />
+  <meta property="og:title" content="Öğrenmeyen yapay zeka" />
+  <meta property="og:description" content="Bıdık'la kurallar, arama ve karar ağacı. Altı kısa bölüm, mutfak labirenti ve bilgi testi." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preload" href="../assets/fonts/Fraunces-Variable.ttf" as="font" type="font/ttf" crossorigin />
+  <link rel="preload" href="../assets/fonts/InstrumentSans-Variable.ttf" as="font" type="font/ttf" crossorigin />
+  <link rel="stylesheet" href="../css/lesson.css" />
+  <style>
+    /* lesson-local styles: rule cards, the dumpling table and the decision tree */
+    .rule-ex { margin: 0 0 8px; font-size: 15px; color: var(--ink-soft); }
+    .rules-list { display: grid; gap: 6px; }
+    .rule { display: grid; grid-template-columns: 26px 1fr auto; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 12px; border: 1px solid var(--line); background: #fff; font-size: 15px; transition: background 0.25s, border-color 0.25s; }
+    .rule__n { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: rgba(43, 33, 27, 0.07); font-size: 12.5px; font-weight: 700; }
+    .rule__r { font-weight: 700; font-size: 14px; white-space: nowrap; }
+    .rule.is-hit { background: #e8f3ea; border-color: #3f8a5b; }
+    .rule.is-hit .rule__r { color: #3f8a5b; }
+    .rule.is-miss { opacity: 0.6; }
+    .rule.is-miss .rule__r { color: var(--ink-soft); }
+    .dtable { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; font-variant-numeric: tabular-nums; }
+    .dtable th { font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); text-align: left; padding: 4px 6px; border-bottom: 1px solid var(--line); }
+    .dtable td { padding: 4px 6px; border-bottom: 1px dashed var(--line); transition: opacity 0.3s; }
+    .dtable .yes { color: #3f8a5b; font-weight: 600; }
+    .dtable .no { color: var(--ink-soft); }
+    .dtable tr.is-out td { opacity: 0.22; text-decoration: line-through; }
+    .tree { margin-top: 12px; padding: 10px 12px; border-radius: 14px; background: rgba(43, 33, 27, 0.05); font-size: 14px; }
+    .tree[hidden] { display: none; }
+    .tree__node { display: inline-block; padding: 6px 12px; border-radius: 999px; background: #fff; border: 1px solid var(--line); font-weight: 600; }
+    .tree__branches { display: flex; gap: 10px; margin: 6px 0 0 12px; padding-left: 10px; border-left: 2px solid rgba(43, 33, 27, 0.15); }
+    .tree__branch { flex: 1; min-width: 0; }
+    .tree__edge { display: block; font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); margin: 2px 0 4px; }
+    .tree__leaf { display: inline-block; padding: 6px 12px; border-radius: 999px; color: #fff; background: var(--chef, var(--ink)); font-weight: 600; }
+    .tree__node.is-on { border-color: var(--terracotta); box-shadow: 0 0 0 2px rgba(196, 98, 61, 0.35); }
+    .tree__leaf.is-on { box-shadow: 0 0 0 3px rgba(196, 98, 61, 0.45); }
+    @media (min-width: 1180px) { .rule { font-size: 16px; } .dtable { font-size: 15px; } .tree { font-size: 15px; } }
+  </style>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "../vendor/three/three.module.js",
+        "three/addons/": "../vendor/three/addons/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <canvas id="stage" tabindex="0" role="application" aria-label="Etkileşimli 3B ders sahnesi. Sol ve sağ ok tuşlarıyla bölümler arasında geçin."></canvas>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="tags" id="tags" aria-hidden="true"></div>
+
+  <div class="loading" id="loading" aria-live="polite">
+    <div class="loading__mark">YZ Dersler</div>
+    <div class="loading__bar"><span id="loading-bar"></span></div>
+    <p class="loading__text" id="loading-text">Bıdık mutfağın zeminini karelere bölüyor…</p>
+  </div>
+
+  <header class="topbar ui">
+    <a class="brand" href="../">YZ Dersler</a>
+    <div class="topbar__right">
+      <button class="pill" id="btn-hide-ui" type="button" title="Yazıları gizle (H)">Sadece sahne</button>
+    </div>
+  </header>
+
+  <section class="hero ui">
+    <p class="eyebrow">Ek ders · Yapay zeka</p>
+    <h1 class="headline">Öğrenmeyen<br />yapay zeka</h1>
+    <p class="lede"><em>Kural, arama, karar ağacı.</em> Bıdık bu sefer öğrenmiyor, düşünüyor.</p>
+  </section>
+
+  <div class="intro" id="intro">
+    <div class="intro__card">
+      <p class="eyebrow">Selam, yine ben!</p>
+      <h2 class="intro__title">Bugün hiçbir şey öğrenmeyeceğim. Yine de akıllı olacağım!</h2>
+      <p class="intro__text">Önceki derslerde hep örneklere bakıp öğrendim. Ama yapay zekanın öğrenmeden çalışan yolları da var: ustamın yazdığı kurallar, labirentte en kısa yolu bulan arama ve sorular sorarak karar veren bir ağaç. Altı kısa bölüm, bir mutfak labirenti, sonunda küçük bir bilgi testi.</p>
+      <button type="button" class="btn btn--accent btn--big" id="btn-start">Hadi başlayalım!</button>
+    </div>
+  </div>
+
+  <div class="finish" id="finish" hidden>
+    <div class="intro__card">
+      <p class="eyebrow">Yaşasın!</p>
+      <h2 class="intro__title">Dersi bitirdin, harikasın!</h2>
+      <p class="intro__text" id="finish-text"></p>
+      <div class="intro__actions">
+        <button type="button" class="btn btn--accent" id="btn-again">Bir daha oynayalım</button>
+      </div>
+    </div>
+  </div>
+
+  <aside class="lesson ui" id="lesson" aria-live="polite">
+    <div class="lesson__head">
+      <span class="lesson__count" id="lesson-count">01 / 07</span>
+      <span class="score" id="score" hidden></span>
+      <button type="button" class="lesson__collapse" id="btn-collapse" aria-expanded="true" aria-controls="lesson-body">Küçült</button>
+    </div>
+    <div id="lesson-body">
+      <h2 class="lesson__title" id="lesson-title"></h2>
+      <div class="lesson__text" id="lesson-text"></div>
+      <div class="lesson__stats" id="lesson-stats" hidden>
+        <canvas class="spark" id="spark" width="220" height="44" aria-label="Grafik" hidden></canvas>
+      </div>
+      <div class="lesson__extra" id="lesson-extra" hidden></div>
+      <p class="readout" id="readout" hidden></p>
+      <div class="lesson__actions">
+        <button type="button" class="btn btn--accent" id="btn-action" hidden></button>
+        <button type="button" class="btn" id="btn-action2" hidden></button>
+      </div>
+    </div>
+  </aside>
+
+  <nav class="dock ui" id="dock" aria-label="Bölümler">
+    <button type="button" class="btn btn--ghost" id="btn-prev" title="Önceki bölüm (←)">← Geri</button>
+    <ol class="dots" id="dots"></ol>
+    <button type="button" class="btn btn--accent" id="btn-next" title="Sonraki bölüm (→)">Devam →</button>
+    <span class="dock__sep"></span>
+    <button type="button" class="toggle" data-toggle="autoplay" aria-pressed="false" title="Kendi kendine ilerlesin"><i></i><span>Kendi ilerlesin</span></button>
+    <button type="button" class="toggle" data-toggle="sound" aria-pressed="false" title="Ses"><i></i><span>Ses</span></button>
+  </nav>
+
+  <p class="keys ui" id="keys" aria-hidden="true">
+    <kbd>←</kbd><kbd>→</kbd> bölüm · <kbd>␣</kbd> düğme · <kbd>H</kbd> sadece sahne
+  </p>
+
+  <button type="button" class="reveal" id="btn-show-ui" hidden>Yazıları geri getir</button>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <footer class="credit ui">YZ Dersler · Arama ve kurallar senin tarayıcında çalışıyor; hiçbir şey kimseye gönderilmiyor.</footer>
+
+  <noscript><p class="noscript">Bıdık'ı görebilmek için JavaScript ve WebGL gerekiyor.</p></noscript>
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>

@@ -19,6 +19,7 @@ GitHub Pages ile yayınlanır: <https://hakanatas.github.io/YZ-Dersler/>
 | 05 | Bıdık görüyor | <https://hakanatas.github.io/YZ-Dersler/bidik-goruyor/> |
 | 06 | Bıdık ödülle öğreniyor | <https://hakanatas.github.io/YZ-Dersler/odulle-ogrenmek/> |
 | 07 | Ne yapabilir, ne yapamaz? (kapanış) | <https://hakanatas.github.io/YZ-Dersler/kapanis/> |
+| Ek | Öğrenmeyen yapay zeka: kurallar, arama, karar ağacı | <https://hakanatas.github.io/YZ-Dersler/arama-ve-kurallar/> |
 
 `.github/workflows/pages.yml` iş akışı `main` dalına her gönderimde siteyi
 yeniden yayınlar.
@@ -155,6 +156,24 @@ modeliyle boyanır.
 | 4. Dört kural | Kaynağını iste, verisini sor, sınavını yap, ödülünü düşün |
 | 5. Final testi | Her dersten en az bir soru, toplam on |
 | 6. Tamamlama | Adına hazırlanan kart; tarayıcıda kalır, hiçbir yere gönderilmez |
+
+## Ek ders · Öğrenmeyen yapay zeka
+
+`arama-ve-kurallar/`. Öğrenmeyen ama akıl yürüten yapay zeka: elle yazılmış
+kurallar, genişlik öncelikli arama ve karar ağacı. Labirent 9×7 (22 dolap,
+41 açık kare); arama 36 kareye bakıp 10 adımlık en kısa yolu bulur; rastgele
+yürüyüş 60 adımda yaklaşık %14 oranında tencereye ulaşır (`js/maze.js`,
+`node --test arama-ve-kurallar/test/`).
+
+| Bölüm | Fikir |
+| --- | --- |
+| 1. Kural | Ustanın defterinden üç kural; MYCIN örneği; şeffaf ama kırılgan |
+| 2. Labirent | Rastgele yürüyüş çoğunlukla tencereye varamaz |
+| 3. Arama | Halka halka genişleyen arama; en kısa yol garantili |
+| 4. Dolap koy | Zemine tıklayıp dolap ekle; yol 14 adıma uzar ya da "yol yok" |
+| 5. Karar ağacı | Sekiz mantı, üç soru; "katlı mı?" hiçbir ustayı ayırmaz |
+| 6. Hangisi? | Altı durum: kural / arama / öğrenme |
+| 7. Bilgi testi | Altı soru |
 
 ## Öğretmen kılavuzu
 
