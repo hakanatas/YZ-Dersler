@@ -15,6 +15,7 @@ GitHub Pages ile yayınlanır: <https://hakanatas.github.io/YZ-Dersler/>
 | 01 | Yapay zeka nasıl çalışır? | <https://hakanatas.github.io/YZ-Dersler/YZ-nasil-calisir/> |
 | 02 | Ezber mi, öğrenme mi? | <https://hakanatas.github.io/YZ-Dersler/ezber-mi-ogrenme-mi/> |
 | 03 | Bıdık kimin mantısını tattı? | <https://hakanatas.github.io/YZ-Dersler/adil-mi/> |
+| 04 | Sohbet robotu neden uydurur? | <https://hakanatas.github.io/YZ-Dersler/neden-uydurur/> |
 
 `.github/workflows/pages.yml` iş akışı `main` dalına her gönderimde siteyi
 yeniden yayınlar.
@@ -85,6 +86,22 @@ uzatabiliyordu ve öğretilecek bir etki kalmıyordu.
 | 4. Neden? | Model gördüğü şeridi düz uzatır; gerçek şerit kıvrılır |
 | 5. Düzelt | Deniz'in mantıları masaya: 8 mantıdan sonra üçü de %100 |
 | 6. Gerçek hayat | Gender Shades (2018), sesli asistanlar; herkesin verisi, gruplara ayrı puan |
+| 7. Bilgi testi | Altı soru |
+
+## Ders 04 · Sohbet robotu neden uydurur?
+
+`neden-uydurur/`. Gerçek, küçük bir dil modeli: Bıdık'ın 71 cümlelik
+kitabındaki ikili ve üçlü kelime dizileri sayılır (`js/ngram.js`, geri
+çekilmeli n-gram), çubuklar gerçek oranları gösterir.
+
+| Bölüm | Fikir |
+| --- | --- |
+| 1. Sıradaki kelime | "mantı en" → güzel %44: sayım oranı |
+| 2. Nasıl sayıyor? | Kitapta bağlamı bul, devamları say; sihir yok |
+| 3. Sıcaklık | p^(1/T): 0'da hep aynı cümle, 2'de sürpriz ve saçma |
+| 4. Uydurma | Bilmediği soruya da akıcı cümle: halüsinasyon; "kitapta var/yok" gerçek arama |
+| 5. Kontrol et | Doğru / uydurma / kaynağa bak oyunu |
+| 6. Büyük modeller | Ölçek farkı, insan geri bildirimi, uydurma neden bitmez |
 | 7. Bilgi testi | Altı soru |
 
 ## Yeni ders eklemek
