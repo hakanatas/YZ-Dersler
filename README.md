@@ -16,6 +16,7 @@ GitHub Pages ile yayınlanır: <https://hakanatas.github.io/YZ-Dersler/>
 | 02 | Ezber mi, öğrenme mi? | <https://hakanatas.github.io/YZ-Dersler/ezber-mi-ogrenme-mi/> |
 | 03 | Bıdık kimin mantısını tattı? | <https://hakanatas.github.io/YZ-Dersler/adil-mi/> |
 | 04 | Sohbet robotu neden uydurur? | <https://hakanatas.github.io/YZ-Dersler/neden-uydurur/> |
+| 05 | Bıdık görüyor | <https://hakanatas.github.io/YZ-Dersler/bidik-goruyor/> |
 | 06 | Bıdık ödülle öğreniyor | <https://hakanatas.github.io/YZ-Dersler/odulle-ogrenmek/> |
 
 `.github/workflows/pages.yml` iş akışı `main` dalına her gönderimde siteyi
@@ -103,6 +104,23 @@ kitabındaki ikili ve üçlü kelime dizileri sayılır (`js/ngram.js`, geri
 | 4. Uydurma | Bilmediği soruya da akıcı cümle: halüsinasyon; "kitapta var/yok" gerçek arama |
 | 5. Kontrol et | Doğru / uydurma / kaynağa bak oyunu |
 | 6. Büyük modeller | Ölçek farkı, insan geri bildirimi, uydurma neden bitmez |
+| 7. Bilgi testi | Altı soru |
+
+## Ders 05 · Bıdık görüyor
+
+`bidik-goruyor/`. Görüntü tanıma: 8×8 siyah-beyaz resimler (64 piksel),
+mantı ile börek. Model 64 giriş → 8 gizli → 1 çıkış (529 parametre),
+öğrenme hızı 0,5, 300 adım; 120 eğitim ve 60 test resmi
+(`js/shapes.js`, tohumlu). Eğitim %100, sınav %98.
+
+| Bölüm | Fikir |
+| --- | --- |
+| 1. Sayılar | Resim = 64 sayı |
+| 2. 64 göz | İleri geçiş: pikseller yardımcılara akar |
+| 3. Örnekler | 120 resim: konum, boy ve gürültü değişir |
+| 4. Antrenman | 300 adım; yanlış bilinen tek sınav resmi tepsiye konur |
+| 5. Sen çiz | Kareleri boya, Bıdık canlı tahmin etsin |
+| 6. Kandır | Kare, tek nokta, harf: %50 "emin değilim" demek; güven ≠ doğruluk |
 | 7. Bilgi testi | Altı soru |
 
 ## Ders 06 · Bıdık ödülle öğreniyor
