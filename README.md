@@ -14,6 +14,7 @@ GitHub Pages ile yayınlanır: <https://hakanatas.github.io/YZ-Dersler/>
 | --- | --- | --- |
 | 01 | Yapay zeka nasıl çalışır? | <https://hakanatas.github.io/YZ-Dersler/YZ-nasil-calisir/> |
 | 02 | Ezber mi, öğrenme mi? | <https://hakanatas.github.io/YZ-Dersler/ezber-mi-ogrenme-mi/> |
+| 03 | Bıdık kimin mantısını tattı? | <https://hakanatas.github.io/YZ-Dersler/adil-mi/> |
 
 `.github/workflows/pages.yml` iş akışı `main` dalına her gönderimde siteyi
 yeniden yayınlar.
@@ -67,6 +68,24 @@ inişi (öğrenme hızı 1,2, 600 adım). Masanın gizli kuralı: ideal pişme s
 | 4. Çok örnek | 64 mantıyla iki masa da %100; kaydırıcıyla örnek sayısı deneyi |
 | 5. Yanlış etiket | Etiketlerin %25'i ters: iki masada da puan düşer; veri kalitesi |
 | 6. Bilgi testi | Altı soru |
+
+## Ders 03 · Bıdık kimin mantısını tattı?
+
+`adil-mi/`. Üç usta, üç boy aralığı (Ayşe 0,05–0,35, Kemal 0,35–0,65, Deniz
+0,65–0,95). Antrenman masasında yalnızca Ayşe ve Kemal'in mantıları var;
+sınav masasında her ustadan 16. Bu dersin mutfak kuralı eğridir (ideal süre
+3 + 6·boy² dakika), çünkü düz kuralda model görmediği bölgeye doğru
+uzatabiliyordu ve öğretilecek bir etki kalmıyordu.
+
+| Bölüm | Fikir |
+| --- | --- |
+| 1. Üç usta | Renkli halkalar ustayı, mantı rengi sonucu gösterir |
+| 2. Masada kim var? | Eğitim kümesinde Deniz Usta yok: kapsama yanlılığı |
+| 3. Usta usta puan | Sınav: Ayşe %100, Kemal %94, Deniz %56; ortalama sorunu gizler |
+| 4. Neden? | Model gördüğü şeridi düz uzatır; gerçek şerit kıvrılır |
+| 5. Düzelt | Deniz'in mantıları masaya: 8 mantıdan sonra üçü de %100 |
+| 6. Gerçek hayat | Gender Shades (2018), sesli asistanlar; herkesin verisi, gruplara ayrı puan |
+| 7. Bilgi testi | Altı soru |
 
 ## Yeni ders eklemek
 
