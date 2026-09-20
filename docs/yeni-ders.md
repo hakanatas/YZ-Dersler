@@ -35,6 +35,8 @@ Ders 02'den itibaren tüm dersler ortak çalışma zamanını kullanır:
 | `onPick(ctx, point)` | Masaya tıklama (y = 0.03 düzleminde dünya noktası). Bölüm başına `step.onPick` de olabilir. |
 | `restart(ctx)` | "Bir daha oynayalım" düğmesi. |
 | `finishLine` | Tüm sorular doğruysa bitiş mesajının kuyruğu. |
+| `finishText(correct, n)` | Bitiş mesajını tamamen özelleştirir. |
+| `finishNext` | Test son bölüm değilse bitiş kartındaki düğmenin yazısı (varsayılan "Devam →"); düğme sonraki bölüme geçer. |
 
 ## Bölüm alanları
 

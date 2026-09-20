@@ -18,6 +18,7 @@ GitHub Pages ile yayınlanır: <https://hakanatas.github.io/YZ-Dersler/>
 | 04 | Sohbet robotu neden uydurur? | <https://hakanatas.github.io/YZ-Dersler/neden-uydurur/> |
 | 05 | Bıdık görüyor | <https://hakanatas.github.io/YZ-Dersler/bidik-goruyor/> |
 | 06 | Bıdık ödülle öğreniyor | <https://hakanatas.github.io/YZ-Dersler/odulle-ogrenmek/> |
+| 07 | Ne yapabilir, ne yapamaz? (kapanış) | <https://hakanatas.github.io/YZ-Dersler/kapanis/> |
 
 `.github/workflows/pages.yml` iş akışı `main` dalına her gönderimde siteyi
 yeniden yayınlar.
@@ -140,6 +141,20 @@ mantının boyu ±0,2 oynadığı için alkış olasılıklı; orta boyda 6 daki
 | 5. Boy değişince | Küçük ve büyük mantı için ayrı defter: 4 dk ve 8 dk (254 alkış, tek defterle 120) |
 | 6. Yanlış alkış | Müşteri hıza alkışlarsa Bıdık çiğ mantı servis eder: ödül hilesi (CoastRunners, 2016) |
 | 7. Bilgi testi | Altı soru |
+
+## Ders 07 · Ne yapabilir, ne yapamaz? (kapanış)
+
+`kapanis/`. Yeni model eğitmez; masadaki örtü Ders 01'in eğitilmiş
+modeliyle boyanır.
+
+| Bölüm | Fikir |
+| --- | --- |
+| 1. Özet | Bıdık altı dersi tek tek hatırlar; ortak fikir: tahmin et, yanıl, düzelt |
+| 2. Nerede? | Günlük hayattan altı örnek → hangi ders? |
+| 3. Yapabilir mi? | Altı iddia: yapabilir / yapamaz / duruma göre |
+| 4. Dört kural | Kaynağını iste, verisini sor, sınavını yap, ödülünü düşün |
+| 5. Final testi | Her dersten en az bir soru, toplam on |
+| 6. Tamamlama | Adına hazırlanan kart; tarayıcıda kalır, hiçbir yere gönderilmez |
 
 ## Yeni ders eklemek
 

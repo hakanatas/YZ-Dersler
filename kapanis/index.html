@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Yapay zeka ne yapabilir, ne yapamaz? — YZ Dersler</title>
+  <meta name="description" content="Serinin kapanışı: altı dersin özeti, yapay zekanın günlük hayattaki yerleri, ne yapabilir ne yapamaz oyunu, on soruluk final testi ve tamamlama kartı. Ortaokul için." />
+  <meta name="theme-color" content="#f5eee3" />
+  <meta property="og:title" content="Yapay zeka ne yapabilir, ne yapamaz?" />
+  <meta property="og:description" content="Bıdık ile serinin kapanışı: özet, oyunlar, final testi ve tamamlama kartı." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preload" href="../assets/fonts/Fraunces-Variable.ttf" as="font" type="font/ttf" crossorigin />
+  <link rel="preload" href="../assets/fonts/InstrumentSans-Variable.ttf" as="font" type="font/ttf" crossorigin />
+  <link rel="stylesheet" href="../css/lesson.css" />
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "../vendor/three/three.module.js",
+        "three/addons/": "../vendor/three/addons/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <canvas id="stage" tabindex="0" role="application" aria-label="Etkileşimli 3B ders sahnesi. Sol ve sağ ok tuşlarıyla bölümler arasında geçin."></canvas>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="tags" id="tags" aria-hidden="true"></div>
+
+  <div class="loading" id="loading" aria-live="polite">
+    <div class="loading__mark">YZ Dersler</div>
+    <div class="loading__bar"><span id="loading-bar"></span></div>
+    <p class="loading__text" id="loading-text">Bıdık mutfağı topluyor…</p>
+  </div>
+
+  <header class="topbar ui">
+    <a class="brand" href="../">YZ Dersler</a>
+    <div class="topbar__right">
+      <button class="pill" id="btn-hide-ui" type="button" title="Yazıları gizle (H)">Sadece sahne</button>
+    </div>
+  </header>
+
+  <section class="hero ui">
+    <p class="eyebrow">Ders 07 · Kapanış</p>
+    <h1 class="headline">Ne yapabilir,<br />ne yapamaz?</h1>
+    <p class="lede"><em>Altı ders, tek fikir.</em> Bıdık'la öğrendiklerimizi toplayalım.</p>
+  </section>
+
+  <div class="intro" id="intro">
+    <div class="intro__card">
+      <p class="eyebrow">Son ders!</p>
+      <h2 class="intro__title">Altı derstir birlikteyiz. Bakalım neler öğrendik?</h2>
+      <p class="intro__text">Mantıyı öğrendim, ezberle öğrenmeyi ayırdım, üç ustayı tanıdım, kitap okudum, resim tanıdım, alkışla pişirdim. Şimdi hepsini toplayalım: yapay zeka nerede karşımıza çıkar, ne yapabilir, ne yapamaz? Dört kısa bölüm, iki oyun, on soruluk final testi ve sonunda tamamlama kartın.</p>
+      <button type="button" class="btn btn--accent btn--big" id="btn-start">Hadi toparlayalım!</button>
+    </div>
+  </div>
+
+  <div class="finish" id="finish" hidden>
+    <div class="intro__card">
+      <p class="eyebrow">Yaşasın!</p>
+      <h2 class="intro__title">Dersi bitirdin, harikasın!</h2>
+      <p class="intro__text" id="finish-text"></p>
+      <div class="intro__actions">
+        <button type="button" class="btn btn--accent" id="btn-again">Bir daha oynayalım</button>
+      </div>
+    </div>
+  </div>
+
+  <aside class="lesson ui" id="lesson" aria-live="polite">
+    <div class="lesson__head">
+      <span class="lesson__count" id="lesson-count">01 / 06</span>
+      <span class="score" id="score" hidden></span>
+      <button type="button" class="lesson__collapse" id="btn-collapse" aria-expanded="true" aria-controls="lesson-body">Küçült</button>
+    </div>
+    <div id="lesson-body">
+      <h2 class="lesson__title" id="lesson-title"></h2>
+      <div class="lesson__text" id="lesson-text"></div>
+      <div class="lesson__stats" id="lesson-stats" hidden>
+        <canvas class="spark" id="spark" width="220" height="44" aria-label="Hata puanı eğrisi" hidden></canvas>
+      </div>
+      <div class="lesson__extra" id="lesson-extra" hidden></div>
+      <p class="readout" id="readout" hidden></p>
+      <div class="lesson__actions">
+        <button type="button" class="btn btn--accent" id="btn-action" hidden></button>
+        <button type="button" class="btn" id="btn-action2" hidden></button>
+      </div>
+    </div>
+  </aside>
+
+  <nav class="dock ui" id="dock" aria-label="Bölümler">
+    <button type="button" class="btn btn--ghost" id="btn-prev" title="Önceki bölüm (←)">← Geri</button>
+    <ol class="dots" id="dots"></ol>
+    <button type="button" class="btn btn--accent" id="btn-next" title="Sonraki bölüm (→)">Devam →</button>
+    <span class="dock__sep"></span>
+    <button type="button" class="toggle" data-toggle="autoplay" aria-pressed="false" title="Kendi kendine ilerlesin"><i></i><span>Kendi ilerlesin</span></button>
+    <button type="button" class="toggle" data-toggle="sound" aria-pressed="false" title="Ses"><i></i><span>Ses</span></button>
+  </nav>
+
+  <p class="keys ui" id="keys" aria-hidden="true">
+    <kbd>←</kbd><kbd>→</kbd> bölüm · <kbd>␣</kbd> düğme · <kbd>H</kbd> sadece sahne
+  </p>
+
+  <button type="button" class="reveal" id="btn-show-ui" hidden>Yazıları geri getir</button>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <footer class="credit ui">YZ Dersler · Bıdık gerçekten senin tarayıcında öğreniyor; hiçbir şey kimseye gönderilmiyor.</footer>
+
+  <noscript><p class="noscript">Bıdık'ı görebilmek için JavaScript ve WebGL gerekiyor.</p></noscript>
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>

@@ -453,3 +453,15 @@ body { font-size: 18px; }
 .corpus { margin: 8px 0 0; padding: 8px 10px; border-radius: 10px; background: rgba(43, 33, 27, 0.05); font-size: 13px; line-height: 1.5; max-height: 140px; overflow: auto; }
 .corpus mark { background: #ffe1a3; border-radius: 3px; padding: 0 2px; }
 @media (min-width: 1180px) { .sliders label { font-size: 15px; } .chips .btn { font-size: 15px; } .corpus { font-size: 15px; } }
+.rules { margin: 8px 0 0; padding-left: 20px; }
+.rules li { margin: 4px 0; }
+.rules li.is-said { color: var(--terracotta-deep); }
+.game__item { margin: 8px 0 12px; }
+.game__text { margin: 0 0 6px; font-weight: 600; }
+.game__why { margin: 6px 0 0; font-size: 13px; color: var(--ink-soft); }
+.game__item.is-done .btn { pointer-events: none; opacity: 0.6; }
+.game__item.is-done .btn.is-right { opacity: 1; background: #3f8a5b; border-color: #3f8a5b; color: #fff; }
+.game__item.is-done .btn.is-wrong { opacity: 1; background: var(--terracotta); border-color: var(--terracotta); color: #fff; }
+.card-out { text-align: center; }
+.card-out .big { font-size: 24px; }
+.card-out .name { font-family: var(--serif); font-size: 26px; font-weight: 600; display: block; margin: 4px 0; }

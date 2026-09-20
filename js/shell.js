@@ -81,7 +81,7 @@ export function createLesson(lesson) {
   const canvas = dom.canvas;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isMobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 900;
-  const state = { step: -1, autoplay: false, sound: false, uiHidden: false, autoTimer: 0, busy: false, score: { you: 0, bidik: 0 }, quizDone: false };
+  const state = { step: -1, autoplay: false, sound: false, uiHidden: false, autoTimer: 0, busy: false, score: { you: 0, bidik: 0 }, quizDone: false, quizNext: null };
 
   let toastTimer = 0;
   function toast(msg, ms = 2600) {
@@ -354,6 +354,9 @@ export function createLesson(lesson) {
         ? `${n} soruda ${n} doğru! ${lesson.finishLine || 'Harikasın.'}`
         : `${n} soruda ${correct} doğru, ${n - correct} yanlış. Hiç dert değil; Bıdık da ilk seferde bilememişti. İstersen bölümlere bir daha bakalım.`;
     dom.finishText.textContent = msg;
+    // a quiz that is not the last chapter hands over to the next one
+    state.quizNext = state.step < STEPS.length - 1 ? state.step + 1 : null;
+    dom.again.textContent = state.quizNext !== null ? lesson.finishNext || 'Devam →' : 'Bir daha oynayalım';
     setTimeout(() => {
       dom.finish.hidden = false;
       ctx.celebrate();
@@ -438,6 +441,12 @@ export function createLesson(lesson) {
   });
   dom.again.addEventListener('click', () => {
     dom.finish.hidden = true;
+    if (state.quizNext !== null && state.quizNext !== undefined) {
+      const next = state.quizNext;
+      state.quizNext = null;
+      go(next);
+      return;
+    }
     state.score = { you: 0, bidik: 0 };
     dom.score.hidden = true;
     lesson.restart?.(ctx);
