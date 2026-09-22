@@ -191,7 +191,9 @@ const FOCUS = {
   overview: { target: new THREE.Vector3(1.7, 0.5, 0.1), dist: 11.0, az: 0.25, el: 0.98, bidik: [2.1, 1.9] },
   board: { target: new THREE.Vector3(-0.95, 0.2, 0.25), dist: 6.9, az: 0.12, el: 1.0, bidik: [1.55, 2.0] },
   network: { target: new THREE.Vector3(3.3, 1.15, 0), dist: 6.9, az: 0.18, el: 1.2, bidik: [4.7, -0.25] },
-  tokens: { target: new THREE.Vector3(0.9, 0.6, 0.0), dist: 8.2, az: 0.05, el: 1.05, bidik: [-2.5, 1.4] },
+  // the guessing game: the table with the marked dumpling and the network side by side
+  game: { target: new THREE.Vector3(1.05, 0.5, 0.15), dist: 10.2, az: 0.2, el: 1.02, bidik: [4.5, 1.0] },
+  tokens: { target: new THREE.Vector3(1.1, 0.6, 0.2), dist: 8.8, az: 0.05, el: 1.05, bidik: [3.0, 1.2] },
   bidik: { target: new THREE.Vector3(2.4, 0.75, 1.7), dist: 5.4, az: 0.2, el: 1.2, bidik: [2.4, 1.7] },
 };
 let focusCtx = null;
@@ -334,12 +336,12 @@ const ctx = {
     board.probeFace.setMood(truth ? 'joy' : 'yum');
     dom.readout.innerHTML =
       `<span class="big">Sen: <b>${youSayIsSweet ? 'kıvamında' : 'olmamış'}</b> ${youOk ? '<span class="ok">✓</span>' : '<span class="bad">✗</span>'} · Bıdık: <b>${bidikSays ? 'kıvamında' : 'olmamış'}</b> (%${Math.round(p * 100)}) ${bidikOk ? '<span class="ok">✓</span>' : '<span class="bad">✗</span>'}</span>` +
-      `Doğru cevap: <b>${truth ? 'tam kıvamında' : 'olmamış'}</b>. ${bidikOk ? 'Bıdık da bildi!' : net.steps > 0 ? 'Bıdık bu sefer yanıldı; biraz daha antrenman iyi gelir.' : 'Bıdık daha öğrenmedi, ona kızma.'}`;
+      `Doğru cevap: <b>${truth ? 'tam kıvamında' : 'olmamış'}</b>. ${bidikOk ? (net.steps > 0 ? 'Bıdık da bildi!' : 'Bıdık da bildi ama şans eseri; daha öğrenmedi.') : net.steps > 0 ? 'Bıdık bu sefer yanıldı; biraz daha antrenman iyi gelir.' : 'Bıdık daha öğrenmedi, ona kızma.'}`;
     if (bidikOk) {
       bidik.react('joy', 2);
       bidik.doHop(0.8);
       sound.play('yum', { volume: 0.7 });
-      ctx.say(youOk ? 'İkimiz de bildik, çak bakalım!' : 'Bu sefer ben bildim! Bir dahakine sen de bilirsin.', 3.5);
+      ctx.say(net.steps === 0 ? 'Bildim! Ama şans galiba, daha öğrenmedim ki.' : youOk ? 'İkimiz de bildik, çak bakalım!' : 'Bu sefer ben bildim! Bir dahakine sen de bilirsin.', 3.5);
     } else {
       bidik.react('worried', 2);
       sound.play('grab', { volume: 0.6 });
@@ -357,11 +359,11 @@ const ctx = {
     ctx.say(wrong ? 'Yanlış oldu! Hangi ip suçlu bakalım?' : 'Doğru bildim ama daha da emin olabilirim.', 2.5);
     await tweens.wait(null, 0.5);
     const { gW2 } = net.gradients(data);
-    network.emitPulses(2, gW2.map((g) => g * 3), true, 0.6);
+    network.emitPulses(2, gW2.map((g) => g * 3), true, 1.0);
     sound.play('lift', { volume: 0.6 });
-    await tweens.wait(null, 0.6);
-    network.emitPulses(1, [1, 1], true, 0.6);
-    await tweens.wait(null, 0.6);
+    await tweens.wait(null, 1.0);
+    network.emitPulses(1, [1, 1], true, 1.0);
+    await tweens.wait(null, 1.0);
     net.trainStep(data, 1.2);
     const after = net.evaluate(data);
     sound.play('boing', { volume: 0.5 });

@@ -53,15 +53,16 @@ export const STEPS = [
     label: 'Oyun',
     title: 'Hadi bir oyun: önce sen, sonra Bıdık',
     body: `
-      <p>Masadan bir mantı seçtim. Boyuna ve kaç dakika piştiğine bak. Sence tam kıvamında mı, yoksa olmamış mı? Korkma, yanlış cevap sorun değil; sadece tahmin!</p>
-      <p>Sen söyleyince sıra Bıdık'a geçiyor. Sayılar iplerden akıp yardımcılara ulaşıyor; parlayan yardımcılar en çok heyecanlananlar. En sondaki yardımcı bir yüzde söylüyor: "%80 kıvamında" gibi. %50'yi geçerse Bıdık "tam kıvamında!" diyor, geçmezse "olmamış!" diyor.</p>
+      <p>Masadan bir mantı seçtim; halkalı tabakta duruyor. Boyuna ve kaç dakika piştiğine bak, bir de komşularına: etrafındaki mantılar pembe mi, sarı mı? Sence tam kıvamında mı, yoksa olmamış mı? Korkma, yanlış cevap sorun değil; sadece tahmin!</p>
+      <p>Sen söyleyince sıra Bıdık'a geçiyor. Mantının iki sayısı (boy ve süre) soldan giriyor, iplerden geçip sekiz yardımcıya ulaşıyor; parlayan yardımcılar en çok heyecanlananlar. Her yardımcı fikrini en sağdakine fısıldıyor, o da bir yüzde söylüyor: "%80 kıvamında" gibi. %50'yi geçerse Bıdık "tam kıvamında!" diyor, geçmezse "olmamış!" diyor. Ama dikkat: Bıdık daha öğrenmedi, ipleri rastgele. Şimdilik bilse de şans.</p>
       ${teacher('<p>Bu bir <b>ileri geçiş</b>tir: her düğüm girdilerini ağırlıklarla çarpıp toplar, sapmayı ekler, sonra bir <b>aktivasyon fonksiyonu</b>ndan (burada tanh) geçirir. Çıkış düğümü sigmoid fonksiyonuyla 0–1 arasında bir olasılık üretir; eşik 0,5. Eğitilmemiş bir model rastgele ağırlıklarla çalıştığı için çoğunlukla yanılır.</p>')}`,
-    focus: 'network',
+    focus: 'game',
     say: 'Bir mantı seçtim. Önce sen söyle, sonra ben deneyeyim!',
     mood: 'curious',
     guess: true,
     action: 'Başka bir mantı seç',
     enter(c) {
+      c.board.revealAll();
       c.network.setWeightsVisible(true);
       c.tokens.visible = false;
       c.later(0.5, () => c.newGuessRound());
@@ -76,7 +77,7 @@ export const STEPS = [
     title: 'Yanılmak sorun değil, düzeltmek önemli',
     body: `
       <p>Bıdık yanılınca ne oluyor biliyor musun? Üzülmüyor, öğreniyor! Önce "ne kadar yanıldım?" diye bakıyor; buna <b>hata puanı</b> diyoruz. Sonra her ipi, hatayı azaltacak yöne doğru <i>azıcık</i> oynatıyor: kimini kalınlaştırıyor, kimini inceltiyor.</p>
-      <p>Mavi ışıkları izle: geriye doğru gidiyorlar. Bu, "hangi ip hataya ne kadar sebep oldu?" sorusunun cevabı. Ardından ipler biraz değişiyor ve hata puanı düşüyor. İşte öğrenmek dediğimiz şey tam olarak bu. Düğmeye bas, kendin gör!</p>
+      <p>Düğmeye bas ve izle: önce mantının sayıları soldan sağa akıyor, Bıdık tahminini söylüyor. Sonra <b>mavi ışıklar</b> beliriyor ve ters yöne, sağdan sola gidiyor. Bu, "hangi ip hataya ne kadar sebep oldu?" sorusunun cevabı. Ardından ipler biraz değişiyor ve hata puanı düşüyor. İşte öğrenmek dediğimiz şey tam olarak bu. Birkaç kez bas, her seferinde puan biraz daha düşsün.</p>
       ${teacher('<p>Modelin tahmini ile gerçek etiket arasındaki uyumsuzluk bir sayıyla ölçülür: <b>kayıp</b> (loss). Burada ikili çapraz entropi kullanılıyor ve ekrandaki "hata puanı" masadaki tüm mantılar için kaybın ortalamasıdır. <b>Geri yayılım</b> her ağırlığın kaybı ne yöne, ne kadar değiştirdiğini (türevini) hesaplar; <b>gradyan inişi</b> ağırlıkları o yönün tersine küçük bir adım oynatır. Her düğmeye basış, masadaki tüm mantılara bakan bir adımdır.</p>')}`,
     focus: 'network',
     say: 'Yanıldım galiba. Olsun! Bakalım hangi ip suçlu?',
@@ -152,11 +153,12 @@ export const STEPS = [
     label: 'Sohbet',
     title: 'Sohbet robotları da tıpkı Bıdık gibi',
     body: `
-      <p>ChatGPT gibi sohbet robotlarını duydun mu? Onlar da Bıdık'la aynı yöntemle öğrendi: tahmin et, yanıl, düzelt, tekrar et. Sadece oyunları farklı: "kıvamında mı?" yerine <b>"sıradaki kelime ne?"</b> oyunu oynuyorlar.</p>
+      <p>Bıdık artık mantıyı biliyor. Peki ya telefonundaki sohbet robotu? Onun mutfağı da aynı; sadece masada mantı yerine kelimeler var. Bu yüzden mantıları kaldırdık, yerine kelime karoları dizdik.</p>
+      <p>ChatGPT gibi sohbet robotları da Bıdık'la aynı yöntemle öğrendi: tahmin et, yanıl, düzelt, tekrar et. Sadece oyunları farklı: "kıvamında mı?" yerine <b>"sıradaki kelime ne?"</b> oyunu oynuyorlar.</p>
       <p>Milyonlarca kitap ve yazı okudular. Her seferinde sıradaki kelimeyi tahmin ettiler, yanılınca iplerini düzelttiler. Bıdık'ın 33 ipi var; onların milyarlarca ipi var. Şimdi sen de oyna: en olası kelimeyi seç, cümle büyüsün!</p>
       ${teacher('<p><b>Büyük dil modelleri</b> metni <b>token</b> denen parçalara (kelime ya da kelime parçası) böler ve bir sonraki token için olasılık dağılımı üretir. Aynı döngüyle eğitilir: tahmin et → kaybı ölç → ağırlıkları düzelt; fark, milyarlarca (en büyüklerinde trilyonlarca) parametre ve çok daha büyük veridir. Sohbet edebilmeleri için bu ön eğitimin üstüne insan geri bildirimiyle ek bir eğitim de yapılır. Buradaki kelimeler ve yüzdeler gerçek bir dil modelinden gelmiyor; fikri göstermek için elle yazıldı (tarayıcıda çalışan gerçek bir sayma modeli Ders 04\'te var). Burada hep en olası kelime seçiliyor; gerçek modeller genellikle olasılıklardan rastgele örnekleme yapar (sıcaklık ayarı).</p>')}`,
     focus: 'tokens',
-    say: 'Bu oyunu ben de biliyorum: sıradaki kelime ne?',
+    say: 'Mantı bitti, şimdi kelime oyunu! Bunu da biliyorum: sıradaki kelime ne?',
     mood: 'happy',
     action: 'Sıradaki kelimeyi seç!',
     enter(c) {
