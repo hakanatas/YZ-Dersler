@@ -1,7 +1,7 @@
 # YZ Dersler
 
 Ortaokul öğrencileri için etkileşimli yapay zeka dersleri. Çırak robot aşçı
-Bıdık'ın mutfağında her ders bir oyun: tahmin et, yanıl, düzelt, tekrar.
+Bıdık'ın mutfağında her ders bir oyun: tahmin et, yanıl, düzelt, tekrar et.
 
 Her şey tarayıcıda çalışır: derleme yok, paketleyici yok, CDN yok, veri
 toplama yok. Herhangi bir statik dosya sunucusuyla açılır.

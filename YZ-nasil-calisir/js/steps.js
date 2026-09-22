@@ -152,7 +152,7 @@ export const STEPS = [
     label: 'Sohbet',
     title: 'Sohbet robotları da tıpkı Bıdık gibi',
     body: `
-      <p>ChatGPT gibi sohbet robotlarını duydun mu? Onlar da Bıdık'la aynı yöntemle öğrendi: tahmin et, yanıl, düzelt, tekrar. Sadece oyunları farklı: "kıvamında mı?" yerine <b>"sıradaki kelime ne?"</b> oyunu oynuyorlar.</p>
+      <p>ChatGPT gibi sohbet robotlarını duydun mu? Onlar da Bıdık'la aynı yöntemle öğrendi: tahmin et, yanıl, düzelt, tekrar et. Sadece oyunları farklı: "kıvamında mı?" yerine <b>"sıradaki kelime ne?"</b> oyunu oynuyorlar.</p>
       <p>Milyonlarca kitap ve yazı okudular. Her seferinde sıradaki kelimeyi tahmin ettiler, yanılınca iplerini düzelttiler. Bıdık'ın 33 ipi var; onların milyarlarca ipi var. Şimdi sen de oyna: en olası kelimeyi seç, cümle büyüsün!</p>
       ${teacher('<p><b>Büyük dil modelleri</b> metni <b>token</b> denen parçalara (kelime ya da kelime parçası) böler ve bir sonraki token için olasılık dağılımı üretir. Aynı döngüyle eğitilir: tahmin et → kaybı ölç → ağırlıkları düzelt; fark, milyarlarca (en büyüklerinde trilyonlarca) parametre ve çok daha büyük veridir. Sohbet edebilmeleri için bu ön eğitimin üstüne insan geri bildirimiyle ek bir eğitim de yapılır. Buradaki kelimeler ve yüzdeler gerçek bir dil modelinden gelmiyor; fikri göstermek için elle yazıldı (tarayıcıda çalışan gerçek bir sayma modeli Ders 04\'te var). Burada hep en olası kelime seçiliyor; gerçek modeller genellikle olasılıklardan rastgele örnekleme yapar (sıcaklık ayarı).</p>')}`,
     focus: 'tokens',
