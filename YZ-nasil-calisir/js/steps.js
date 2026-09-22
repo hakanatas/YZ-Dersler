@@ -13,11 +13,17 @@ export const STEPS = [
     body: `
       <p>Bıdık'ın derdi şu: mantıları bazen çiğ kalıyor, bazen lapa oluyor. Büyük mantı daha uzun pişer, tamam da tam olarak ne kadar? Bunu ona kural olarak söylemeyeceğiz. Masaya bir sürü pişmiş mantı dizeceğiz, Bıdık kendi çözecek.</p>
       <p>Masada sağa gittikçe mantılar büyüyor, yukarı çıktıkça daha uzun pişmişler. <span class="sweet">Pembeler tam kıvamında</span>, <span class="salty">sarılar olmamış</span>: ya çiğ kalmış ya da fazla pişmiş. Masaya dikkatli bak: bir desen görüyor musun?</p>
-      ${teacher('<p>Bu masa <b>eğitim verisi</b>dir. Her mantı bir <b>örnek</b>: iki <b>özellik</b> (boy: 0–1, pişme süresi: 0–10 dakika) ve bir <b>etiket</b> (tam kıvamında = 1, olmamış = 0). Masada <span data-count="dishes">64</span> örnek var. Masanın gizli kuralı: ideal süre 3 + 6·boy dakika, ±1,5 dakika tolerans. Bu yüzden "kıvamında" bölgesi çapraz bir şerittir. Şerit tek bir düz çizgiyle ayrılamaz; yani doğrusal olmayan bir kuraldır ve gizli katmanı olmayan bir model bunu öğrenemez.</p>')}`,
+      <p>Gördün, değil mi? Peki Bıdık neden göremiyor? Çünkü Bıdık masaya bakmıyor; ona yalnızca sayılar gidiyor. Düğmeye bas, masayı Bıdık'ın gözüyle gör. Bir de şunu bil: kuralı burada biz biliyoruz, ama gerçek işlerde kuralı kimse yazamaz ("fotoğrafta kedi var mı?" için kural yazmayı dene!). Bu yüzden makineye kural değil örnek veriyoruz. Mantı masası, bu yöntemi gözünle kontrol edebilmen için basit tutuldu.</p>
+      ${teacher('<p>Bu masa <b>eğitim verisi</b>dir. Her mantı bir <b>örnek</b>: iki <b>özellik</b> (boy: 0–1, pişme süresi: 0–10 dakika) ve bir <b>etiket</b> (tam kıvamında = 1, olmamış = 0). Masada <span data-count="dishes">64</span> örnek var. Masanın gizli kuralı: ideal süre 3 + 6·boy dakika, ±1,5 dakika tolerans. Bu yüzden "kıvamında" bölgesi çapraz bir şerittir. Şerit tek bir düz çizgiyle ayrılamaz; yani doğrusal olmayan bir kuraldır ve gizli katmanı olmayan bir model bunu öğrenemez. Örnek bilerek basittir: öğrencinin deseni görebilmesi, modelin öğrendiğini gözle denetlemeyi mümkün kılar. Model ise örtüyü değil, 64 sayı çiftini alır; öğrenmenin gerekçesi de burada kuralın bilinmemesi değil, gerçek görevlerde (görüntü, ses, dil) kuralın yazılamamasıdır.</p>')}`,
     focus: 'board',
     say: 'Ooo, bu kadar mantı mı? Hangisi kıvamında, hangisi olmamış, bakayım!',
     mood: 'curious',
+    action: 'Bıdık\'ın gözüyle bak',
+    act(c) {
+      c.toggleBidikView();
+    },
     enter(c) {
+      c.bidikView = false;
       c.board.tintTarget = 0;
       c.network.setWeightsVisible(false);
       c.tokens.visible = false;
@@ -98,7 +104,7 @@ export const STEPS = [
     label: 'Antrenman',
     title: 'Tekrar, tekrar, tekrar!',
     body: `
-      <p>Bir düzeltme yetmez tabii. Bıdık masadaki mantılara yüzlerce kez bakıp her seferinde ipleri azıcık düzeltiyor. Buna <b>antrenman</b> diyoruz. Bisiklete binmeyi öğrenmek gibi: düşe kalka ama sonunda oluyor.</p>
+      <p>Bir düzeltme yetmez tabii. Bıdık masadaki mantılara yüzlerce kez bakıp her seferinde ipleri azıcık düzeltiyor. Buna <b>antrenman</b> diyoruz. Bisiklete binmeyi öğrenmek gibi: düşe kalka ama sonunda oluyor. Bu 600 bakış aslında bir saniye bile sürmez; sen izleyebil diye yavaşlattık.</p>
       <p>Antrenman sırasında masa örtüsüne bak. <span class="sweet">Pembe</span> şerit Bıdık'ın "burada tam kıvamında" dediği yer, <span class="salty">sarı</span> bölgeler "burada olmamış" dediği yerler. Kimse ona "büyük mantı uzun pişer" demedi. Örneklere baka baka kendi buldu. Süper, değil mi?</p>
       ${teacher('<p><b>Eğitim</b>: tam yığın gradyan inişi, öğrenme hızı 1,2, 600 adım; her adımda masadaki mantıların hepsi kullanılır. Kayıp düşerken doğruluk yükselir. Örtüdeki renk, modelin her (boy, süre) noktası için tahminidir; pembe ile sarının kesiştiği çizgi <b>karar sınırı</b>dır. Çapraz şerit yalnızca gizli katman sayesinde öğrenilebilir.</p>')}`,
     focus: 'overview',

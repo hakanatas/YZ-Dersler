@@ -263,6 +263,29 @@ const ctx = {
   randomExample() {
     return pick(data);
   },
+  /** Chapter 1: the table as Bıdık gets it, 64 rows of numbers instead of a picture. */
+  toggleBidikView() {
+    ctx.bidikView = !ctx.bidikView;
+    if (ctx.bidikView) {
+      board.hideAll();
+      const rows = data
+        .map((d, i) => `<div>${String(i + 1).padStart(2, '0')}. boy ${d.x[0].toFixed(2).replace('.', ',')} · süre ${(d.x[1] * MINUTES).toFixed(1).replace('.', ',')} dk → ${d.y}</div>`)
+        .join('');
+      dom.readout.hidden = false;
+      dom.readout.innerHTML = `<span class="big">Bıdık'ın gördüğü: ${data.length} satır sayı</span>Örtü yok, renk yok. Her mantı iki sayı ve bir etiket (1 = kıvamında, 0 = olmamış). Desen burada görünüyor mu?<div class="corpus">${rows}</div>`;
+      dom.action.textContent = 'Masaya dön';
+      sound.play('pick', { volume: 0.5 });
+      bidik.react('thinking', 2);
+      ctx.say('Masa mı? Ben sadece sayılar görüyorum. Desen nerede?', 4);
+    } else {
+      board.revealAll();
+      dom.readout.hidden = true;
+      dom.action.textContent = 'Bıdık\'ın gözüyle bak';
+      sound.play('refill', { volume: 0.4 });
+      bidik.react('happy', 1.5);
+      ctx.say('Sen deseni gördün; ben sayılardan öğrenmek zorundayım.', 4);
+    }
+  },
   shuffleWeights() {
     net.seed = Math.floor(Math.random() * 1e6);
     net.reset();
