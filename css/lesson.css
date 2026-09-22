@@ -465,3 +465,46 @@ body { font-size: 18px; }
 .card-out { text-align: center; }
 .card-out .big { font-size: 24px; }
 .card-out .name { font-family: var(--serif); font-size: 26px; font-weight: 600; display: block; margin: 4px 0; }
+
+/* ---- responsive fixes (review) ------------------------------------------ */
+@media (max-width: 900px) {
+  /* the panel spans the screen with equal margins (an earlier global width rule leaked in) */
+  .lesson { left: 10px; right: 10px; width: auto; max-height: 46vh; }
+  /* the only toggle worth its space on a phone is sound, and it says so */
+  .toggle[data-toggle='autoplay'] { display: none; }
+  .toggle[data-toggle='sound'] span { display: inline; font-size: 13px; }
+  .toggle[data-toggle='sound'] { gap: 6px; padding: 7px 10px 7px 7px; }
+}
+@media (min-width: 901px) and (max-width: 1180px) {
+  .lesson { width: min(440px, 44vw); }
+  .lesson__text p { font-size: 17.5px; }
+  .lesson__title { font-size: 28px; }
+}
+@media (max-width: 900px) {
+  /* once the lesson starts the panel carries the title; the big headline only covers the scene */
+  body:not(.is-intro) .hero { display: none; }
+  /* on a phone the things to press come first, the explanation follows below them */
+  #lesson-body { display: flex; flex-direction: column; }
+  #lesson-body > .lesson__title { order: 0; }
+  #lesson-body > .lesson__extra, #lesson-body > .lesson__sliders { order: 1; margin-top: 0; margin-bottom: 10px; }
+  #lesson-body > .guess { order: 2; margin-top: 0; margin-bottom: 10px; }
+  #lesson-body > .lesson__actions { order: 3; margin-top: 0; margin-bottom: 10px; }
+  #lesson-body > .readout { order: 4; margin-top: 0; margin-bottom: 10px; }
+  #lesson-body > .lesson__stats { order: 5; margin-top: 0; margin-bottom: 10px; }
+  #lesson-body > .lesson__text { order: 6; }
+  #lesson-body > .lesson__actions:not(:has(> .btn:not([hidden]))) { display: none; }
+}
+@media (max-width: 900px) {
+  /* small screens: axis labels collide with Bıdık's speech bubble; the text names the axes */
+  .tag--axis { display: none; }
+}
+@media (max-width: 900px) {
+  /* phones: Bıdık's speech sits in a fixed strip under the top bar instead of over the scene */
+  .tag--bubble { left: 50%; top: 68px; transform: translateX(-50%) !important; width: max-content; max-width: calc(100vw - 32px); font-size: 15px; padding: 8px 14px; }
+  .tag--bubble::after { display: none; }
+  .tag { font-size: 12px; padding: 4px 9px; }
+  .tag--big { font-size: 13.5px; padding: 5px 11px; }
+}
+@media (max-width: 900px) {
+  .pixels { max-width: 232px; margin-left: auto; margin-right: auto; }
+}

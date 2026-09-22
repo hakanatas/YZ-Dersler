@@ -118,7 +118,7 @@ export function createLesson(lesson) {
   controls.minPolarAngle = 0.5;
   controls.maxPolarAngle = 1.3;
   controls.minDistance = 2.5;
-  controls.maxDistance = 18;
+  controls.maxDistance = 45; // phones frame from further away
   controls.touches = { ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_ROTATE };
 
   const key = new THREE.DirectionalLight('#fff0dc', 2.3);
@@ -177,7 +177,8 @@ export function createLesson(lesson) {
   function focus(name, instant = false) {
     const f = FOCUS[name] || FOCUS.overview;
     const aspect = camera.aspect;
-    const fit = clamp(1.4 / aspect, 1, 2.4);
+    // phones: the panel covers the lower half, so the scene gets a smaller stage
+    const fit = aspect < 1 && window.innerWidth <= 900 ? clamp((1.4 / aspect) * 0.85, 1, 3) : clamp(1.4 / aspect, 1, 2.4);
     const dist = f.dist * fit;
     const to = new THREE.Vector3(Math.sin(f.az) * Math.sin(f.el), Math.cos(f.el), Math.cos(f.az) * Math.sin(f.el)).multiplyScalar(dist).add(f.target);
     const fromPos = camera.position.clone();
@@ -552,9 +553,16 @@ export function createLesson(lesson) {
     const h = window.innerHeight;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
-    if (w / h > 1.4) camera.setViewOffset(w, h, -w * 0.13, -h * 0.02, w, h);
-    else if (w / h < 0.8) camera.setViewOffset(w, h, 0, h * 0.02, w, h);
+    // keep the scene in the part of the screen the lesson panel leaves free:
+    // wide screens → to the right of the panel; phones → above the panel
+    if (w > 1180) camera.setViewOffset(w, h, -w * 0.13, -h * 0.02, w, h);
+    else if (w > 900) camera.setViewOffset(w, h, -w * 0.2, -h * 0.02, w, h);
+    else if (w / h < 1) camera.setViewOffset(w, h, 0, h * 0.2, w, h);
     else camera.clearViewOffset();
+    // the phone framing sits further back; push the fog back with it
+    const far = w <= 900 && w / h < 1;
+    scene.fog.near = far ? 34 : 18;
+    scene.fog.far = far ? 72 : 36;
     camera.updateProjectionMatrix();
   }
   window.addEventListener('resize', () => {

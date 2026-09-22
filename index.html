@@ -68,11 +68,16 @@
     .about h3 { margin: 0 0 6px; font-family: var(--serif); font-size: 21px; font-weight: 500; }
     .about p { margin: 0; font-size: 15.5px; color: var(--ink-soft); }
     footer { margin-top: 56px; font-size: 14px; color: var(--ink-soft); display: flex; gap: 16px; flex-wrap: wrap; justify-content: space-between; }
+    @media (max-width: 480px) { .pill--other { display: none; } }
     @media (max-width: 860px) {
       .wrap { padding: 18px 18px 60px; }
+      .topbar { gap: 8px; }
+      .brand { white-space: nowrap; }
+      .topbar .pill { padding: 7px 11px; font-size: 13.5px; text-align: center; white-space: nowrap; }
+      .bidik svg { width: min(46%, 170px); }
+      .bubble { font-size: 17px; padding: 9px 14px; margin-bottom: 10px; }
       .hero { grid-template-columns: 1fr; gap: 24px; }
       .bidik { order: -1; }
-      .bidik svg { width: min(70%, 260px); }
       .lede { font-size: 17.5px; }
       h2 { font-size: 28px; }
     }
@@ -83,7 +88,7 @@
     <header class="topbar">
       <a class="brand" href="./">YZ Dersler</a>
       <a class="pill" href="./ogretmen/">Öğretmen kılavuzu</a>
-      <a class="pill" href="https://hakanatas.github.io/cin-manti/dersler/">Diğer Küçük Dersler</a>
+      <a class="pill pill--other" href="https://hakanatas.github.io/cin-manti/dersler/">Diğer Küçük Dersler</a>
     </header>
 
     <section class="hero">
@@ -146,7 +151,7 @@
           <div class="card__tag">Ders 01 · Yapay zeka</div>
           <h3 class="card__title">Yapay zeka nasıl çalışır?</h3>
           <p class="card__text">Bıdık mantıyı ne kadar pişireceğini örneklerden öğreniyor. Gerçek bir sinir ağı, tahmin oyunları, sohbet robotları ve sonunda bilgi testi.</p>
-          <div class="card__meta"><span>8 bölüm</span><span>ortaokul</span><span>~10 dk</span></div>
+          <div class="card__meta"><span>8 bölüm</span><span>ortaokul</span><span>~10 dk tek başına</span></div>
         </a>
 
         <a class="card" href="./ezber-mi-ogrenme-mi/">
@@ -166,7 +171,7 @@
           <div class="card__tag">Ders 02 · Yapay zeka</div>
           <h3 class="card__title">Ezber mi, öğrenme mi?</h3>
           <p class="card__text">İki masa: antrenman ve sınav. Altı mantıyla ezber, altmış dört mantıyla öğrenme, dalgın ustanın yanlış etiketleri. Üç deney ve bilgi testi.</p>
-          <div class="card__meta"><span>6 bölüm</span><span>ortaokul</span><span>~10 dk</span></div>
+          <div class="card__meta"><span>6 bölüm</span><span>ortaokul</span><span>~10 dk tek başına</span></div>
         </a>
 
         <a class="card" href="./adil-mi/">
@@ -189,7 +194,7 @@
           <div class="card__tag">Ders 03 · Yapay zeka</div>
           <h3 class="card__title">Bıdık kimin mantısını tattı?</h3>
           <p class="card__text">Üç usta, üç boy mantı: Bıdık ikisinin mantılarıyla çalışıyor, üçüncüsününkilerde çuvallıyor. Yanlı veri, gruplara ayrı puan ve adalet: yapay zeka verisinde kim yoksa onu öğrenemez.</p>
-          <div class="card__meta"><span>7 bölüm</span><span>ortaokul</span><span>~12 dk</span></div>
+          <div class="card__meta"><span>7 bölüm</span><span>ortaokul</span><span>~12 dk tek başına</span></div>
         </a>
 
         <a class="card" href="./neden-uydurur/">
@@ -209,7 +214,7 @@
           <div class="card__tag">Ders 04 · Yapay zeka</div>
           <h3 class="card__title">Sohbet robotu neden uydurur?</h3>
           <p class="card__text">Bıdık küçük bir kitap okuyup "sıradaki kelime" oyunu oynuyor: tarayıcıda çalışan gerçek bir sayma dil modeli, sıcaklık, uydurma (halüsinasyon) ve kaynağı kontrol etme alışkanlığı.</p>
-          <div class="card__meta"><span>7 bölüm</span><span>ortaokul</span><span>~10 dk</span></div>
+          <div class="card__meta"><span>7 bölüm</span><span>ortaokul</span><span>~10 dk tek başına</span></div>
         </a>
 
         <a class="card" href="./bidik-goruyor/">
@@ -233,7 +238,7 @@
           <div class="card__tag">Ders 05 · Yapay zeka</div>
           <h3 class="card__title">Bıdık görüyor</h3>
           <p class="card__text">Bilgisayar için bir resim sayılardan ibarettir. Bıdık 8×8 piksellik resimlerden mantıyla böreği ayırt etmeyi öğreniyor; sen de çizip onu kandırmayı deniyorsun.</p>
-          <div class="card__meta"><span>7 bölüm</span><span>ortaokul</span><span>~10 dk</span></div>
+          <div class="card__meta"><span>7 bölüm</span><span>ortaokul</span><span>~10 dk tek başına</span></div>
         </a>
 
         <a class="card" href="./odulle-ogrenmek/">
@@ -255,27 +260,7 @@
           <div class="card__tag">Ders 06 · Yapay zeka</div>
           <h3 class="card__title">Bıdık ödülle öğreniyor</h3>
           <p class="card__text">Etiket yok, alkış var: Bıdık mantıyı kaç dakika pişireceğini yalnızca müşterinin alkışından öğreniyor. Keşif mi kullanım mı, boya göre iki defter ve hıza alkışlayan müşteriyle ödül tuzağı.</p>
-          <div class="card__meta"><span>7 bölüm</span><span>ortaokul</span><span>~12 dk</span></div>
-        </a>
-
-        <a class="card" href="./kapanis/">
-          <div class="card__art" style="background:#f3e6d2">
-            <svg viewBox="0 0 300 150" aria-hidden="true">
-              <rect x="60" y="22" width="180" height="106" rx="12" fill="#fffaf1" stroke="#c4623d" stroke-width="3"/>
-              <rect x="72" y="34" width="156" height="82" rx="8" fill="none" stroke="#e9c1ad" stroke-width="2" stroke-dasharray="5 4"/>
-              <text x="150" y="58" text-anchor="middle" font-family="Fraunces, serif" font-size="11" font-weight="600" letter-spacing="2" fill="#9c472a">TAMAMLAMA KARTI</text>
-              <line x1="96" y1="76" x2="204" y2="76" stroke="#2b211b" stroke-width="2.5" stroke-linecap="round"/>
-              <line x1="110" y1="90" x2="190" y2="90" stroke="#d9c9b0" stroke-width="2" stroke-linecap="round"/>
-              <line x1="120" y1="102" x2="180" y2="102" stroke="#d9c9b0" stroke-width="2" stroke-linecap="round"/>
-              <g fill="#e2557e"><path d="M40 110 l5 10 l11 1 l-8 7 l2 11 l-10 -5 l-10 5 l2 -11 l-8 -7 l11 -1 z"/></g>
-              <g fill="#f0b41f"><path d="M258 28 l4 8 l9 1 l-7 6 l2 9 l-8 -4 l-8 4 l2 -9 l-7 -6 l9 -1 z"/></g>
-              <circle cx="232" cy="112" r="14" fill="#c4623d"/><path d="M225 112 l5 5 l10 -10" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="card__tag">Ders 07 · Kapanış</div>
-          <h3 class="card__title">Ne yapabilir, ne yapamaz?</h3>
-          <p class="card__text">Altı dersin özeti, "yapay zeka nerede?" eşleştirmesi, "yapabilir mi?" oyunu, dört kural, on soruluk final testi ve adına hazırlanan tamamlama kartı.</p>
-          <div class="card__meta"><span>6 bölüm</span><span>ortaokul</span><span>~12 dk</span></div>
+          <div class="card__meta"><span>7 bölüm</span><span>ortaokul</span><span>~12 dk tek başına</span></div>
         </a>
 
         <a class="card" href="./arama-ve-kurallar/">
@@ -300,7 +285,27 @@
           <div class="card__tag">Ek ders · Yapay zeka</div>
           <h3 class="card__title">Öğrenmeyen yapay zeka</h3>
           <p class="card__text">Kuralı insan yazar, bilgisayar uygular; mutfak labirentinde en kısa yolu arama bulur; sekiz mantıdan karar ağacı çıkar. Kural mı, arama mı, öğrenme mi: hangisi nerede?</p>
-          <div class="card__meta"><span>7 bölüm</span><span>ortaokul</span><span>~12 dk</span></div>
+          <div class="card__meta"><span>7 bölüm</span><span>ortaokul</span><span>~12 dk tek başına</span></div>
+        </a>
+
+        <a class="card" href="./kapanis/">
+          <div class="card__art" style="background:#f3e6d2">
+            <svg viewBox="0 0 300 150" aria-hidden="true">
+              <rect x="60" y="22" width="180" height="106" rx="12" fill="#fffaf1" stroke="#c4623d" stroke-width="3"/>
+              <rect x="72" y="34" width="156" height="82" rx="8" fill="none" stroke="#e9c1ad" stroke-width="2" stroke-dasharray="5 4"/>
+              <text x="150" y="58" text-anchor="middle" font-family="Fraunces, serif" font-size="11" font-weight="600" letter-spacing="2" fill="#9c472a">TAMAMLAMA KARTI</text>
+              <line x1="96" y1="76" x2="204" y2="76" stroke="#2b211b" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="110" y1="90" x2="190" y2="90" stroke="#d9c9b0" stroke-width="2" stroke-linecap="round"/>
+              <line x1="120" y1="102" x2="180" y2="102" stroke="#d9c9b0" stroke-width="2" stroke-linecap="round"/>
+              <g fill="#e2557e"><path d="M40 110 l5 10 l11 1 l-8 7 l2 11 l-10 -5 l-10 5 l2 -11 l-8 -7 l11 -1 z"/></g>
+              <g fill="#f0b41f"><path d="M258 28 l4 8 l9 1 l-7 6 l2 9 l-8 -4 l-8 4 l2 -9 l-7 -6 l9 -1 z"/></g>
+              <circle cx="232" cy="112" r="14" fill="#c4623d"/><path d="M225 112 l5 5 l10 -10" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="card__tag">Ders 07 · Kapanış</div>
+          <h3 class="card__title">Ne yapabilir, ne yapamaz?</h3>
+          <p class="card__text">Altı dersin özeti, "yapay zeka nerede?" eşleştirmesi, "yapabilir mi?" oyunu, dört kural, on soruluk final testi ve adına hazırlanan tamamlama kartı.</p>
+          <div class="card__meta"><span>6 bölüm</span><span>ortaokul</span><span>~12 dk tek başına</span></div>
         </a>
       </div>
     </section>
@@ -313,7 +318,7 @@
 
     <footer>
       <span>YZ Dersler · Bıdık, The Dumpling Club mutfağından.</span>
-      <span>Kaynak kodu: <a href="https://github.com/hakanatas/YZ-Dersler">github.com/hakanatas/YZ-Dersler</a></span>
+      <span><a href="https://hakanatas.github.io/cin-manti/dersler/">Diğer Küçük Dersler</a> · Kaynak kodu: <a href="https://github.com/hakanatas/YZ-Dersler">github.com/hakanatas/YZ-Dersler</a></span>
     </footer>
   </div>
 </body>
