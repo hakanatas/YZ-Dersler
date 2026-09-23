@@ -20,16 +20,16 @@ const PER_CHEF_TEST = 16;
 
 const EXAMPLES = [
   {
-    say: 'Yüz tanıyan programlar koyu tenli kadınları çok daha sık yanlış bildi.',
-    html: '<span class="big">Yüzler</span>2018, Gender Shades araştırması: açık tenli erkeklerde hata en fazla %0,8; koyu tenli kadınlarda %34,7\'ye kadar. Programların öğrendiği fotoğraf yığınında koyu tenli kadın çok azdı.',
+    say: 'Konuşmayı yazıya çeviren programlar da aynı hataya düştü!',
+    html: '<span class="big">1. Konuşmayı yazıya çevirmek</span>2020\'de Stanford Üniversitesi\'nden araştırmacılar beş büyük şirketin konuşmayı yazıya çeviren programlarını denedi. Siyahi Amerikalı konuşmacıların söylediği her 100 kelimeden ortalama <b>35</b>\'i yanlış yazıldı; beyaz konuşmacılarda bu sayı <b>19</b>\'du. Araştırmacılara göre en olası neden: programların dinlediği kayıtlarda o konuşma biçimi azdı.',
   },
   {
-    say: 'Sesli asistan bazı aksanları zor anlıyor. Az dinlemiş!',
-    html: '<span class="big">Sesler</span>Sesli asistanlar, az ses kaydı dinledikleri aksanları daha zor anlar. Çözüm: o aksanla konuşan insanlardan daha çok kayıt toplamak.',
+    say: 'Veri geçmişi taşıyorsa, geçmişin dengesizliğini de öğrenirim.',
+    html: '<span class="big">2. İş başvuruları</span>2018\'de Reuters haber ajansına göre Amazon, iş başvurularını puanlayan deneysel bir program geliştirdi. Program şirketin 10 yılda aldığı özgeçmişlerden öğrenmişti ve bunların çoğu erkeklerdendi. Sonuç: "kadın" kelimesi geçen özgeçmişlere (örneğin "kadın satranç kulübü kaptanı") daha düşük puan vermeye başladı. Amazon projeyi bıraktı.',
   },
   {
-    say: 'Çözüm: herkesin verisi masada olsun, puan herkes için ayrı sayılsın!',
-    html: '<span class="big">Çözüm</span>Eksik grubun verisini topla, başarıyı her grup için ayrı ölç. Tıpkı Deniz Usta\'nın mantılarını masaya koymamız gibi.',
+    say: 'Az gördüğüm ten rengindeki lekeyi de zor tanırım.',
+    html: '<span class="big">3. Deri hastalıkları</span>Deri kanserini fotoğraftan tanımayı öğrenen programlar, herkese açık fotoğraf arşivleriyle eğitiliyor. 2021\'de yayımlanan bir inceleme bu arşivlerden 21\'ini taradı: ten rengi yazılı <b>2.436</b> fotoğraftan yalnızca <b>10</b>\'u kahverengi, <b>1</b>\'i koyu kahverengi ya da siyah tenliydi. Masada Deniz Usta\'nın mantısı neredeyse hiç yok gibi.',
   },
 ];
 
@@ -284,11 +284,13 @@ createLesson({
       nextExample() {
         c.exampleIdx = (c.exampleIdx + 1) % EXAMPLES.length;
         const ex = EXAMPLES[c.exampleIdx];
+        const last = c.exampleIdx === EXAMPLES.length - 1;
         c.readout(ex.html);
         c.say(ex.say, 5);
-        bidik.react(c.exampleIdx === 2 ? 'joy' : 'thinking', 2);
-        if (c.exampleIdx === 2) bidik.doHop(0.7);
+        bidik.react(last ? 'proud' : 'thinking', 2);
+        bidik.doHop(0.5);
         sound.play('pick', { volume: 0.5 });
+        c.setAction(last ? 'Örneklere baştan bak' : `Sıradaki örnek (${c.exampleIdx + 2}/${EXAMPLES.length})`);
       },
     };
     return ext;

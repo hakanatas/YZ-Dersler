@@ -203,17 +203,17 @@ export const STEPS = [
     title: 'Gerçek hayatta: yüzler, sesler, adalet',
     body: `
       <p>Bu sadece mantı meselesi değil. 2018'de Joy Buolamwini ve Timnit Gebru adlı iki araştırmacı, fotoğraftaki yüze bakıp "kadın mı, erkek mi" diyen ticari programları test etti. Programlar açık tenli erkeklerde en fazla %0,8 hata yaparken koyu tenli kadınlarda hata %34,7'ye kadar çıkıyordu. Neden? Programların öğrendiği fotoğraf yığınlarında koyu tenli kadın çok azdı. Tıpkı masada Deniz Usta'nın mantısının olmaması gibi.</p>
-      <p>Sesli asistanlar da bazı aksanları daha zor anlıyor; çünkü o aksanla konuşan insanlardan az ses kaydı dinlediler. Çözüm hep aynı: masaya <b>herkesin</b> verisini koymak ve puanı <b>her grup için ayrı</b> saymak. <b>"Bir örnek daha"</b> düğmesine bas, Bıdık örnekleri tek tek anlatsın.</p>
-      ${teacher('<p>Kaynak: "Gender Shades" (Buolamwini &amp; Gebru, 2018). Çalışma üç ticari yüz analiz sisteminin cinsiyet sınıflandırmasını, ten rengi ve cinsiyete göre dengelenmiş bir veri kümesinde ölçtü: açık tenli erkeklerde hata en fazla %0,8, koyu tenli kadınlarda %34,7\'ye kadar. Nedeni, kullanılan yüz veri kümelerinde koyu tenli kadınların çok az temsil edilmesiydi. Bu tür sorunlara <b>algoritmik yanlılık</b> denir; çözüm çeşitli veri toplamak, alt gruplarda ayrı test etmek ve sonuçları raporlamaktır. Aksan örneği genel bir gözlemdir; bu derste ona ait bir sayı verilmiyor.</p>')}`,
+      <p>Sesli asistanlar da bazı aksanları daha zor anlıyor; çünkü o aksanla konuşan insanlardan az ses kaydı dinlediler. Çözüm hep aynı: masaya <b>herkesin</b> verisini koymak ve puanı <b>her grup için ayrı</b> saymak.</p>
+      <p>Bıdık'ın bildiği üç gerçek örnek daha var: konuşmayı yazıya çeviren programlar, iş başvurularını puanlayan bir program ve deri hastalıklarını tanıyan programlar. <b>"Örnekleri göster"</b> düğmesine bas; her basışta yeni bir örnek gelsin.</p>
+      ${teacher('<p>Kaynak: "Gender Shades" (Buolamwini &amp; Gebru, 2018). Çalışma üç ticari yüz analiz sisteminin cinsiyet sınıflandırmasını, ten rengi ve cinsiyete göre dengelenmiş bir veri kümesinde ölçtü: açık tenli erkeklerde hata en fazla %0,8, koyu tenli kadınlarda %34,7\'ye kadar. Nedeni, kullanılan yüz veri kümelerinde koyu tenli kadınların çok az temsil edilmesiydi. Bu tür sorunlara <b>algoritmik yanlılık</b> denir; çözüm çeşitli veri toplamak, alt gruplarda ayrı test etmek ve sonuçları raporlamaktır. Düğmeyle gelen üç örneğin kaynakları: (1) Koenecke ve ark., "Racial disparities in automated speech recognition", PNAS, 2020: Amazon, Apple, Google, IBM ve Microsoft\'un sistemlerinde ortalama kelime hata oranı siyahi konuşmacılarda 0,35, beyaz konuşmacılarda 0,19; yazarlar en olası nedeni eğitim verisindeki ses kayıtlarının yetersizliği olarak gösterir. (2) Reuters, Ekim 2018: Amazon\'un deneysel işe alım aracı 10 yıllık, çoğunluğu erkeklerden gelen özgeçmişlerle eğitilmiş, "women\'s" kelimesini içeren özgeçmişlerin puanını düşürmüş; şirket projeyi bırakmıştır. Bu örnekte sorun eksik grup değil, geçmişteki dengesizliği taşıyan veridir. (3) Wen ve ark., "Characteristics of publicly available skin cancer image datasets", Lancet Digital Health, 2021 (çevrim içi) / 2022: 21 açık veri kümesi, ten tipi kayıtlı 2.436 görüntüden 10\'u kahverengi, 1\'i koyu kahverengi ya da siyah ten. Sınıfta tartışma: hangi örnek "eksik veri", hangisi "geçmişin dengesizliği"?</p>')}`,
     focus: 'bidik',
     say: 'Verimde kim yoksa onu tanıyamıyorum. İnsanların programları da öyle!',
     mood: 'thinking',
-    action: 'Bir örnek daha',
+    action: 'Örnekleri göster',
     enter(c) {
       c.showRule(false);
       c.clearMarks();
       c.exampleIdx = -1;
-      c.later(1.2, () => c.nextExample());
     },
     act(c) {
       c.nextExample();
