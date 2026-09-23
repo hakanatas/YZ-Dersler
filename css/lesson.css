@@ -545,3 +545,4 @@ body { font-size: 18px; }
   /* phones: "Sadece sahne" gives way to the way home */
   #btn-hide-ui { display: none; }
 }
+#lesson-stats { scroll-margin-bottom: 96px; }

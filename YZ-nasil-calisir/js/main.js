@@ -407,12 +407,18 @@ const ctx = {
   startTraining() {
     state.training = true;
     state.trainBudget = 600;
+    state.trainTime = 0;
+    state.trainDone = 0;
+    state.trainNextSay = 0;
+    state.trainPulse = 0.4;
     dom.action.textContent = 'Dur biraz';
     dom.action.classList.add('is-running');
     board.tintTarget = 1;
     bidik.setMood('curious');
     ctx.say('Bakıyorum, düzeltiyorum, bakıyorum, düzeltiyorum… Başım döndü!', 6);
     sound.play('click');
+    // keep the counters in view while the student watches
+    if (window.innerWidth > 900) dom.stats.scrollIntoView({ block: 'nearest', behavior: reducedMotion ? 'auto' : 'smooth' });
   },
   stopTraining() {
     if (!state.training) return;
@@ -819,17 +825,53 @@ function frame() {
   tweens.update(dt);
 
   if (state.training) {
-    const perFrame = reducedMotion ? 8 : 4;
-    for (let k = 0; k < perFrame && state.trainBudget > 0; k++) {
+    // a watchable schedule: the first looks go one by one, then Bıdık speeds up
+    // (0–6 s: 20 looks, 6–12 s: 100, 12–18 s: 300, 18–24 s: 600; reduced motion: 6 s in all)
+    state.trainTime += dt;
+    const T = state.trainTime * (reducedMotion ? 4 : 1);
+    const keys = [[0, 0], [6, 20], [12, 100], [18, 300], [24, 600]];
+    let target = 600;
+    for (let k = 1; k < keys.length; k++) {
+      if (T < keys[k][0]) {
+        const [t0, s0] = keys[k - 1];
+        const [t1, s1] = keys[k];
+        target = Math.floor(s0 + ((T - t0) / (t1 - t0)) * (s1 - s0));
+        break;
+      }
+    }
+    let stepped = 0;
+    while (state.trainDone < target && state.trainBudget > 0) {
       net.trainStep(data, 1.2);
       state.trainBudget--;
+      state.trainDone++;
+      stepped++;
+    }
+    if (stepped && state.trainDone <= 20) sound.play('drip', { volume: 0.3 });
+    // Bıdık says how it is going at a few milestones
+    const says = [
+      [1, () => 'İlk bakış! Şimdilik tahminlerim yazı tura gibi.'],
+      [20, (a) => `20 kez baktım: %${a} doğru. Örtüye bak, pembe şerit belirmeye başladı mı?`],
+      [100, (a) => `100 kez baktım: %${a} doğru. İplerim kalınlaşıp inceliyor!`],
+      [300, (a) => `300 kez baktım: %${a} doğru. Artık hızlanıyorum!`],
+    ];
+    const next = says[state.trainNextSay];
+    if (next && state.trainDone >= next[0]) {
+      state.trainNextSay++;
+      ctx.say(next[1](Math.round(net.evaluate(data).acc * 100)), 5);
+      bidik.doHop(0.5);
+    }
+    // show which dumpling it is looking at: a marked dish and pulses through the strings
+    state.trainPulse -= dt;
+    if (!reducedMotion && state.trainPulse <= 0 && !ctx.forwardBusy) {
+      state.trainPulse = 1.2;
+      ctx.showForward(pick(data), true);
     }
     paintTimer += dt;
     if (paintTimer > 0.08) {
       paintTimer = 0;
       board.paint((s, t) => net.predict([s, t]));
       ctx.updateStats();
-      if (net.steps % 12 === 0) sound.play('hop', { volume: 0.25 });
+      if (state.trainDone > 20 && net.steps % 12 === 0) sound.play('hop', { volume: 0.25 });
       if (net.steps % 40 === 0) bidik.doHop(0.4);
     }
     if (state.trainBudget <= 0) {

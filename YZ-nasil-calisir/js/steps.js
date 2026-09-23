@@ -91,6 +91,7 @@ export const STEPS = [
     action: 'Hadi düzelt!',
     stats: true,
     enter(c) {
+      c.board.revealAll(); // the dishes may still be hidden if chapter 1 was skipped mid-reveal
       c.network.setWeightsVisible(true);
       c.tokens.visible = false;
       c.updateStats();
@@ -104,16 +105,17 @@ export const STEPS = [
     label: 'Antrenman',
     title: 'Tekrar, tekrar, tekrar!',
     body: `
-      <p>Bir düzeltme yetmez tabii. Bıdık masadaki mantılara yüzlerce kez bakıp her seferinde ipleri azıcık düzeltiyor. Buna <b>antrenman</b> diyoruz. Bisiklete binmeyi öğrenmek gibi: düşe kalka ama sonunda oluyor. Bu 600 bakış aslında bir saniye bile sürmez; sen izleyebil diye yavaşlattık.</p>
+      <p>Bir düzeltme yetmez tabii. Bıdık masadaki mantılara yüzlerce kez bakıp her seferinde ipleri azıcık düzeltiyor. Buna <b>antrenman</b> diyoruz. Bisiklete binmeyi öğrenmek gibi: düşe kalka ama sonunda oluyor. Bu 600 bakış bilgisayarda bir saniye bile sürmez; sen izleyebil diye yavaşlattık: ilk bakışlar tek tek geçiyor, sonra Bıdık hızlanıyor. Örtüye, iplere ve "Doğru bildi" sayısına bak. Doğru sayısı önce yavaş yavaş, en sonda hızla yükseliyor.</p>
       <p>Antrenman sırasında masa örtüsüne bak. <span class="sweet">Pembe</span> şerit Bıdık'ın "burada tam kıvamında" dediği yer, <span class="salty">sarı</span> bölgeler "burada olmamış" dediği yerler. Kimse ona "büyük mantı uzun pişer" demedi. Örneklere baka baka kendi buldu. Süper, değil mi?</p>
       ${teacher('<p><b>Eğitim</b>: tam yığın gradyan inişi, öğrenme hızı 1,2, 600 adım; her adımda masadaki mantıların hepsi kullanılır. Kayıp düşerken doğruluk yükselir. Örtüdeki renk, modelin her (boy, süre) noktası için tahminidir; pembe ile sarının kesiştiği çizgi <b>karar sınırı</b>dır. Çapraz şerit yalnızca gizli katman sayesinde öğrenilebilir.</p>')}`,
-    focus: 'overview',
+    focus: 'game',
     say: 'Hadi antrenman! Düşe kalka öğrenirim, göreceksin.',
     mood: 'happy',
     action: 'Antrenman başlasın!',
     secondary: 'Her şeyi unut',
     stats: true,
     enter(c) {
+      c.board.revealAll(); // the dishes may still be hidden if chapter 1 was skipped mid-reveal
       c.network.setWeightsVisible(true);
       c.tokens.visible = false;
       c.board.tintTarget = c.net.steps > 0 ? 1 : 0;
@@ -144,6 +146,7 @@ export const STEPS = [
     sliders: true,
     guess: true,
     enter(c) {
+      c.board.revealAll(); // the dishes may still be hidden if chapter 1 was skipped mid-reveal
       c.network.setWeightsVisible(true);
       c.tokens.visible = false;
       c.board.tintTarget = c.net.steps > 0 ? 1 : 0;
