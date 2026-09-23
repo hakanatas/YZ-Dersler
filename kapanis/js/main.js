@@ -137,7 +137,7 @@ createLesson({
         const date = new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
         const line = score ? `Final testi: ${score.n} soruda ${score.correct} doğru` : 'Final testi henüz yapılmadı';
         c.readout(
-          `<span class="card-out"><span class="big">YZ Dersler · Tamamlama Kartı</span><span class="name">${escapeHtml(name)}</span>Bıdık'la yedi dersi tamamladı: yapay zeka tahmin ederek öğrenir, veri kadar bilir, kaynağı sorulur, ödülü tasarlanır.<br />${line} · ${date}</span>`
+          `<span class="card-out"><span class="big">YZ Dersler · Tamamlama Kartı</span><span class="name">${escapeHtml(name)}</span>Bıdık'la yedi dersi tamamladı: yapay zeka tahmin ederek öğrenir, veri kadar bilir, kaynağı sorulur, ödülü tasarlanır.<br />${line} · ${date}<br /><a class="btn btn--accent" href="../" style="margin-top: 12px">Tüm derslere dön</a></span>`
         );
         c.celebrate();
         c.say(`Tebrikler ${escapeHtml(name)}! Artık sen de biliyorsun.`, 6);
