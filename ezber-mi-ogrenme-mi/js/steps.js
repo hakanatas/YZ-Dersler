@@ -30,7 +30,7 @@ export const STEPS = [
     title: 'Deney 1: Bıdık\'a sadece 6 mantı ver',
     body: `
       <p>Antrenman masasına yalnızca <b>6 mantı</b> koyduk. Bıdık bunlara yüzlerce kez bakıp iplerini düzeltecek. Sonra her iki masada da kaç mantıyı doğru bildiğine bakacağız.</p>
-      <p>Tahmin et: antrenman masasında kaç puan alır? Peki sınav masasında? Düğmeye bas, birlikte görelim. Örtülerin renklerine de dikkat et: pembe şerit Bıdık'ın "kıvamında" dediği yer.</p>
+      <p>Tahmin et: antrenman masasında kaç puan alır? Peki sınav masasında? <b>"Antrenman başlasın!"</b> düğmesine bas, birlikte görelim. Örtülerin renklerine de dikkat et: pembe şerit Bıdık'ın "kıvamında" dediği yer.</p>
       ${teacher('<p>Eğitim: tam yığın gradyan inişi, 600 adım, öğrenme hızı 1,2, yalnızca seçilen 6 örnekle. Model 33 parametreyle 6 noktayı kolayca ezberler (eğitim doğruluğu %100) ama öğrendiği karar sınırı gerçek şeride benzemez; test doğruluğu genellikle %75–80 civarında kalır. Eğitim ile test başarısı arasındaki bu açıklık <b>aşırı öğrenmenin</b> (overfitting) göstergesidir.</p>')}`,
     focus: 'overview',
     say: 'Altı mantı mı? Kolay! Hepsini aklımda tutarım.',

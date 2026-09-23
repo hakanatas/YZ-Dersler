@@ -23,7 +23,7 @@ export const STEPS = [
     title: 'Bir resim, sayılardan ibaret',
     body: `
       <p>Bıdık'ın gözü yok ama görmeyi öğrenecek. Nasıl mı? Bilgisayar için bir resim, minicik karelerden oluşan bir tablodur. Her kareye <b>piksel</b> denir. Tepsideki resim 8 kare eninde, 8 kare boyunda: toplam <b>64 piksel</b>.</p>
-      <p>Her piksel bir sayı taşıyor: dolu kare <b>1</b>, boş kare <b>0</b>. Düğmeye bas, resmin altındaki sayıları gör. Bıdık'a "resim" diye verdiğimiz şey, işte bu 64 sayı.</p>
+      <p>Her piksel bir sayı taşıyor: dolu kare <b>1</b>, boş kare <b>0</b>. <b>"Sayıları göster"</b> düğmesine bas, resmin altındaki sayıları gör. Bıdık'a "resim" diye verdiğimiz şey, işte bu 64 sayı.</p>
       ${teacher('<p>Dijital bir görüntü, piksellerden oluşan bir sayı dizisidir. Bu derste her piksel 0 ya da 1 (siyah-beyaz, 8×8 = 64 sayı). Gerçek fotoğraflarda her piksel gri tonu için 0–255 arası bir sayı, renkli fotoğrafta ise üç sayı (kırmızı, yeşil, mavi; RGB) taşır: 1000×1000 piksellik renkli bir fotoğraf 1 milyon piksel × 3 = 3 milyon sayıdır. Model bu sayıları alır; "resmi" görmez.</p>')}`,
     focus: 'board',
     say: 'Tepside ne var? Ben sadece sayılar görüyorum!',
@@ -52,7 +52,7 @@ export const STEPS = [
     title: '64 göz, 8 yardımcı, 1 cevap',
     body: `
       <p>Bıdık'ın kafasının içi yine ipler ve yardımcılarla dolu. Bu sefer soldan giren iki sayı değil, <b>64 sayı</b>: her piksel için bir "göz". Ortada <b>8 yardımcı</b> bu 64 sayıyı dinliyor. En sağdaki yardımcı son sözü söylüyor: <i>"Yüzde kaç mantı?"</i></p>
-      <p>Düğmeye bas: dolu piksellerden ışıklar çıkıp iplerden yardımcılara akıyor. Bıdık daha antrenman yapmadı, ipleri rastgele; o yüzden cevabı şimdilik yazı tura gibi. Merak etme, birazdan öğrenecek.</p>
+      <p><b>"Bıdık'a göster"</b> düğmesine bas: dolu piksellerden ışıklar çıkıp iplerden yardımcılara akıyor. Bıdık daha antrenman yapmadı, ipleri rastgele; o yüzden cevabı şimdilik yazı tura gibi. Merak etme, birazdan öğrenecek.</p>
       ${teacher('<p>Model: 64 giriş → 8 düğümlü gizli katman (tanh) → 1 sigmoid çıkış. Ağırlıklar 64·8 + 8 = 520, sapmalar 8 + 1 = 9; toplam <b>529 parametre</b>. Çıkış, "mantı" olasılığıdır; eşik 0,5. Tabloda yalnızca değeri 1 olan pikseller ışık gönderir, çünkü 0 çarpı ağırlık her zaman 0\'dır. Eğitilmemiş ağın doğruluğu bu veri setinde yazı tura düzeyindedir: rastgele başlangıca göre %38–78 arasında (13 farklı tohumla ölçüldü).</p>')}`,
     focus: 'network',
     say: 'Altmış dört gözüm var! Ama daha ne gördüğümü bilmiyorum.',
@@ -78,7 +78,7 @@ export const STEPS = [
     title: 'Öğrenmek için örnek gerek: 120 resim',
     body: `
       <p>Geçen derslerdeki gibi Bıdık'a kural söylemeyeceğiz. "Mantı yuvarlaktır, böreğin ucu uzundur" demek yok! Onun yerine bir sürü resim ve etiketi: bu <span class="sweet">mantı</span> (1), bu <span class="salty">börek</span> (0).</p>
-      <p>Düğmeye basıp örnekleri gez. Dikkat: mantılar bazen büyük bazen küçük, bazen sağa bazen sola kaymış. Börekler bazen düz, bazen hafif eğik. Üstelik resimlerde arada bir yanlış piksel var, fotoğraftaki kum taneleri gibi. Bıdık bu farklılıklara rağmen şekli yakalamalı.</p>
+      <p><b>"Başka örnek"</b> düğmesine basıp örnekleri gez. Dikkat: mantılar bazen büyük bazen küçük, bazen sağa bazen sola kaymış. Börekler bazen düz, bazen hafif eğik. Üstelik resimlerde arada bir yanlış piksel var, fotoğraftaki kum taneleri gibi. Bıdık bu farklılıklara rağmen şekli yakalamalı.</p>
       ${teacher('<p><b>Eğitim kümesi</b>: 60 mantı + 60 börek = 120 resim; <b>sınav (test) kümesi</b>: 30 + 30 = 60 ayrı resim. Her resim aynı tarifle ama farklı rastgelelikle üretilir: konum ±1 piksel kayar, mantının yarıçapı 2,2–2,8 piksel (tepesinde 1 piksellik büzük), börek 6–7 piksel eninde, 2–3 piksel boyunda, yaklaşık ±25°\'ye kadar eğik; ayrıca 0–3 rastgele piksel ters çevrilir (gürültü). Bu çeşitlilik, modelin tek bir resmi ezberlemek yerine şekli öğrenmesini sağlar (<b>veri çoğaltma</b> fikri).</p>')}`,
     focus: 'board',
     say: 'Bunların hepsi mantı mı? Kimi kocaman, kimi minicik…',
@@ -168,7 +168,7 @@ export const STEPS = [
     label: 'Kandır',
     title: 'Bıdık\'ı kandır: bu ne, mantı mı börek mi?',
     body: `
-      <p>Bıdık yalnızca iki şey biliyor: mantı ve börek. Ona bir kare, tek bir nokta ya da bir harf gösterirsen ne olur? "Bu ne ki?" demez; <i>mutlaka</i> ikisinden birini seçer. Düğmelere bas ya da kendin çiz.</p>
+      <p>Bıdık yalnızca iki şey biliyor: mantı ve börek. Ona bir kare, tek bir nokta ya da bir harf gösterirsen ne olur? "Bu ne ki?" demez; <i>mutlaka</i> ikisinden birini seçer. <b>"Sıradaki tuzak"</b> düğmesine bas ya da kendin çiz.</p>
       <p>Yüzdeye dikkat: <b>%50</b> civarı "emin değilim" demek. Ama Bıdık bazen alakasız bir şeye "%99 mantı" da diyebilir. Yani çok emin olması, doğru olması demek değil! Gerçek sistemlerde bir de "hiçbiri" cevabı ya da "emin değilsen söyleme" kuralı olur.</p>
       ${teacher('<p>Model iki sınıflı bir sınıflandırıcıdır: çıkışı her girdi için 0–1 arasında bir sayıdır ve eğitim verisine hiç benzemeyen girdiler (<b>dağılım dışı</b> örnekler) için de bir cevap üretir. <b>Güven (olasılık) ≠ doğruluk</b>: model, hiç görmediği türden bir şekle yüksek güvenle yanlış etiket verebilir. Gerçek sistemler bunun için bir eşik ("%80\'in altındaysa cevap verme"), bir "diğer/hiçbiri" sınıfı ya da ayrı bir belirsizlik ölçümü kullanır.</p>')}`,
     focus: 'overview',

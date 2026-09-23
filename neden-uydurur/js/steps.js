@@ -43,7 +43,7 @@ export const STEPS = [
     title: 'Sıradaki kelime oyunu',
     body: `
       <p>Bıdık küçük bir kitap okudu: mutfağıyla ilgili <b><span data-n="sentences">71</span> kısa cümle</b>. Kitabın tamamı aşağıda. Şimdi bir oyun oynuyor: "Mantı en …" diye başlayan cümleyi nasıl sürdürürdü?</p>
-      <p>Masadaki çubuklara bak. Her çubuk bir aday kelime; boyu da Bıdık'ın o kelimeye verdiği yüzde. Düğmeye bas: Bıdık en uzun çubuğu seçer, kelime masaya eklenir ve yeni adaylar gelir. Cümle noktaya kadar büyüsün!</p>
+      <p>Masadaki çubuklara bak. Her çubuk bir aday kelime; boyu da Bıdık'ın o kelimeye verdiği yüzde. <b>"Sıradaki kelimeyi seç"</b> düğmesine bas: Bıdık en uzun çubuğu seçer, kelime masaya eklenir ve yeni adaylar gelir. Cümle noktaya kadar büyüsün!</p>
       ${teacher('<p>Bu gerçek, küçük bir <b>dil modeli</b>dir: tarayıcıda, kitaptaki <span data-n="sentences">71</span> cümle üzerinden <b>ikili ve üçlü kelime dizilerini</b> (bigram/trigram) sayar. Bir bağlam için aday yüzdesi = o kelimenin sayısı / bağlamın toplam sayısı. Örneğin "mantı en" kitapta 9 kez geçer; 4\'ünde ardından "güzel" gelir, yani %44. Beşten fazla aday varsa yalnızca ilk beşi gösterilir, o yüzden çubuklar %100\'e tamamlanmayabilir. Bu bölümde her zaman en olası kelime seçilir (argmax); eşitlikte listede önce gelen. Nokta da bir kelime gibi sayılır; cümle böyle biter.</p>')}`,
     focus: 'tokens',
     say: 'Bu oyunu biliyorum: sıradaki kelime ne? Kitabı okudum, hazırım!',
@@ -66,7 +66,7 @@ export const STEPS = [
     title: 'Nasıl sayıyor? Sihir yok',
     body: `
       <p>Yüzdeler nereden geliyor? Bıdık bir şey <i>anlamıyor</i>; sadece <b>sayıyor</b>. Kitapta son iki kelimenin yan yana geçtiği yerleri buluyor ve hemen sonra hangi kelimenin kaç kez geldiğine bakıyor. Hepsi bu.</p>
-      <p>Aşağıdaki kitapta sarı yerler Bıdık'ın baktığı bağlam, kalın kelime de ondan sonra gelen. Çiplerle başka bir başlangıç dene; düğmeyle kelime ekle ve bağlamın nasıl kaydığını izle.</p>
+      <p>Aşağıdaki kitapta sarı yerler Bıdık'ın baktığı bağlam, kalın kelime de ondan sonra gelen. Çiplerle başka bir başlangıç dene; <b>"Sıradaki kelimeyi ekle"</b> düğmesiyle kelime ekle ve bağlamın nasıl kaydığını izle.</p>
       ${teacher('<p><b>Geri çekilme (backoff)</b>: son iki kelime kitapta yan yana görüldüyse üçlü sayımlar kullanılır; görülmediyse yalnızca son kelimeye bakılır (ikili); o da kitapta yoksa kitaptaki tüm kelimelerin sıklığı kullanılır. Ekrandaki "kitapta N kez" sayısı bağlamın toplam geçiş sayısı, listedeki sayılar ise her devam kelimesinin sayısıdır; yüzde bu ikisinin oranıdır. Model, kitaptaki cümlelerin dışına yalnızca bu sayılarla çıkabilir; kelimelerin anlamını temsil eden hiçbir şey yoktur.</p>')}`,
     focus: 'tokens',
     say: 'Sayıyorum, sayıyorum… Sonra en çok geleni seçiyorum. Sihir yok!',

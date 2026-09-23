@@ -21,7 +21,7 @@ export const STEPS = [
     title: 'Üç usta, üç boy mantı',
     body: `
       <p>Bugün mutfakta üç usta var. <b>Ayşe Usta</b> minik mantılar yapıyor, <b>Kemal Usta</b> orta boy, <b>Deniz Usta</b> ise kocaman. Üçü de aynı kurala göre pişiriyor: büyük mantı daha uzun pişer. Sağdaki <b>sınav masası</b>nda her ustadan 16 mantı var, toplam 48.</p>
-      <p>Her tabağın altındaki renkli halka mantının hangi ustadan geldiğini gösterir: ${chefSpan(0, 'yeşil Ayşe')}, ${chefSpan(1, 'mavi Kemal')}, ${chefSpan(2, 'mor Deniz')}. Mantının rengi ise yine sonuç: <span class="sweet">pembe tam kıvamında</span>, <span class="salty">sarı olmamış</span>. Düğmeye basıp ustaları tek tek tanı.</p>
+      <p>Her tabağın altındaki renkli halka mantının hangi ustadan geldiğini gösterir: ${chefSpan(0, 'yeşil Ayşe')}, ${chefSpan(1, 'mavi Kemal')}, ${chefSpan(2, 'mor Deniz')}. Mantının rengi ise yine sonuç: <span class="sweet">pembe tam kıvamında</span>, <span class="salty">sarı olmamış</span>. <b>"Sıradaki ustayı tanıt"</b> düğmesine basıp ustaları tek tek tanı.</p>
       ${teacher('<p>Sınav (test) kümesi: 48 örnek, her ustadan 16. Özellikler yine boy (0–1) ve pişme süresi (0–10 dakika); etiket "tam kıvamında" (1) ya da "olmamış" (0). Ustaların boy aralıkları: Ayşe 0,05–0,35, Kemal 0,35–0,65, Deniz 0,65–0,95. Bu dersin gizli mutfak kuralı önceki derslerden farklı olarak <b>eğri</b>dir: ideal süre 3 + 6·boy² dakika, ±1,5 dakika (kocaman mantının içi orantısız geç pişer); bu yüzden pembe şerit sağa doğru yukarı kıvrılır. Ders 01–02\'deki düz kuralla (3 + 6·boy) model şeridi hiç görmediği bölgeye de doğru uzatıyor ve bu dersin etkisi görünmüyordu; bu sayısal olarak denendi. Model öncekiyle aynı: 2 giriş, 8 gizli düğüm, 1 çıkış; 33 parametre.</p>')}`,
     focus: 'test',
     say: 'Üç usta, üç boy mantı. Hepsini tanıyorum… sanırım?',
@@ -83,7 +83,7 @@ export const STEPS = [
     title: 'Antrenman ve sınav: usta usta puan',
     body: `
       <p>Bıdık antrenman masasına 600 kez bakıp iplerini düzeltecek; tıpkı önceki derslerdeki gibi. Sonra sınav masasındaki 48 mantıyı tek tek tadacak. Puanı bu sefer <b>usta usta ayrı</b> sayacağız: Ayşe'nin mantılarında kaç doğru, Kemal'inkilerde kaç, Deniz'inkilerde kaç?</p>
-      <p>Düğmeye bas. Antrenman bitince sınav masasında yanlış bilinen mantıların altında kırmızı halka belirecek. Kırmızı halkaların hangi renkli halkaların üstünde toplandığına dikkat et.</p>
+      <p><b>"Antrenman başlasın!"</b> düğmesine bas. Antrenman bitince sınav masasında yanlış bilinen mantıların altında kırmızı halka belirecek. Kırmızı halkaların hangi renkli halkaların üstünde toplandığına dikkat et.</p>
       ${teacher('<p>Eğitim: tam yığın gradyan inişi, 600 adım, öğrenme hızı 1,2. Veri ve başlangıç ağırlıkları sabit tohumlu olduğu için sonuç her seferinde aynıdır. Eğitim doğruluğu %100. Sınav masasında usta başına doğruluk: Ayşe 16/16 (%100), Kemal 15/16 (%94), Deniz 9/16 (%56). Toplam doğruluk 40/48 (%83) "fena değil" görünür; sorun ancak gruplara ayrı bakınca ortaya çıkar. Bu yüzden adalet değerlendirmelerinde başarı <b>alt gruplar</b> için ayrı ayrı ölçülür.</p>')}`,
     focus: 'overview',
     say: 'Bakıyorum, düzeltiyorum, bakıyorum, düzeltiyorum…',
@@ -118,7 +118,7 @@ export const STEPS = [
     title: 'Neden? Bıdık kötü niyetli değil',
     body: `
       <p>Kırmızı halkalar hep ${chefSpan(2, 'mor')} halkaların üstünde toplandı: Deniz Usta'nın 16 mantısından 7'si yanlış. Bıdık, tam kıvamında pişmiş 5 büyük mantıya "olmamış" dedi; çiğ kalmış 2 tanesine "kıvamında" dedi. Peki Bıdık Deniz Usta'yı sevmiyor mu? Hayır! Bıdık büyük mantıyı <b>hiç görmedi</b> ki.</p>
-      <p>Örtüye bak: Bıdık pembe şeridi küçük ve orta mantılardan öğrendi, sonra sağa doğru <b>dümdüz uzattı</b>. Oysa gerçek şerit büyük mantılarda yukarı kıvrılıyor: kocaman mantının içi geç pişer. Düğmeye basıp gerçek şeridi örtünün üstünde gör. Bıdık'ın kuralı basit: <b>veri kimi içeriyorsa onu öğrenir.</b></p>
+      <p>Örtüye bak: Bıdık pembe şeridi küçük ve orta mantılardan öğrendi, sonra sağa doğru <b>dümdüz uzattı</b>. Oysa gerçek şerit büyük mantılarda yukarı kıvrılıyor: kocaman mantının içi geç pişer. <b>"Gerçek şeridi göster"</b> düğmesine basıp gerçek şeridi örtünün üstünde gör. Bıdık'ın kuralı basit: <b>veri kimi içeriyorsa onu öğrenir.</b></p>
       ${teacher('<p>Model, verinin olmadığı bölgede <b>dış değerleme</b> (ekstrapolasyon) yapar: gördüğü şeridi düz devam ettirir. Gerçek kural eğri (3 + 6·boy²) olduğu için büyük mantılarda modelin şeridi gerçeğin altında kalır. Sınav masasındaki yanlışlar: 3,9 ve 4,9 dakika pişmiş iki çiğ mantıya "kıvamında"; 6,5–7,4 dakika pişmiş, kıvamındaki beş mantıya "olmamış". Kemal Usta\'nın tek yanlışı da aralığının büyük ucunda (boy 0,56). Bu yanlılık modelin kötü olmasından değil, eğitim verisinin sınav dağılımını <b>kapsamamasından</b> kaynaklanır (dağılım kayması, "out-of-distribution"). Koyu çizgiler gerçek şeridin iki sınırıdır.</p>')}`,
     focus: 'test',
     say: 'Ama… büyük mantıyı hiç görmedim ki! Nereden bileyim?',
@@ -202,7 +202,7 @@ export const STEPS = [
     title: 'Gerçek hayatta: yüzler, sesler, adalet',
     body: `
       <p>Bu sadece mantı meselesi değil. 2018'de Joy Buolamwini ve Timnit Gebru adlı iki araştırmacı, fotoğraftaki yüze bakıp "kadın mı, erkek mi" diyen ticari programları test etti. Programlar açık tenli erkeklerde en fazla %0,8 hata yaparken koyu tenli kadınlarda hata %34,7'ye kadar çıkıyordu. Neden? Programların öğrendiği fotoğraf yığınlarında koyu tenli kadın çok azdı. Tıpkı masada Deniz Usta'nın mantısının olmaması gibi.</p>
-      <p>Sesli asistanlar da bazı aksanları daha zor anlıyor; çünkü o aksanla konuşan insanlardan az ses kaydı dinlediler. Çözüm hep aynı: masaya <b>herkesin</b> verisini koymak ve puanı <b>her grup için ayrı</b> saymak. Düğmeye bas, Bıdık örnekleri tek tek anlatsın.</p>
+      <p>Sesli asistanlar da bazı aksanları daha zor anlıyor; çünkü o aksanla konuşan insanlardan az ses kaydı dinlediler. Çözüm hep aynı: masaya <b>herkesin</b> verisini koymak ve puanı <b>her grup için ayrı</b> saymak. <b>"Bir örnek daha"</b> düğmesine bas, Bıdık örnekleri tek tek anlatsın.</p>
       ${teacher('<p>Kaynak: "Gender Shades" (Buolamwini &amp; Gebru, 2018). Çalışma üç ticari yüz analiz sisteminin cinsiyet sınıflandırmasını, ten rengi ve cinsiyete göre dengelenmiş bir veri kümesinde ölçtü: açık tenli erkeklerde hata en fazla %0,8, koyu tenli kadınlarda %34,7\'ye kadar. Nedeni, kullanılan yüz veri kümelerinde koyu tenli kadınların çok az temsil edilmesiydi. Bu tür sorunlara <b>algoritmik yanlılık</b> denir; çözüm çeşitli veri toplamak, alt gruplarda ayrı test etmek ve sonuçları raporlamaktır. Aksan örneği genel bir gözlemdir; bu derste ona ait bir sayı verilmiyor.</p>')}`,
     focus: 'bidik',
     say: 'Verimde kim yoksa onu tanıyamıyorum. İnsanların programları da öyle!',

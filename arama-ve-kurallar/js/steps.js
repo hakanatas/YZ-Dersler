@@ -76,7 +76,7 @@ export const STEPS = [
     title: 'Mutfak labirenti: tencereye nasıl gidilir?',
     body: `
       <p>Mutfağın zemini karelere bölündü. Koyu kareler <b>dolaplar</b>; oradan geçilmez. Bıdık solda, buharlı tencere sağda. Her adımda yalnızca yan kareye geçebilir: sağ, sol, ileri, geri.</p>
-      <p>Önce en kolay yöntemi deneyelim: Bıdık hiç düşünmeden her adımda rastgele bir yön seçsin. <b>60 adım</b> hakkı var. Sence tencereye ulaşır mı? Düğmeye bas, birlikte sayalım. Birkaç kez dene.</p>
+      <p>Önce en kolay yöntemi deneyelim: Bıdık hiç düşünmeden her adımda rastgele bir yön seçsin. <b>60 adım</b> hakkı var. Sence tencereye ulaşır mı? <b>"Bıdık rastgele yürüsün"</b> düğmesine bas, birlikte sayalım. Birkaç kez dene.</p>
       ${teacher('<p>Zemin 9×7 = 63 kare; 22\'si dolap, 41\'i açık. <b>Rastgele yürüyüş</b>: her adımda geçilebilir komşulardan biri eşit olasılıkla seçilir. Bilgisayarda 10.000 kez denendi: 60 adımlık hakla tencereye ulaşma oranı yaklaşık %14; ulaşanlar da ortalama 43 adım harcadı. Oysa en kısa yol 10 adımdır. Bu bölümün amacı "akıllı bir yöntem lazım" hissini vermektir.</p>')}`,
     focus: 'grid',
     say: 'Tencere şurada, ben buradayım. Rastgele yürüsem bulurum herhalde?',
@@ -103,7 +103,7 @@ export const STEPS = [
     title: 'Arama: her yolu sırayla dene',
     body: `
       <p>Rastgele yürümek yerine Bıdık şöyle düşünsün: "Bir adımda gidebildiğim kareler hangileri? Peki iki adımda? Üç adımda?" Halka halka dışa doğru bakar; tencereyi bulunca da ona nasıl geldiğini geriye doğru sayar. Buna <b>arama</b> diyoruz.</p>
-      <p>Düğmeye bas: kareler yakından uzağa doğru renkleniyor, <span class="salty">sarı</span> yakın, <span class="sweet">pembe</span> uzak. Tencere bulununca en kısa yol çiziliyor ve Bıdık yürüyor. Kaç kareye baktı, yol kaç adım? Sayılara dikkat et.</p>
+      <p><b>"Aramayı başlat"</b> düğmesine bas: kareler yakından uzağa doğru renkleniyor, <span class="salty">sarı</span> yakın, <span class="sweet">pembe</span> uzak. Tencere bulununca en kısa yol çiziliyor ve Bıdık yürüyor. Kaç kareye baktı, yol kaç adım? Sayılara dikkat et.</p>
       ${teacher('<p><b>Genişlik öncelikli arama</b> (breadth-first search, BFS): kareler başlangıca uzaklık sırasına göre keşfedilir; hedef bulunduğunda çizilen yol, adım sayısı bakımından <b>en kısa yoldur</b>; bu bir garantidir. Bedeli, bakılan kare sayısıdır. Bu labirentte Bıdık 41 açık karenin 36\'sına bakar ve 10 adımlık yolu bulur (hedefin bulunduğu halka tamamlanınca durur). Navigasyon uygulamaları aynı fikri kullanır; yollar eşit uzunlukta olmadığı için adım yerine süre ya da mesafe toplayan sürümleri vardır (Dijkstra, A*). Burada öğrenme yoktur: labirent değişse de yöntem aynı şekilde çalışır.</p>')}`,
     focus: 'grid',
     say: 'Önce yakın kareler, sonra biraz daha uzaktakiler… Halka halka!',

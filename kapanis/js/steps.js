@@ -32,7 +32,7 @@ export const STEPS = [
     title: 'Altı ders, tek fikir: tahmin et, yanıl, düzelt',
     body: `
       <p>Hatırlıyor musun? Her şey bir soruyla başladı: <i>mantı kaç dakika pişer?</i> Bıdık'a kural söylemedik, örnek gösterdik. Tahmin etti, yanıldı, iplerini azıcık düzeltti; yüzlerce kez. Bu döngü altı dersin hepsinin altında yatıyor.</p>
-      <p>Masaya bak: mantılar, ipler ve kelime karoları hepsi aynı mutfaktan. Düğmeye bas, Bıdık altı dersi tek tek hatırlasın.</p>
+      <p>Masaya bak: mantılar, ipler ve kelime karoları hepsi aynı mutfaktan. <b>"Bıdık hatırlasın"</b> düğmesine bas, Bıdık altı dersi tek tek hatırlasın.</p>
       ${teacher('<p>Serinin omurgası: (1) Öğrenme = örneklerden parametre ayarlama (Ders 01). (2) Genelleme, ezber ve veri kalitesi (Ders 02). (3) Verinin kapsamı ve adalet (Ders 03). (4) Dil modelleri olası devamı üretir, doğruyu değil (Ders 04). (5) Algı: resim sayılardır (Ders 05). (6) Ödülle öğrenme ve ödül tasarımı (Ders 06). Bu ders yeni model eğitmez; masadaki örtü Ders 01\'in eğitilmiş modeliyle boyanır.</p>')}`,
     focus: 'overview',
     say: 'Altı ders! Hepsini hatırlıyorum, bak anlatayım.',
@@ -84,7 +84,7 @@ export const STEPS = [
     label: 'Dört kural',
     title: 'Yapay zekayla çalışırken dört kural',
     body: `
-      <p>Bıdık'ın altı dersten çıkardığı dört kural var. Her biri bir derse dayanıyor. Düğmeye bas, Bıdık sırayla söylesin.</p>
+      <p>Bıdık'ın altı dersten çıkardığı dört kural var. Her biri bir derse dayanıyor. <b>"Bıdık söylesin"</b> düğmesine bas, Bıdık sırayla söylesin.</p>
       <ol id="rules" class="rules">
         <li><b>Kaynağını iste.</b> Akıcı cümle doğru cümle demek değil. (Ders 04)</li>
         <li><b>Verisini sor.</b> Kimin verisiyle öğrendi? Kim eksik? (Ders 02, 03)</li>

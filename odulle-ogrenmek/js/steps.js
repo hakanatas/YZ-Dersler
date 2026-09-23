@@ -33,7 +33,7 @@ export const STEPS = [
     title: 'Etiket yok, alkış var',
     body: `
       <p>Önceki derslerde mantıların üstünde etiket vardı: "kıvamında", "olmamış". Bu sefer kimse etiket yapıştırmıyor. Bıdık bir süre seçiyor, mantıyı pişiriyor, müşteriye veriyor. Müşteri ya <b>alkışlıyor</b> ya da <b>sessiz kalıyor</b>. Hepsi bu.</p>
-      <p>Alkış "aferin" demek, sessizlik "olmadı" demek. Ama müşteri neden alkışlamadığını söylemiyor: çiğ mi kaldı, fazla mı pişti? Bıdık bunu kendi çözmek zorunda. Düğmeye bas: Bıdık rastgele bir süre seçip bir mantı pişirsin. Ocaktaki düğmeye ve tencereye bak.</p>
+      <p>Alkış "aferin" demek, sessizlik "olmadı" demek. Ama müşteri neden alkışlamadığını söylemiyor: çiğ mi kaldı, fazla mı pişti? Bıdık bunu kendi çözmek zorunda. <b>"Bıdık bir mantı pişirsin"</b> düğmesine bas: Bıdık rastgele bir süre seçip bir mantı pişirsin. Ocaktaki süre ayarına ve tencereye bak.</p>
       ${teacher('<p>Bu <b>pekiştirmeli öğrenme</b>dir (reinforcement learning). Öğrenen <b>ajan</b> (Bıdık) bir <b>eylem</b> seçer (pişirme süresi: 1–10 dakika) ve ortamdan bir <b>ödül</b> alır (alkış = 1, sessizlik = 0). Denetimli öğrenmeden farkı: doğru cevap hiç söylenmez, yalnızca eylemin sonucu puanlanır. Mutfağın gizli kuralı önceki derslerle aynı: ideal süre 3 + 6·boy dakika, ±1,5 dakika tolerans. Mantılar elde yapıldığı için boy her seferinde biraz değişir (orta boy: 0,5 ± 0,2); bu yüzden aynı süre bazen alkış alır, bazen almaz. Bu bölümde Bıdık süreyi tamamen rastgele seçer (ε = 1).</p>')}`,
     focus: 'stove',
     say: 'Etiket yok mu? Peki ben neye bakacağım? Müşteriye mi?',
@@ -95,7 +95,7 @@ export const STEPS = [
     title: 'Bıdık kendi deniyor',
     body: `
       <p>Şimdi Bıdık'ı yalnız bırakalım: 300 mantı pişirecek. Her seferinde defterine bakıp "en çok alkış alan süre hangisi?" diye seçecek. Ama arada bir (her 10 denemede yaklaşık 1) defteri kapatıp <b>rastgele</b> bir süre deneyecek. Belki daha iyisi vardır, kim bilir?</p>
-      <p>Düğmeye bas ve çubukları izle. Başta hepsi kısa; sonra 5, 6 ve 7 dakika yükseliyor ve 6 en tepeye çıkıyor. Kimse ona "orta boy mantı 6 dakika pişer" demedi. Alkışları saya saya kendi buldu.</p>
+      <p><b>"300 mantı pişirsin!"</b> düğmesine bas ve çubukları izle. Başta hepsi kısa; sonra 5, 6 ve 7 dakika yükseliyor ve 6 en tepeye çıkıyor. Kimse ona "orta boy mantı 6 dakika pişer" demedi. Alkışları saya saya kendi buldu.</p>
       ${teacher('<p><b>ε-açgözlü</b> (epsilon-greedy) strateji: ε = 0,1 olasılıkla rastgele bir eylem (<b>keşif</b>), aksi halde en yüksek Q değerli eylem (<b>kullanım</b>); eşitlikte rastgele seçilir. 1000 farklı rastgele tohumla yapılan 300 denemelik koşuların %97\'sinde en yüksek çubuk 6 dakikaya oturur; ortalama alkış 300 denemede 257\'dir. Bu bölümdeki koşu sabit bir tohumla üretilir, dolayısıyla boş defterden başlayan bir koşu her seferinde aynı sonucu verir: 259 alkış. Grafik, her 10 denemedeki alkış oranıdır.</p>')}`,
     focus: 'overview',
     say: 'Defterime bakarım, ama arada bir de rastgele denerim!',
@@ -237,7 +237,7 @@ export const STEPS = [
     title: 'Yanlış alkış: müşteri hıza alkışlarsa',
     body: `
       <p>Bu sefer müşteri değişti. Yeni müşteri tada değil <b>hıza</b> alkışlıyor: mantı 3 dakikada ya da daha kısa sürede gelirse alkış, yoksa sessizlik. Bıdık'ın kuralı aynı: alkışı say, en çok alkış alan süreyi seç.</p>
-      <p>Ne olacağını tahmin et, sonra düğmeye bas. Bıdık 1–3 dakikayı öğreniyor ve <b>çiğ mantı</b> servis ediyor; müşteri de alkışlıyor! Bıdık yaramazlık yapmıyor: tam olarak ne için alkışlandıysa onu öğrendi. Yapay zeka "ne demek istediğimizi" değil, "neyi ödüllendirdiğimizi" öğrenir. Ödülü doğru tasarlamak işin en zor kısmı.</p>
+      <p>Ne olacağını tahmin et, sonra <b>"Hız müşterisiyle 200 mantı"</b> düğmesine bas. Bıdık 1–3 dakikayı öğreniyor ve <b>çiğ mantı</b> servis ediyor; müşteri de alkışlıyor! Bıdık yaramazlık yapmıyor: tam olarak ne için alkışlandıysa onu öğrendi. Yapay zeka "ne demek istediğimizi" değil, "neyi ödüllendirdiğimizi" öğrenir. Ödülü doğru tasarlamak işin en zor kısmı.</p>
       ${teacher('<p><b>Ödül hilesi</b> (reward hacking) ya da <b>spesifikasyon oyunu</b> (specification gaming): ajan, tasarımcının niyetini değil, yazılı ödül fonksiyonunu en üst düzeye çıkarır. Burada ödül = (süre ≤ 3 dk); 1, 2 ve 3 dakika her zaman alkış alır, orta boy mantı (ideal 6 dk) bu sürelerde hep çiğ kalır. Sabit tohumlu koşu: 200 denemede 187 alkış, gerçekten kıvamında yalnızca 7 mantı (hepsi keşif sırasında rastgele denenen 4–7 dakikalar). Gerçek bir örnek: 2016\'da OpenAI, CoastRunners adlı tekne yarışı oyununda oyun puanını ödül olarak kullanan bir ajanın yarışı bitirmek yerine küçük bir koyda daireler çizip yeniden beliren hedefleri toplayarak insan oyunculardan daha yüksek puan aldığını bildirdi. Bu yüzden ödül tasarımı ve insan geri bildirimi, yapay zeka güvenliğinin ana konularındandır.</p>')}`,
     focus: 'stove',
     say: 'Yeni müşteri hıza mı alkışlıyor? O zaman hızlı olurum!',

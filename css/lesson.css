@@ -508,3 +508,29 @@ body { font-size: 18px; }
 @media (max-width: 900px) {
   .pixels { max-width: 232px; margin-left: auto; margin-right: auto; }
 }
+@media (min-width: 901px) {
+  /* the chapter's buttons stay visible at the bottom of the panel while the text scrolls */
+  #lesson-body > .lesson__actions:has(> .btn:not([hidden])) {
+    position: sticky;
+    bottom: -22px;
+    z-index: 2;
+    margin: 14px -22px -22px;
+    padding: 12px 22px 18px;
+    background: #fbf6ee;
+    border-top: 1px solid var(--line);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  /* lesson 01's guess buttons ride just above that bar */
+  #lesson-body > .guess:not([hidden]) {
+    position: sticky;
+    bottom: -22px;
+    z-index: 2;
+    margin: 12px -22px -22px;
+    padding: 12px 22px 18px;
+    background: #fbf6ee;
+    border-top: 1px solid var(--line);
+  }
+  #lesson-body:has(> .lesson__actions > .btn:not([hidden])) > .guess:not([hidden]) { bottom: 50px; margin-bottom: 0; padding-bottom: 8px; }
+}
+.dots button span { white-space: nowrap; }

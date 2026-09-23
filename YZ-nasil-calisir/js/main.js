@@ -192,7 +192,7 @@ const FOCUS = {
   board: { target: new THREE.Vector3(-0.95, 0.2, 0.25), dist: 6.9, az: 0.12, el: 1.0, bidik: [1.55, 2.0] },
   network: { target: new THREE.Vector3(3.3, 1.15, 0), dist: 6.9, az: 0.18, el: 1.2, bidik: [4.7, -0.25] },
   // the guessing game: the table with the marked dumpling and the network side by side
-  game: { target: new THREE.Vector3(1.05, 0.5, 0.15), dist: 10.2, az: 0.2, el: 1.02, bidik: [4.5, 1.0] },
+  game: { target: new THREE.Vector3(1.05, 0.5, 0.15), dist: 10.2, az: 0.2, el: 1.02, bidik: [5.3, 0.9] },
   tokens: { target: new THREE.Vector3(1.1, 0.6, 0.2), dist: 8.8, az: 0.05, el: 1.05, bidik: [3.0, 1.2] },
   bidik: { target: new THREE.Vector3(2.4, 0.75, 1.7), dist: 5.4, az: 0.2, el: 1.2, bidik: [2.4, 1.7] },
 };
