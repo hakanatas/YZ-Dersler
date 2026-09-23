@@ -55,10 +55,11 @@ createLesson({
       },
       /**
        * Bars for the current prompt. T = null → raw counted probabilities;
-       * otherwise temperature-scaled ones. Returns the model's answer.
+       * otherwise temperature-scaled ones. mixed: the temperature chapter's
+       * mixed prediction instead of backoff. Returns the model's answer.
        */
-      showCandidates(highlight = null, T = null, quiet = false) {
-        const r = model.next(c.prompt);
+      showCandidates(highlight = null, T = null, quiet = false, mixed = false) {
+        const r = mixed ? model.nextMixed(c.prompt) : model.next(c.prompt);
         const dist = T == null ? r.candidates.map((x) => ({ ...x, q: x.p })) : model.scaled(r.candidates, T);
         words.build({ prompt: c.prompt, candidates: dist.slice(0, 5).map((d) => [d.word, d.q]), highlight, animateLast: false }, true);
         if (!quiet) c.readout(c.candidateHtml(r, dist));
@@ -67,6 +68,17 @@ createLesson({
       candidateHtml(r, dist, T = null) {
         const ctxText = r.context.filter((w) => w !== START);
         let how;
+        if (r.level === 'mix') {
+          const w = `<b>${esc(ctxText.join(' '))}</b>`;
+          const look = !ctxText.length ? 'Cümle başına baktım' : r.context[0] === START ? `Cümle başındaki ${w} kelimesine baktım` : ctxText.length > 1 ? `Son iki kelimeye baktım: ${w}` : `Son kelimeye baktım: ${w}`;
+          how = `${look}; çubukların çoğu buradan gelir. Ama bu bölümde Bıdık, yalnız son kelimeye bakınca gelen kelimelere de küçük bir şans verir. Kitaptaki her kelimenin de çok çok küçük bir şansı var. Sıcaklık bu küçük şansları büyütür ya da küçültür.`;
+          const list = dist
+            .slice(0, 5)
+            .map((d) => `<span><b>${esc(d.word)}</b> ${pct(d.q)}</span>`)
+            .join('');
+          const more = dist.length > 5 ? `<span>+${dist.length - 5} aday daha</span>` : '';
+          return `<span class="big">${quote(c.prompt)}</span>${how}<span class="row">Sonra gelen: ${list}${more}</span>`;
+        }
         if (r.level === 'trigram' && r.context[0] === START) how = `Cümle başındaki <b>${esc(ctxText[0])}</b> kelimesine baktım: kitapta ${r.total} cümle böyle başlıyor.`;
         else if (r.level === 'trigram') how = `Son iki kelimeye baktım: <b>${esc(ctxText.join(' '))}</b>, kitapta ${r.total} kez yan yana geçiyor.`;
         else if (r.level === 'bigram' && ctxText.length) how = `Son iki kelime kitapta yan yana yok; sadece son kelimeye baktım: <b>${esc(ctxText[0])}</b>, kitapta ${r.total} kez geçiyor.`;
@@ -188,7 +200,7 @@ createLesson({
         if (c.playing) return;
         const T = c.T;
         const start = c.startTokens();
-        const trace = model.generate(start, T, 14);
+        const trace = model.generate(start, T, 14, undefined, true);
         const sentence = model.text(trace.words);
         c.setAction('Yazıyor…', true);
         bidik.setMood('thinking');
@@ -211,9 +223,9 @@ createLesson({
             line = 'Ooo, cümleyi bitiremedim; 14 kelimede kestim!';
           } else if (!inBook) {
             mood = 'surprised';
-            line = 'Ooo, bu cümle kitapta yok! Parçaları karıştırdım; anlamlı mı, sen karar ver.';
+            line = 'Ooo, bu cümle kitapta yok! Anlamlı mı, saçma mı? Sen karar ver.';
           } else if (T >= 1.2) {
-            line = 'Sıcaklık yüksek ama bu cümle kitapta aynen var. Kitabımız küçük, çoğu yerde tek aday var. Bir daha dene!';
+            line = 'Sıcaklık yüksek ama zar bu sefer olası kelimelere denk geldi; bu cümle kitapta aynen var. Bir daha dene!';
           }
           bidik.react(mood, 2);
           if (!repeat) bidik.doHop(0.5);

@@ -94,8 +94,9 @@ export const STEPS = [
     title: 'Sıcaklık: hep aynı mı, sürpriz mi?',
     body: `
       <p>Hep en uzun çubuğu seçersen hep aynı cümle çıkar. Sıkıcı! Bu yüzden sohbet robotları bazen daha kısa çubukları da seçer: zar atar gibi, ama uzun çubuğun kazanma şansı daha yüksek.</p>
-      <p>Bu zarın adı <b>sıcaklık</b>. Kaydırıcıyı sola çek (0): Bıdık hep en olası kelimeyi seçer, aynı cümleyi tekrar eder. Sağa çek (2): kısa çubuklar da seçilebilir, her seferinde başka bir cümle çıkar; ara sıra kitapta olmayan tuhaf bir cümle de gelir. Ama bizim kitabımız küçük: çoğu yerde kitapta tek bir aday var, zarın seçeceği başka kelime yok. Bu yüzden yüksek sıcaklıkta bile cümlelerin çoğu kitaptan çıkar. Binlerce adayı olan büyük modellerde yüksek sıcaklık çok daha kolay saçmalatır. Birkaç kez "Bir cümle yaz" de ve karşılaştır.</p>
-      ${teacher('<p>Sıcaklık T için her adayın olasılığı p<sub>i</sub><sup>1/T</sup> olarak ölçeklenir ve yeniden %100\'e tamamlanır; kelime bu yeni dağılımdan rastgele çekilir. T = 1: sayılan oranlar olduğu gibi. T → 0: en olası kelime (T = 0 burada tam argmax). T > 1: dağılım düzleşir, seyrek kelimeler öne çıkar. Örnek, "mantı en" bağlamındaki "güzel": T = 1\'de %44, T = 0,2\'de %97, T = 2\'de %31. Bu bölümde çubuklar sıcaklık uygulanmış olasılıkları gösterir ve yeşil çubuk çekilen kelimedir. Cümle noktada ya da en çok 14 yeni kelimede biter. Dikkat: bu küçük kitapta üçlü bağlamların yaklaşık %85\'inden sonra tek bir kelime gelir; orada sıcaklık hiçbir şeyi değiştirmez. "Mantı" ile başlayınca T = 2\'de bile cümlelerin yaklaşık %80\'i kitapta aynen vardır; T yükseldikçe asıl artan şey çeşitliliktir (T = 0\'da tek cümle, T ≥ 1\'de on dört kadar farklı cümle). Öğrenci "yüksek sıcaklık ama cümle normal" derse haklıdır: zar olasılıkları değiştirir, sonucu garanti etmez.</p>')}`,
+      <p>Bu zarın adı <b>sıcaklık</b>. Kaydırıcıyı sola çek (0): Bıdık hep en olası kelimeyi seçer, aynı cümleyi tekrar eder. Sağa çek (2): kısa çubuklar da sık seçilir, kitapta olmayan tuhaf, hatta saçma cümleler çıkar. Bu bir zar: yüksek sıcaklıkta da bazen kitaptaki bir cümle gelir, ama tuhaf cümleler çok daha sık olur. Birkaç kez <b>Bir cümle yaz</b> düğmesine bas ve karşılaştır.</p>
+      <p>Bu bölümde Bıdık biraz daha cesur: çoğunlukla son iki kelimeye bakar, ama yalnız son kelimeye bakınca gelen kelimelere de küçük bir şans verir. Kitaptaki her kelimenin de çok küçük bir şansı var. Büyük sohbet robotları da böyledir: her kelimenin az da olsa bir şansı vardır.</p>
+      ${teacher('<p>Sıcaklık T için her adayın olasılığı p<sub>i</sub><sup>1/T</sup> olarak ölçeklenir ve yeniden %100\'e tamamlanır; kelime bu yeni dağılımdan rastgele çekilir. T = 1: oranlar olduğu gibi. T → 0: en olası kelime (T = 0 burada tam argmax). T > 1: dağılım düzleşir, seyrek kelimeler öne çıkar. Örnek, "mantı en" bağlamındaki "güzel": T = 1\'de %44, T = 0,2\'de %97, T = 2\'de %23. Bu bölümde çubuklar sıcaklık uygulanmış olasılıkları gösterir ve yeşil çubuk çekilen kelimedir. Cümle noktada ya da en çok 14 yeni kelimede biter. Bu bölümde model 1. ve 2. bölümdeki gibi yalnız geri çekilmeyle (backoff) değil, <b>karışımla</b> (doğrusal enterpolasyon, Jelinek–Mercer) tahmin eder: olasılık = 0,85 × üçlü + 0,145 × ikili + 0,005 × tek kelime sıklığı. Nedeni: bu küçük kitapta üçlü bağlamların yaklaşık %85\'inden sonra tek bir kelime gelir; yalnız backoff ile sıcaklığın seçecek adayı olmazdı ve 2\'de bile cümlelerin çoğu kitaptan aynen çıkardı. Karışımla, "Mantı" ile başlayınca kitapta olmayan cümle oranı yaklaşık: T = 0\'da %0, T = 1\'de %25, T = 1,5\'te %60, T = 2\'de %90 (bazıları 14 kelimede kesilen kelime salatası). Zar olasılıkları değiştirir, sonucu garanti etmez: yüksek sıcaklıkta da ara sıra kitaptaki bir cümle çıkabilir.</p>')}`,
     focus: 'tokens',
     say: 'Biraz sürpriz olsun mu? Sıcaklığı sen ayarla, ben yazayım!',
     mood: 'curious',
@@ -109,6 +110,8 @@ export const STEPS = [
       sl.addEventListener('input', () => {
         c.T = Number(sl.value);
         out.textContent = c.fmtT(c.T);
+        // let the bars show the die flattening or sharpening as the slider moves
+        if (!c.playing && c.prompt[c.prompt.length - 1] !== END) c.showCandidates(null, c.T, true, true);
       });
       const chips = c.$('#lesson-extra').querySelectorAll('[data-start]');
       const mark = () => chips.forEach((b) => b.setAttribute('aria-pressed', String(b.textContent === c.startWord)));
@@ -121,7 +124,7 @@ export const STEPS = [
       });
       mark();
       c.setPrompt(c.startTokens());
-      c.showCandidates(null, c.T);
+      c.showCandidates(null, c.T, false, true);
       if (c.history.length) c.showHistory();
     },
     act(c) {

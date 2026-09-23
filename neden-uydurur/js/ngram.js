@@ -15,11 +15,21 @@
  * Sampling with temperature T: p_i^(1/T) renormalised. T → 0 is argmax,
  * T = 1 is the counted distribution, T > 1 flattens it.
  *
+ * The temperature chapter uses a mixed prediction instead of backoff
+ * (linear interpolation, Jelinek–Mercer): MIX.tri of the trigram
+ * distribution + MIX.bi of the bigram one + MIX.uni of the word
+ * frequencies. In a book this small most word pairs have exactly one
+ * follower, so with backoff alone temperature would have nothing to choose
+ * from; the mix gives every word a small chance, as in a large model.
+ *
  * Importable in node (no THREE) so it can be unit-tested.
  */
 
 export const START = '<s>';
 export const END = '.';
+
+/** Weights of the mixed prediction (temperature chapter). */
+export const MIX = { tri: 0.85, bi: 0.145, uni: 0.005 };
 
 export const CORPUS = [
   'Mantı en güzel yoğurtla yenir.',
@@ -206,6 +216,33 @@ export class NGram {
     return { level, context, total, candidates };
   }
 
+  /**
+   * Mixed prediction: MIX.tri·trigram + MIX.bi·bigram + MIX.uni·unigram,
+   * renormalised over the tables that exist for this context.
+   * Same shape as next(); level is 'mix', count is the backoff count
+   * (0 for words that never followed this context in the book).
+   */
+  nextMixed(prompt, mix = MIX) {
+    const r = this.next(prompt);
+    const seq = NGram.seq(prompt);
+    const n = seq.length;
+    const parts = [];
+    if (n >= 2 && this.tri.has(`${seq[n - 2]} ${seq[n - 1]}`)) parts.push([this.tri.get(`${seq[n - 2]} ${seq[n - 1]}`), mix.tri]);
+    if (this.bi.has(seq[n - 1])) parts.push([this.bi.get(seq[n - 1]), mix.bi]);
+    parts.push([this.uni, mix.uni]);
+    const wsum = parts.reduce((a, [, w]) => a + w, 0);
+    const p = new Map();
+    for (const [table, w] of parts) {
+      const total = [...table.values()].reduce((a, b) => a + b, 0);
+      for (const [word, count] of table) p.set(word, (p.get(word) || 0) + (w / wsum) * (count / total));
+    }
+    const counts = new Map(r.candidates.map((c) => [c.word, c.count]));
+    const candidates = [...p.entries()]
+      .map(([word, q]) => ({ word, count: counts.get(word) || 0, p: q }))
+      .sort((a, b) => b.p - a.p || (a.word < b.word ? -1 : 1));
+    return { level: 'mix', backoff: r.level, context: r.context, total: r.total, candidates };
+  }
+
   /** The most likely next token (ties: alphabetical, as sorted by next()). */
   top(prompt) {
     return this.next(prompt).candidates[0].word;
@@ -236,9 +273,9 @@ export class NGram {
     return word;
   }
 
-  /** Draw one next token with temperature T. Returns { word, level, context, total, dist }. */
-  sample(prompt, T = 1) {
-    const r = this.next(prompt);
+  /** Draw one next token with temperature T (mixed: use nextMixed). Returns { word, level, context, total, dist }. */
+  sample(prompt, T = 1, mixed = false) {
+    const r = mixed ? this.nextMixed(prompt) : this.next(prompt);
     const dist = this.scaled(r.candidates, T);
     const word = T <= 0.05 ? dist[0].word : this.draw(dist);
     return { word, level: r.level, context: r.context, total: r.total, dist };
@@ -248,15 +285,16 @@ export class NGram {
    * Continue `prompt` until "." or maxWords new words. T ≤ 0.05 → argmax.
    * onStep(step) is called before each token is appended with
    * { prompt, word, level, context, total, dist } so a scene can replay it.
+   * mixed: predict with nextMixed (temperature chapter) instead of backoff.
    * Returns { words: [...all tokens incl. prompt], added: n, ended: bool, steps }.
    */
-  generate(prompt, T = 1, maxWords = 14, onStep) {
+  generate(prompt, T = 1, maxWords = 14, onStep, mixed = false) {
     const words = prompt.map((w) => lower(w));
     const steps = [];
     let added = 0;
     let ended = false;
     while (added < maxWords) {
-      const s = this.sample(words, T);
+      const s = this.sample(words, T, mixed);
       const step = { prompt: words.slice(), ...s };
       steps.push(step);
       onStep?.(step);

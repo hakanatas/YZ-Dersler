@@ -546,3 +546,13 @@ body { font-size: 18px; }
   #btn-hide-ui { display: none; }
 }
 #lesson-stats { scroll-margin-bottom: 96px; }
+
+/* Short screens (a phone turned sideways, a small laptop window): the intro and
+   finish cards must never push their buttons below the screen edge. */
+.intro__card { max-height: calc(100vh - 40px); max-height: calc(100dvh - 40px); overflow-y: auto; overscroll-behavior: contain; }
+@media (max-height: 560px) {
+  .intro, .finish { padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+  .intro__card { max-height: calc(100vh - 24px); max-height: calc(100dvh - 24px); padding: 16px 20px; }
+  .intro__title { font-size: 22px; }
+  .intro__text { font-size: 15px; line-height: 1.45; margin-bottom: 12px; }
+}
