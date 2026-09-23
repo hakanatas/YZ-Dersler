@@ -538,3 +538,10 @@ body { font-size: 18px; }
 .finish__next { margin: 12px 0 0; text-align: center; font-size: 15px; color: var(--ink-soft); }
 /* scrolled into view above the pinned button bar, not under it */
 .readout { scroll-margin-bottom: 96px; scroll-margin-top: 12px; }
+/* a visible way back to the lesson list from any chapter */
+.pill--home { text-decoration: none; color: var(--ink); display: inline-flex; align-items: center; }
+.pill--home:hover { background: #fff; }
+@media (max-width: 520px) {
+  /* phones: "Sadece sahne" gives way to the way home */
+  #btn-hide-ui { display: none; }
+}
