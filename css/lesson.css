@@ -536,3 +536,5 @@ body { font-size: 18px; }
 .dots button span { white-space: nowrap; }
 .intro__actions { flex-wrap: wrap; }
 .finish__next { margin: 12px 0 0; text-align: center; font-size: 15px; color: var(--ink-soft); }
+/* scrolled into view above the pinned button bar, not under it */
+.readout { scroll-margin-bottom: 96px; scroll-margin-top: 12px; }

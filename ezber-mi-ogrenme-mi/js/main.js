@@ -208,7 +208,20 @@ createLesson({
         const b = c.net.evaluate(c.test);
         const pa = Math.round(a.acc * 100);
         const pb = Math.round(b.acc * 100);
-        c.readout(`<span class="big">Antrenman masası %${pa} · Sınav masası %${pb}</span>${pa - pb >= 12 ? '<span class="warn">Büyük fark!</span> Bıdık masayı ezberlemiş, kuralı öğrenmemiş.' : pb >= 90 ? 'Fark küçük: Bıdık bu sefer gerçekten öğrendi.' : 'İkisi de düşük: Bıdık\'ın kafası karışmış.'}`);
+        const flipped = c.subset.filter((d) => d.flipped);
+        if (c.noisy && flipped.length) {
+          // the training table is graded against the chef's wrong labels, the test table against the true ones
+          const n = c.subset.length;
+          const cap = Math.floor(((n - flipped.length) / n) * 100);
+          const copied = flipped.filter((d) => (c.net.predict(d.x) > 0.5 ? 1 : 0) === d.y).length;
+          c.readout(
+            `<span class="big">Antrenman masası %${pa} · Sınav masası %${pb}</span>` +
+              `<b>${pb > pa ? 'Sınav neden daha yüksek?' : 'İki puan neden böyle?'}</b> Antrenman masası ustanın yanlış etiketleriyle puanlanıyor: ${n} mantının ${flipped.length} tanesinin etiketi yanlış, o yüzden orada en fazla %${cap} alınabilir. Sınav masasının etiketleri doğru. ` +
+              `Temiz etiketlerle ikisi de %100'dü; yanlış etiketler Bıdık'ı iki masada da geriletti. Üstelik Bıdık ${flipped.length} yanlış etiketin <span class="warn">${copied} tanesini</span> olduğu gibi ezberledi.`
+          );
+        } else {
+          c.readout(`<span class="big">Antrenman masası %${pa} · Sınav masası %${pb}</span>${pa - pb >= 12 ? '<span class="warn">Büyük fark!</span> Bıdık masayı ezberlemiş, kuralı öğrenmemiş.' : pb >= 90 ? 'Fark küçük: Bıdık bu sefer gerçekten öğrendi.' : 'İkisi de düşük: Bıdık\'ın kafası karışmış.'}`);
+        }
         c.toast(`Antrenman bitti! Antrenman masası %${pa}, sınav masası %${pb}.`);
         c.say(pa - pb >= 12 ? 'Antrenmanda süperim ama sınavda… hmm.' : pb >= 90 ? 'İki masada da bildim! Bu sefer öğrendim!' : 'Bir şeyler ters. Bu mantılar birbirini tutmuyor!', 5);
         c.bidik.react(pb >= 90 ? 'bliss' : 'worried', 3);

@@ -131,7 +131,7 @@ export const STEPS = [
     body: `
       <p>Bu sefer 64 mantı var ama bir sorun var: dalgın usta mantıların <b>dörtte birine yanlış etiket</b> yapıştırmış. Kıvamındakilere "olmamış", olmamışlara "kıvamında" demiş. Masaya bak: şeridin dışında pembe, içinde sarı mantılar var.</p>
       <p>Bıdık bunları da doğru sanıp öğrenmeye çalışacak. Sence ne olur? Antrenmanı başlat; iki masadaki puanları önceki deneyle karşılaştır.</p>
-      ${teacher('<p><b>Etiket gürültüsü</b>: eğitim verisinin %25\'inde etiket ters çevrilmiştir (belirli tohumla, her seferinde aynı mantılar). Model çelişkili örnekleri uzlaştırmaya çalışır; hem eğitim hem test doğruluğu düşer, karar sınırı bozulur. Ders: modelin kalitesi verinin kalitesini geçemez ("çöp girer, çöp çıkar"). Gerçek projelerde veri temizliği ve etiket denetimi bu yüzden zaman alır.</p>')}`,
+      ${teacher('<p><b>Etiket gürültüsü</b>: eğitim verisinin %25\'inde etiket ters çevrilmiştir (belirli tohumla, her seferinde aynı mantılar). Model çelişkili örnekleri uzlaştırmaya çalışır; hem eğitim hem test doğruluğu düşer, karar sınırı bozulur. Bu deneyde 64 örneğin 16\'sı ters etiketlidir; sonuç eğitimde %67 (43/64), testte %81 (26/32). Test puanının eğitimden yüksek çıkması şaşırtıcı değildir: eğitim doğruluğu ustanın <i>yanlış</i> etiketlerine göre ölçülür (kuralı kusursuz öğrenen bir model bile en fazla %75 alır), test ise doğru etiketlerle ölçülür. Model 16 ters etiketin 10\'unu olduğu gibi öğrenmiştir, yani hatayı ezberlemiştir. Ders: modelin kalitesi verinin kalitesini geçemez ("çöp girer, çöp çıkar"). Gerçek projelerde veri temizliği ve etiket denetimi bu yüzden zaman alır.</p>')}`,
     focus: 'train',
     say: 'Şu pembe mantı şeridin çok dışında… Usta, emin misin?',
     mood: 'worried',

@@ -249,6 +249,10 @@ export function createLesson(lesson) {
     readout(html) {
       dom.readout.hidden = !html;
       dom.readout.innerHTML = html || '';
+      // a new result is only useful if it can be seen: bring it into the panel's view
+      if (html && window.innerWidth > 900 && !dom.lesson.classList.contains('is-collapsed')) {
+        requestAnimationFrame(() => dom.readout.scrollIntoView({ block: 'nearest', behavior: reducedMotion ? 'auto' : 'smooth' }));
+      }
     },
     /** rows: [[label, value], ...]; history: numbers for the sparkline (optional). */
     setStats(rows, history) {
