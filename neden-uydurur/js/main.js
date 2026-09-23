@@ -194,13 +194,30 @@ createLesson({
         bidik.setMood('thinking');
         c.play(trace, T, () => {
           c.setAction('Bir cümle yaz', false);
-          c.history.unshift({ text: sentence, T, inBook: model.has(sentence), ended: trace.ended });
+          const inBook = model.has(sentence);
+          c.history.unshift({ text: sentence, T, inBook, ended: trace.ended });
           c.history = c.history.slice(0, 3);
           c.showHistory();
           const repeat = c.history.length > 1 && c.history[1].text === sentence;
-          bidik.react(repeat ? 'sleepy' : T >= 1.4 ? 'surprised' : 'happy', 2);
+          // React to what actually came out, not to the slider: a hot die can
+          // still land on the likeliest words and rebuild a sentence from the book.
+          let mood = 'happy';
+          let line = sentence;
+          if (repeat) {
+            mood = 'sleepy';
+            line = 'Yine aynı cümle. Sıcaklığı biraz artırsana!';
+          } else if (!trace.ended) {
+            mood = 'surprised';
+            line = 'Ooo, cümleyi bitiremedim; 14 kelimede kestim!';
+          } else if (!inBook) {
+            mood = 'surprised';
+            line = 'Ooo, bu cümle kitapta yok! Parçaları karıştırdım; anlamlı mı, sen karar ver.';
+          } else if (T >= 1.2) {
+            line = 'Sıcaklık yüksek ama bu cümle kitapta aynen var. Kitabımız küçük, çoğu yerde tek aday var. Bir daha dene!';
+          }
+          bidik.react(mood, 2);
           if (!repeat) bidik.doHop(0.5);
-          c.say(repeat ? 'Yine aynı cümle. Sıcaklığı biraz artırsana!' : T >= 1.4 ? 'Ooo, bu biraz tuhaf oldu!' : sentence, 4);
+          c.say(line, 4);
         });
       },
       showHistory() {
