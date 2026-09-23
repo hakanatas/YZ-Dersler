@@ -193,7 +193,7 @@ const FOCUS = {
   network: { target: new THREE.Vector3(3.3, 1.15, 0), dist: 6.9, az: 0.18, el: 1.2, bidik: [4.7, -0.25] },
   // the guessing game: the table with the marked dumpling and the network side by side
   game: { target: new THREE.Vector3(1.05, 0.5, 0.15), dist: 10.2, az: 0.2, el: 1.02, bidik: [5.3, 0.9] },
-  tokens: { target: new THREE.Vector3(1.1, 0.6, 0.2), dist: 8.8, az: 0.05, el: 1.05, bidik: [3.0, 1.2] },
+  tokens: { target: new THREE.Vector3(0.25, 0.6, 0.4), dist: 10.8, az: 0.05, el: 1.05, bidik: [3.2, 0.0] },
   bidik: { target: new THREE.Vector3(2.4, 0.75, 1.7), dist: 5.4, az: 0.2, el: 1.2, bidik: [2.4, 1.7] },
 };
 let focusCtx = null;
@@ -459,6 +459,13 @@ const ctx = {
   updateTokenReadout() {
     const c = tokens.candidates;
     dom.readout.hidden = false;
+    if (tokens.finished) {
+      dom.readout.innerHTML = `<span class="big">"Mantı en güzel yoğurtla yenir."</span>Cümle bitti! Sıradaki en olası "kelime" nokta çıktı (%71), o yüzden cümle orada durdu. Bıdık her adımda en uzun çubuğu seçti; sen de aynı oyunu oynadın.`;
+      dom.action.textContent = 'Baştan başla';
+      ctx.say('Cümle tamam: Mantı en güzel yoğurtla yenir. Nokta da bir tahmindi!', 5);
+      return;
+    }
+    dom.action.textContent = 'Sıradaki kelimeyi seç!';
     dom.readout.innerHTML =
       `<span class="big">"${promptText()} ___"</span>` +
       c.map(([w, p], i) => `${i === 0 ? '<b>' : ''}${w} %${Math.round(p * 100)}${i === 0 ? '</b>' : ''}`).join(' · ');

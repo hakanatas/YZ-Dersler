@@ -36,6 +36,8 @@ export const STORY = [
       ['!', 0.01],
     ],
   },
+  // the sentence is finished: the most likely next "word" was the full stop
+  { prompt: ['Mantı', 'en', 'güzel', 'yoğurtla', 'yenir', '.'], candidates: [] },
 ];
 
 function tileTexture(text, palette) {
@@ -88,7 +90,8 @@ export class TokenDemo extends THREE.Group {
     this.clear();
     this.stage = stage;
     const s = STORY[stage];
-    const W = this.tileW;
+    // a long sentence gets narrower tiles so the whole line stays on the table
+    const W = s.prompt.length > 5 ? 0.64 : this.tileW;
     const gap = 0.12;
     const total = s.prompt.length * (W + gap) - gap;
     const x0 = -total / 2 + W / 2;
@@ -112,10 +115,11 @@ export class TokenDemo extends THREE.Group {
       this.add(tile);
       this.tiles.push(tile);
     });
-    // the empty slot for the next word
+    // the empty slot for the next word (none once the sentence is finished)
     const slot = new THREE.Mesh(new THREE.BoxGeometry(W, 0.06, 0.42), this.slotMat);
     slot.position.set(x0 + s.prompt.length * (W + gap), 0.03, 1.1);
     slot.receiveShadow = true;
+    slot.visible = s.candidates.length > 0;
     this.add(slot);
     this.tiles.push(slot);
     slot.userData.target = 1;
@@ -153,6 +157,11 @@ export class TokenDemo extends THREE.Group {
   }
 
   /** Accept the most likely word and move to the next stage (loops). */
+  /** True when the story has reached its full stop. */
+  get finished() {
+    return STORY[this.stage].candidates.length === 0;
+  }
+
   next() {
     this.build((this.stage + 1) % STORY.length, true);
   }
