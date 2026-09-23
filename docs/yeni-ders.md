@@ -77,6 +77,14 @@ otomatik ilerleme o sırada durur ve test betiği bekler.
   'pick' | 'drip' | 'hop' | 'boing' | 'yum' | 'grab' | 'lift' | 'refill')`),
   `tween.js`, `textures.js`, `dumpling-shape.js`.
 
+## Dersler arası geçiş
+
+`index.html` içindeki bitiş kartında (`#finish`) sıradaki derse giden
+`<a class="btn btn--accent" href="../<sonraki-ders>/">Sıradaki ders →</a>`
+bağlantısı ve `<a class="btn" href="../">Tüm dersler</a>` bulunur. Son
+bölümde alttaki "Devam" düğmesi bu bağlantıyı okur ve "Sıradaki ders →"
+olur; bağlantı yoksa "Tüm dersler" olur ve ana sayfaya gider.
+
 ## Test
 
 ```bash

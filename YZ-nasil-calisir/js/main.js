@@ -611,7 +611,7 @@ function go(i, instant = false) {
   dom.action2.hidden = !s.secondary;
   dom.action2.textContent = s.secondary || '';
   dom.prev.disabled = i === 0;
-  dom.next.textContent = i === STEPS.length - 1 ? 'Baştan başla' : 'Devam →';
+  dom.next.textContent = i === STEPS.length - 1 ? (document.querySelector('#finish a.btn--accent') ? 'Sıradaki ders →' : 'Tüm dersler') : 'Devam →';
   dom.dots.querySelectorAll('button').forEach((b, k) => (k === i ? b.setAttribute('aria-current', 'step') : b.removeAttribute('aria-current')));
   dom.lesson.classList.remove('is-collapsed');
   dom.collapse.setAttribute('aria-expanded', 'true');
@@ -631,7 +631,12 @@ function go(i, instant = false) {
 }
 
 dom.prev.addEventListener('click', () => go(state.step - 1));
-dom.next.addEventListener('click', () => go(state.step === STEPS.length - 1 ? 0 : state.step + 1));
+// on the last chapter the dock leads on to the next lesson (or back to the list)
+dom.next.addEventListener('click', () => {
+  if (state.step < STEPS.length - 1) return go(state.step + 1);
+  const nextLesson = document.querySelector('#finish a.btn--accent');
+  window.location.href = nextLesson ? nextLesson.getAttribute('href') : '../';
+});
 dom.action.addEventListener('click', () => {
   sound.unlock();
   STEPS[state.step].act?.(ctx);
