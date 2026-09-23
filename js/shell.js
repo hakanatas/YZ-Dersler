@@ -250,7 +250,10 @@ export function createLesson(lesson) {
       dom.readout.hidden = !html;
       dom.readout.innerHTML = html || '';
       // a new result is only useful if it can be seen: bring it into the panel's view
-      if (html && window.innerWidth > 900 && !dom.lesson.classList.contains('is-collapsed')) {
+      // only for results the student asked for: a chapter that shows a result as it opens
+      // must keep its title and text in view (the panel starts at the top)
+      const asked = (state.actedAt || 0) > (state.enteredAt || 0);
+      if (html && asked && window.innerWidth > 900 && !dom.lesson.classList.contains('is-collapsed')) {
         requestAnimationFrame(() => dom.readout.scrollIntoView({ block: 'nearest', behavior: reducedMotion ? 'auto' : 'smooth' }));
       }
     },
@@ -390,6 +393,7 @@ export function createLesson(lesson) {
     timers.length = 0;
     state.step = i;
     state.autoTimer = 0;
+    state.enteredAt = performance.now();
     const s = STEPS[i];
     dom.count.textContent = `Bölüm ${i + 1} / ${STEPS.length}`;
     dom.title.textContent = s.title;
@@ -421,6 +425,9 @@ export function createLesson(lesson) {
     sound.play('click', { volume: 0.6 });
   }
 
+  // anything the student presses inside the panel (buttons, chips, sliders, quiz) counts as asking
+  dom.lesson.addEventListener('pointerdown', () => (state.actedAt = performance.now()));
+  dom.lesson.addEventListener('keydown', () => (state.actedAt = performance.now()));
   dom.prev.addEventListener('click', () => go(state.step - 1));
   // on the last chapter the dock leads on to the next lesson (or back to the list)
   dom.next.addEventListener('click', () => {
