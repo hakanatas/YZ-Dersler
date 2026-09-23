@@ -8,7 +8,7 @@ import { STEPS, QUIZ, GUESSES } from './steps.js';
 const FOCUS = {
   overview: { target: new THREE.Vector3(0.8, 0.45, -0.3), dist: 12.0, az: 0.18, el: 0.98, bidik: [0.7, 2.4] },
   train: { target: new THREE.Vector3(-1.1, 0.2, 0.2), dist: 6.9, az: 0.12, el: 1.0, bidik: [0.95, 2.05] },
-  test: { target: new THREE.Vector3(2.5, 0.2, 0.2), dist: 6.2, az: 0.1, el: 1.0, bidik: [0.6, 2.0] },
+  test: { target: new THREE.Vector3(2.8, 0.2, 0.2), dist: 6.6, az: 0.1, el: 1.0, bidik: [4.3, -0.7] },
   network: { target: new THREE.Vector3(1.05, 1.15, -2.6), dist: 6.9, az: 0.18, el: 1.2, bidik: [2.6, -2.7] },
   bidik: { target: new THREE.Vector3(1.2, 0.75, 2.3), dist: 5.4, az: 0.2, el: 1.2, bidik: [1.2, 2.3] },
 };

@@ -117,7 +117,7 @@ export const STEPS = [
     label: 'Neden?',
     title: 'Neden? Bıdık kötü niyetli değil',
     body: `
-      <p>Kırmızı halkalar hep ${chefSpan(2, 'mor')} halkaların üstünde toplandı: Deniz Usta'nın 16 mantısından 7'si yanlış. Bıdık, tam kıvamında pişmiş 5 büyük mantıya "olmamış" dedi; çiğ kalmış 2 tanesine "kıvamında" dedi. Peki Bıdık Deniz Usta'yı sevmiyor mu? Hayır! Bıdık büyük mantıyı <b>hiç görmedi</b> ki.</p>
+      <p>Kırmızı halkaların neredeyse hepsi ${chefSpan(2, 'mor')} halkaların üstünde: Deniz Usta'nın 16 mantısından 7'si yanlış, Kemal Usta'nın ise yalnızca 1'i, Ayşe Usta'nın hiçbiri. Bıdık, tam kıvamında pişmiş 5 büyük mantıya "olmamış" dedi; çiğ kalmış 2 tanesine "kıvamında" dedi. Peki Bıdık Deniz Usta'yı sevmiyor mu? Hayır! Bıdık büyük mantıyı <b>hiç görmedi</b> ki.</p>
       <p>Örtüye bak: Bıdık pembe şeridi küçük ve orta mantılardan öğrendi, sonra sağa doğru <b>dümdüz uzattı</b>. Oysa gerçek şerit büyük mantılarda yukarı kıvrılıyor: kocaman mantının içi geç pişer. <b>"Gerçek şeridi göster"</b> düğmesine basıp gerçek şeridi örtünün üstünde gör. Bıdık'ın kuralı basit: <b>veri kimi içeriyorsa onu öğrenir.</b></p>
       ${teacher('<p>Model, verinin olmadığı bölgede <b>dış değerleme</b> (ekstrapolasyon) yapar: gördüğü şeridi düz devam ettirir. Gerçek kural eğri (3 + 6·boy²) olduğu için büyük mantılarda modelin şeridi gerçeğin altında kalır. Sınav masasındaki yanlışlar: 3,9 ve 4,9 dakika pişmiş iki çiğ mantıya "kıvamında"; 6,5–7,4 dakika pişmiş, kıvamındaki beş mantıya "olmamış". Kemal Usta\'nın tek yanlışı da aralığının büyük ucunda (boy 0,56). Bu yanlılık modelin kötü olmasından değil, eğitim verisinin sınav dağılımını <b>kapsamamasından</b> kaynaklanır (dağılım kayması, "out-of-distribution"). Koyu çizgiler gerçek şeridin iki sınırıdır.</p>')}`,
     focus: 'test',
@@ -126,7 +126,8 @@ export const STEPS = [
     action: 'Gerçek şeridi göster',
     controls: legend(),
     enter(c) {
-      if (c.denizCount !== 0) {
+      // reached from any chapter (the dots skip chapters): make sure the table is Ayşe + Kemal only
+      if (c.denizCount !== 0 || !c.subset.length) {
         c.setDeniz(0, true);
         c.resetNet(true);
       }

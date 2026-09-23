@@ -85,6 +85,7 @@ export class TinyNet {
   /** One full-batch gradient step. Returns loss and accuracy before the update. */
   trainStep(data, lr = 0.6) {
     const n = data.length;
+    if (!n) return { loss: 0, acc: 0 }; // nothing to learn from: leave the weights alone
     const gW1 = this.W1.map((w) => new Array(w.length).fill(0));
     const gb1 = new Array(this.hidden).fill(0);
     const gW2 = new Array(this.hidden).fill(0);
@@ -120,6 +121,7 @@ export class TinyNet {
   }
 
   evaluate(data) {
+    if (!data.length) return { loss: 0, acc: 0 };
     let loss = 0;
     let correct = 0;
     for (const { x, y } of data) {
