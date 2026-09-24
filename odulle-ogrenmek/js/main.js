@@ -10,8 +10,6 @@ const FOCUS = {
   bidik: { target: new THREE.Vector3(1.2, 0.75, 2.3), dist: 5.4, az: 0.2, el: 1.2, bidik: [1.2, 2.3] },
 };
 
-const DONE_TEXT = { raw: 'çiğ kalmış', good: 'tam kıvamında', over: 'fazla pişmiş' };
-
 createLesson({
   steps: STEPS,
   quiz: QUIZ,
@@ -62,6 +60,12 @@ createLesson({
       afterRun: null,
       afterCook: null,
       selected: 6,
+      /**
+       * How the served dumpling looks in the pot. The student sees only what
+       * Bıdık sees (clap or silence) until the speed-customer chapter, which
+       * shows the truth next to the claps (showTasty).
+       */
+      look: (t) => (c.showTasty ? t.done : 'cooking'),
       /** Switch experiment (mode from bandit.js), epsilon and seed; the learner starts empty. */
       setMode(mode, epsilon, seed) {
         c.stopAll();
@@ -134,12 +138,11 @@ createLesson({
           c.state.busy = false;
           c.syncBars();
           c.updateStats();
-          const done = DONE_TEXT[t.done];
           const size = SIZE_NAMES[t.kind];
           c.readout(
             t.r
-              ? `<span class="big">${minutes} dk → <span class="ok">Alkış!</span></span>Mantı ${done}. Bıdık'ın defterine bir alkış daha yazıldı.`
-              : `<span class="big">${minutes} dk → <span class="bad">sessizlik</span></span>Mantı ${done}. Ama bunu yalnızca sen ve müşteri biliyorsunuz; Bıdık'a söylenmiyor.`
+              ? `<span class="big">${minutes} dk → <span class="ok">Alkış!</span></span>Müşteri alkışladı ama nedenini söylemedi. Bıdık'ın defterine yazıldı: ${minutes} dakika, bir alkış.`
+              : `<span class="big">${minutes} dk → <span class="bad">sessizlik</span></span>Müşteri alkışlamadı. Çiğ mi kaldı, fazla mı pişti? Söylemiyor. Bıdık'ın defterine yazıldı: ${minutes} dakika, alkış yok.`
           );
           bidik.setMood('happy');
           c.afterCook?.(t, size);
@@ -149,7 +152,7 @@ createLesson({
       showTrial(t, animated) {
         c.stove.setMinutes(t.minutes);
         c.minuteTag.el.textContent = `${t.minutes} dk`;
-        c.stove.setDumpling(t.size, t.done, !animated);
+        c.stove.setDumpling(t.size, c.look(t), !animated);
         c.bars.flash(t.table, t.minutes - 1, t.r);
         const hold = animated ? 1.6 : 0.25;
         if (t.r) {
@@ -176,7 +179,7 @@ createLesson({
             c.soundTimer = 0.2;
           }
         }
-        if (animated) c.stove.setDumpling(t.size, t.done);
+        if (animated) c.stove.setDumpling(t.size, c.look(t));
       },
       /** Bıdık cooks `n` dumplings on his own, a few per frame. */
       startRun(n, label) {

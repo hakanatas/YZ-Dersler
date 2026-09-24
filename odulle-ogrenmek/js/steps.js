@@ -33,8 +33,8 @@ export const STEPS = [
     title: 'Etiket yok, alkış var',
     body: `
       <p>Önceki derslerde mantıların üstünde etiket vardı: "kıvamında", "olmamış". Bu sefer kimse etiket yapıştırmıyor. Bıdık bir süre seçiyor, mantıyı pişiriyor, müşteriye veriyor. Müşteri ya <b>alkışlıyor</b> ya da <b>sessiz kalıyor</b>. Hepsi bu.</p>
-      <p>Alkış "aferin" demek, sessizlik "olmadı" demek. Ama müşteri neden alkışlamadığını söylemiyor: çiğ mi kaldı, fazla mı pişti? Bıdık bunu kendi çözmek zorunda. <b>"Bıdık bir mantı pişirsin"</b> düğmesine bas: Bıdık rastgele bir süre seçip bir mantı pişirsin. Ocaktaki süre ayarına ve tencereye bak.</p>
-      ${teacher('<p>Bu <b>pekiştirmeli öğrenme</b>dir (reinforcement learning). Öğrenen <b>ajan</b> (Bıdık) bir <b>eylem</b> seçer (pişirme süresi: 1–10 dakika) ve ortamdan bir <b>ödül</b> alır (alkış = 1, sessizlik = 0). Denetimli öğrenmeden farkı: doğru cevap hiç söylenmez, yalnızca eylemin sonucu puanlanır. Mutfağın gizli kuralı önceki derslerle aynı: ideal süre 3 + 6·boy dakika, ±1,5 dakika tolerans. Mantılar elde yapıldığı için boy her seferinde biraz değişir (orta boy: 0,5 ± 0,2); bu yüzden aynı süre bazen alkış alır, bazen almaz. Bu bölümde Bıdık süreyi tamamen rastgele seçer (ε = 1).</p>')}`,
+      <p>Alkış "aferin" demek, sessizlik "olmadı" demek. Ama müşteri neden alkışlamadığını söylemiyor: çiğ mi kaldı, fazla mı pişti? Bıdık bunu kendi çözmek zorunda. <b>"Bıdık bir mantı pişirsin"</b> düğmesine bas: Bıdık rastgele bir süre seçip bir mantı pişirsin. Ocaktaki süre ayarına bak ve müşteriyi dinle.</p>
+      ${teacher('<p>Bu <b>pekiştirmeli öğrenme</b>dir (reinforcement learning). Öğrenen <b>ajan</b> (Bıdık) bir <b>eylem</b> seçer (pişirme süresi: 1–10 dakika) ve ortamdan bir <b>ödül</b> alır (alkış = 1, sessizlik = 0). Denetimli öğrenmeden farkı: doğru cevap hiç söylenmez, yalnızca eylemin sonucu puanlanır. Mutfağın gizli kuralı önceki derslerle aynı: ideal süre 3 + 6·boy dakika, ±1,5 dakika tolerans. Mantılar elde yapıldığı için boy her seferinde biraz değişir (orta boy: 0,5 ± 0,2); bu yüzden aynı süre bazen alkış alır, bazen almaz. Bu bölümde Bıdık süreyi tamamen rastgele seçer (ε = 1). Öğrenci de 1–5. bölümlerde Bıdık\'ın gördüğünü görür: yalnızca alkış ya da sessizlik. Mantının gerçek hâli (çiğ, kıvamında, fazla pişmiş) yalnızca 6. bölümde, ödül yanlış tasarlanınca gösterilir.</p>')}`,
     focus: 'stove',
     say: 'Etiket yok mu? Peki ben neye bakacağım? Müşteriye mi?',
     mood: 'curious',
@@ -59,7 +59,7 @@ export const STEPS = [
     label: 'Sen dene',
     title: 'Sen dene: kaç dakika?',
     body: `
-      <p>Şimdi sıra sende. Orta boy bir mantı var. Bir süre seç, müşteriyi izle. Sonra başka süreler de dene: 3 dakikada ne oluyor, 9 dakikada ne oluyor?</p>
+      <p>Şimdi sıra sende. Orta boy bir mantı var. Bir süre seç, müşteriyi izle. Sen de Bıdık gibi yalnızca alkışı ya da sessizliği göreceksin; mantının çiğ mi kaldığını, fazla mı piştiğini kimse söylemeyecek. Başka süreler de dene: 3 dakikada ne oluyor, 9 dakikada ne oluyor? Alkış hangi sürelerde geliyor?</p>
       <p>Arkadaki <b>çubuklar</b> Bıdık'ın not defteri. Her süre için "kaç denemede alkış geldi?" oranını tutuyor. Çubuk ne kadar uzunsa o süre o kadar çok alkış almış. Aynı süreyi birkaç kez dene; çünkü her mantı birazcık farklı ve tek deneme yanıltabilir.</p>
       ${teacher('<p>Her çubuk bir eylemin <b>değer tahmini</b>dir: o süreyle yapılan denemelerdeki ortalama ödül, Q(a) = alkış sayısı / deneme sayısı. Kod bunu her denemede artımlı olarak günceller: Q[a] += (r − Q[a]) / n[a]. Orta boy mantının boyu 0,3–0,7 arasında değiştiği için alkış olasılıkları süreye göre şöyledir: 4 dk %29, 5 dk %71, <b>6 dk %100</b>, 7 dk %71, 8 dk %29; 1–3 dakika ile 9–10 dakika hiç alkış almaz. Deneme sayısı arttıkça çubuklar bu olasılıklara yaklaşır.</p>')}`,
     focus: 'overview',
@@ -251,7 +251,7 @@ export const STEPS = [
       c.setMode('hiz', 0.1, 1);
       c.afterRun = () => {
         const k = c.kitchen;
-        c.readout(`<span class="big">${k.count} denemede ${k.bandit.claps} alkış</span>Ama gerçekten kıvamında olan mantı: <span class="bad">${k.tasty}</span>. Bıdık ${k.bestMinutes(0)} dakikayı seçti; mantılar çiğ, müşteri mutlu.`);
+        c.readout(`<span class="big">${k.count} denemede ${k.bandit.claps} alkış</span>Ama gerçekten kıvamında olan mantı: <span class="bad">${k.tasty}</span>. Bıdık ${k.bestMinutes(0)} dakikayı seçti; mantılar çiğ, müşteri mutlu.<span class="row"><span>Bu bölümde mantının gerçek hâlini de sayıyoruz ("Gerçekten kıvamında" satırı). Bıdık bunu hiç görmüyor; o yalnızca alkışı sayıyor.</span></span>`);
         c.say('Bir sürü alkış aldım! Ama… bu mantılar çiğ değil mi? Alkışlanan buysa, ben de bunu öğrendim.', 6);
         c.bidik.react('surprised', 3);
       };
@@ -286,7 +286,7 @@ export const STEPS = [
       c.setMode('orta', 0.1, 3);
       for (let i = 0; i < 300; i++) c.kitchen.step();
       c.syncBars(true);
-      c.stove.setDumpling(c.kitchen.last.size, c.kitchen.last.done, true);
+      c.stove.setDumpling(c.kitchen.last.size, 'cooking', true);
       c.stove.setMinutes(c.kitchen.last.minutes, true);
     },
   },
