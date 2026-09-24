@@ -119,7 +119,7 @@ createLesson({
       buildMatch() {
         const host = c.$('#match-host');
         if (!host) return;
-        buildGame(host, MATCH.map((m) => ({ text: m.text, options: [1, 2, 3, 4, 5, 6].map((n) => `Ders ${n}`), answer: m.lesson - 1, why: m.why })), 'Altı örnekten');
+        buildGame(host, MATCH.map((m) => ({ text: m.text, options: m.options, answer: m.answer, why: m.why })), 'Altı olaydan');
       },
       buildCan() {
         const host = c.$('#can-host');

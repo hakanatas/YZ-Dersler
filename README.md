@@ -151,7 +151,7 @@ modeliyle boyanır.
 | Bölüm | Fikir |
 | --- | --- |
 | 1. Özet | Bıdık altı dersi tek tek hatırlar; ortak fikir: tahmin et, yanıl, düzelt |
-| 2. Nerede? | Günlük hayattan altı örnek → hangi ders? |
+| 2. Nerede? | Günlük hayattan altı olay → arkasındaki fikir ne? |
 | 3. Yapabilir mi? | Altı iddia: yapabilir / yapamaz / duruma göre |
 | 4. Dört kural | Kaynağını iste, verisini sor, sınavını yap, ödülünü düşün |
 | 5. Final testi | Her dersten en az bir soru, toplam on |

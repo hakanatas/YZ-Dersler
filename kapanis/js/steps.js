@@ -5,14 +5,44 @@
  */
 const teacher = (html) => `<details class="teacher"><summary>Öğretmen notu</summary>${html}</details>`;
 
-/** "Bu hangi ders?" matching game: everyday example → lesson number (1–6). */
+/** "Neden böyle?" game: an everyday event → the idea behind it (not the lesson number). */
 export const MATCH = [
-  { text: 'Video uygulaması sana hep izlediklerine benzer videolar öneriyor.', lesson: 1, why: 'Öneri sistemi de tahmin ederek öğrenir: "bunu izler mi?" sorusuna geçmiş izlemelerden cevap arar.' },
-  { text: 'Bir sohbet robotu, hiç var olmayan bir kitabın adını kendinden emin söylüyor.', lesson: 4, why: 'Halüsinasyon: model bilmediğinde de akıcı devam üretir. Kaynağa bakmak gerekir.' },
-  { text: 'Telefonun fotoğraflarda kedi olanları kendiliğinden buluyor.', lesson: 5, why: 'Görüntü tanıma: resim sayılardan ibaret, model piksellerden öğrenir.' },
-  { text: 'Sesli asistan bazı aksanları diğerlerinden daha zor anlıyor.', lesson: 3, why: 'Eksik veri: o aksanla konuşan insanlardan az kayıt dinlemiş. Veride kim yoksa onu öğrenemez.' },
-  { text: 'Bir oyun yapay zekası milyonlarca deneme oynayarak şampiyonu yeniyor.', lesson: 6, why: 'Ödülle öğrenme: etiket yok, kazanınca ödül var; deneme yanılma.' },
-  { text: 'Sadece 10 fotoğrafla eğitilen bir program yeni fotoğraflarda sürekli yanılıyor.', lesson: 2, why: 'Az örnek ezberletir: antrenmanda tam puan, sınavda düşük puan.' },
+  {
+    text: 'Video uygulaması sana hep izlediklerine benzer videolar öneriyor.',
+    options: ['Senin ne düşündüğünü okuyor', 'Geçmişte izlediklerinden, neyi izleyeceğini tahmin ediyor', 'Videoları rastgele seçiyor'],
+    answer: 1,
+    why: 'Öneri sistemi de Bıdık gibi tahmin eder: geçmişteki örneklere bakıp "bunu izler mi?" sorusuna cevap arar. Düşünce okumaz. (Ders 01)',
+  },
+  {
+    text: 'Bir sohbet robotu, hiç var olmayan bir kitabın adını kendinden emin söylüyor.',
+    options: ['Bilmediğinde de en olası kelimeleri dizip akıcı bir cevap kuruyor', 'Bilerek yalan söylüyor', 'Kitap gerçekten var, biz bilmiyoruz'],
+    answer: 0,
+    why: 'Halüsinasyon: model doğruyu değil, olası devamı üretir; bilmediğinde de durmaz. Niyeti yok, ama kaynağa bakmak gerekir. (Ders 04)',
+  },
+  {
+    text: 'Telefonun, fotoğraflarda kedi olanları kendiliğinden buluyor.',
+    options: ['Bir insan her fotoğrafa tek tek bakıyor', 'Kedi fotoğraflarında gizli bir işaret var', 'Resimler sayılardan ibaret; model binlerce kedi resminden öğrendi'],
+    answer: 2,
+    why: 'Görüntü tanıma: bilgisayar resmi değil, piksellerin sayılarını görür ve örneklerden öğrenir. (Ders 05)',
+  },
+  {
+    text: 'Sesli asistan bazı aksanları diğerlerinden daha zor anlıyor.',
+    options: ['Öğrenirken o aksanla konuşan insanlardan az kayıt dinlemiş', 'Mikrofon o sesleri duyamıyor', 'Asistan o aksanı bilerek anlamıyor'],
+    answer: 0,
+    why: 'Eksik veri: veride kim azsa model onda daha çok yanılır. Kötü niyet değil ama sonucu haksız olabilir. (Ders 03)',
+  },
+  {
+    text: 'Bir oyun yapay zekası milyonlarca deneme oynayarak şampiyonu yeniyor.',
+    options: ['Şampiyonun hamlelerini gizlice gördü', 'Kazanınca ödül aldı; ödül getiren hamleleri denemeyle öğrendi', 'Her hamleyi bir insan tek tek yazdı'],
+    answer: 1,
+    why: 'Ödülle öğrenme: etiket yok, kazanınca ödül var; deneme yanılmayla neyin işe yaradığını bulur. (Ders 06)',
+  },
+  {
+    text: 'Sadece 10 fotoğrafla eğitilen bir program, yeni fotoğraflarda sürekli yanılıyor.',
+    options: ['Fotoğraflar çok büyük', 'Program yeni fotoğrafları sevmedi', 'Az örneği ezberlemiş; genel kuralı öğrenememiş'],
+    answer: 2,
+    why: 'Az örnek ezberletir: antrenmanda tam puan, hiç görmediği örneklerde düşük puan. (Ders 02)',
+  },
 ];
 
 /** "Yapabilir mi?" game. answer: 0 = yapabilir, 1 = yapamaz, 2 = duruma göre. */
@@ -54,9 +84,9 @@ export const STEPS = [
     label: 'Nerede?',
     title: 'Yapay zeka nerede karşımıza çıkar?',
     body: `
-      <p>Bıdık'ın mutfağından çıkalım. Aşağıdaki olayların her biri günlük hayattan. Hangisi hangi dersin konusu? Örneği oku, ders numarasını seç. Yanlış olursa Bıdık neden olduğunu söyler.</p>
+      <p>Bıdık'ın mutfağından çıkalım. Aşağıdaki olayların her biri günlük hayattan ve her birinin arkasında Bıdık'ın başına gelen bir şey var. Olayı oku: <b>neden böyle oluyor?</b> Doğru açıklamayı seç. Cevabı seçince Bıdık açıklamasını ve hangi derste gördüğümüzü söyler.</p>
       <div id="match-host"></div>
-      ${teacher('<p>Transfer etkinliği: öğrenci, mutfak benzetmesini gerçek sistemlere (öneri, sohbet, fotoğraf, ses, oyun) eşler. Her örnek tek bir dersin ana fikrine bağlanacak biçimde yazılmıştır; tartışmada birden fazla dersle ilişkilendirilmesi de değerlidir (örneğin öneri sistemleri hem öğrenme hem veri kapsamı konusudur).</p>')}`,
+      ${teacher('<p>Transfer etkinliği: öğrenci, derslerdeki fikirleri gerçek sistemlere (öneri, sohbet, fotoğraf, ses, oyun) uygular. Ders numarası sorulmaz; her olay için arkasındaki fikir seçilir, yanlış seçenekler de sık görülen yanılgılardır ("düşünce okur", "bilerek yalan söyler", "bilerek anlamaz"). Tartışmada birden fazla fikirle ilişkilendirmek de değerlidir (örneğin öneri sistemleri hem tahmin hem veri kapsamı konusudur).</p>')}`,
     focus: 'bidik',
     say: 'Bunlar hep benim başıma gelenler gibi. Sen hangisi hangisi bul!',
     mood: 'curious',

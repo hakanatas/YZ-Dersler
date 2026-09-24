@@ -561,3 +561,6 @@ body { font-size: 18px; }
    the lesson panel) covers fades out instead of showing half a word */
 .tag--bubble { z-index: 2; }
 .tag.is-on.is-covered { opacity: 0; }
+
+/* answer chips with a whole sentence wrap inside the panel instead of running off it */
+.game__item .chips .btn, .quiz__opts .btn { white-space: normal; max-width: 100%; text-align: left; line-height: 1.3; }
