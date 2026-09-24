@@ -556,3 +556,8 @@ body { font-size: 18px; }
   .intro__title { font-size: 22px; }
   .intro__text { font-size: 15px; line-height: 1.45; margin-bottom: 12px; }
 }
+
+/* Bıdık's speech bubble is always on top of the scene labels; a label it (or
+   the lesson panel) covers fades out instead of showing half a word */
+.tag--bubble { z-index: 2; }
+.tag.is-on.is-covered { opacity: 0; }

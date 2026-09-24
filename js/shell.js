@@ -611,20 +611,43 @@ export function createLesson(lesson) {
     controls.update();
 
     const r = canvas.getBoundingClientRect();
+    // the lesson panel: labels behind it are faded out, and when it sits beside
+    // the scene (wide screens) Bıdık's speech bubble stays to its right
+    const panel = !state.uiHidden && !dom.lesson.hidden ? dom.lesson.getBoundingClientRect() : null;
+    const side = panel && window.innerWidth > 900; // panel beside the scene, not under it
+    const shown = [];
     for (const t of tags) {
       const on = t.on();
       t.el.classList.toggle('is-on', !!on);
-      if (!on) continue;
+      if (!on) {
+        t.el.classList.remove('is-covered');
+        continue;
+      }
       tmp.copy(t.get()).project(camera);
       let x = r.left + ((tmp.x + 1) / 2) * r.width;
       let y = r.top + ((1 - tmp.y) / 2) * r.height;
+      const hw = t.el.offsetWidth / 2;
+      const hh = t.el.offsetHeight / 2;
       if (t === bubble) {
-        const hw = t.el.offsetWidth / 2 + 8;
-        const hh = t.el.offsetHeight / 2 + 8;
-        x = clamp(x, hw, r.width - hw);
-        y = clamp(y, hh + 60, r.height - hh);
+        const minX = side && panel.width ? Math.min(panel.right + hw + 16, r.width - hw - 8) : hw + 8;
+        x = clamp(x, minX, r.width - hw - 8);
+        y = clamp(y, hh + 68, r.height - hh - 8);
       }
       t.el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+      shown.push({ t, x0: x - hw, x1: x + hw, y0: y - hh, y1: y + hh });
+    }
+    // a label under the speech bubble or behind the panel is not readable; fade it
+    // (on phones the bubble is pinned under the top bar by CSS, so measure it)
+    const bub = bubble.text && !state.uiHidden ? bubble.el.getBoundingClientRect() : null;
+    const hit = (a, b) => b && b.width && a.x0 < b.right + 6 && a.x1 > b.left - 6 && a.y0 < b.bottom + 6 && a.y1 > b.top - 6;
+    // ...and so is one half under the top bar's buttons or under a label placed before it
+    const bar = [...document.querySelectorAll('.topbar .brand, .topbar__right')].map((e) => e.getBoundingClientRect());
+    const kept = [];
+    for (const s of shown) {
+      if (s.t === bubble) continue;
+      const covered = hit(s, bub) || hit(s, panel) || bar.some((b) => hit(s, b)) || kept.some((k) => s.x0 < k.x1 && s.x1 > k.x0 && s.y0 < k.y1 && s.y1 > k.y0);
+      s.t.el.classList.toggle('is-covered', covered);
+      if (!covered) kept.push(s);
     }
     renderer.render(scene, camera);
   }
