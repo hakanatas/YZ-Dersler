@@ -5,15 +5,21 @@
  * chapter, one thing to do, a teacher note with the real terms.
  */
 const teacher = (html) => `<details class="teacher"><summary>Öğretmen notu</summary>${html}</details>`;
-const fmtEps = (e) => e.toFixed(2).replace('.', ',');
+const pctEps = (e) => `%${Math.round(e * 100)}`;
 
 function renderRuns4(c) {
   if (!c.runs4.length) return;
   const best = Math.max(...c.runs4.map((r) => r.claps));
   const rows = c.runs4
-    .map((r) => `<span>ε = ${fmtEps(r.eps)} → <b>${r.claps} alkış</b> · en sevdiği ${r.best ? r.best + ' dk' : '–'}${r.tried6 ? '' : ' · <span class="warn">6 dk\'yı hiç denemedi</span>'}${r.claps === best && c.runs4.length > 1 ? ' ★' : ''}</span>`)
+    .map((r) => `<span>Keşif ${pctEps(r.eps)} → <b>${r.claps} alkış</b> · en sevdiği ${r.best ? r.best + ' dk' : '–'}${r.tried6 ? '' : ' · <span class="warn">6 dk\'yı hiç denemedi</span>'}${r.claps === best && c.runs4.length > 1 ? ' ★' : ''}</span>`)
     .join('');
-  c.readout(`<span class="big">Koşular (300 mantı)</span><span class="row">${rows}</span>`);
+  const last = c.runs4[c.runs4.length - 1];
+  let why;
+  if (last.eps === 0) why = `Keşif %0: Bıdık hep defterindeki en iyi süreyi seçti. İlk alkış aldığı ${last.best || '?'} dakikaya yapıştı${last.tried6 ? '' : '; en iyi süre olan 6 dakikayı hiç denemedi'}.`;
+  else if (last.eps >= 0.3) why = `Keşif ${pctEps(last.eps)}: En iyi süreyi ${last.best === 6 ? 'buldu' : 'arıyor'}, ama her 10 mantıdan yaklaşık ${Math.round(last.eps * 10)} tanesi rastgele sürelere gitti; o mantıların çoğu alkış almadı.`;
+  else why = `Keşif ${pctEps(last.eps)}: Arada bir yeni süre denedi, ${last.best === 6 ? '6 dakikayı buldu ve çoğu zaman onu kullandı' : `şimdilik ${last.best} dakikayı seçti`}.`;
+  const next = c.runs4.length < 3 ? '<span class="row"><span>Şimdi kaydırıcıyı değiştir ve bir koşu daha yap.</span></span>' : '';
+  c.readout(`<span class="big">Koşular (300 mantı)</span><span class="row">${rows}</span><span class="row"><span>${why}</span></span>${next}`);
 }
 
 function renderRuns5(c) {
@@ -132,21 +138,18 @@ export const STEPS = [
     label: 'Keşif',
     title: 'Keşfet mi, kullan mı?',
     body: `
-      <p>O "arada bir rastgele dene" payına <b>ε</b> (epsilon) diyoruz. Kaydırıcıyla ayarla, 300 mantı pişirt ve alkışları karşılaştır:</p>
-      <ul>
-        <li><b>ε = 0:</b> Bıdık hiç keşfetmez. İlk alkış aldığı süreye yapışır; 6 dakikayı belki de hiç denemez.</li>
-        <li><b>ε = 0,1 civarı:</b> Arada bir dener, en iyiyi bulur, sonra hep onu kullanır.</li>
-        <li><b>ε = 0,5:</b> Denemelerin yarısı rastgele. En iyiyi bilse bile zamanının yarısını boşa harcar.</li>
-      </ul>
-      <p>Her koşu boş defterle başlar; alkış sayıları aşağıda listelenir. Hangi ε en çok alkışı topluyor?</p>
-      ${teacher('<p><b>Keşif–kullanım ikilemi</b> (exploration–exploitation). Bu bölümde her koşu aynı rastgele tohumla başlar; böylece yalnızca ε\'nin etkisi görülür. ε = 0 ile Bıdık ilk alkış aldığı 5 dakikada takılır: 300 denemede 209 alkış, 6 dakikayı hiç denemez (defterde 5 dk %71, ötekiler 0; sıfırı geçen tek çubuk hep kazanır). ε = 0,05 → 283; ε = 0,1 → 276; ε = 0,2 → 259; ε = 0,3 → 227; ε = 0,5 → 197 alkış. 1000 tohum üzerinden ortalamalar aynı sırayı verir: ε = 0 → 221 (koşuların yalnızca %34\'ünde 6 dakikayı bulur), ε = 0,1 → 257, ε = 0,5 → 190. Gerçek sistemlerde ε çoğunlukla zamanla küçültülür: önce çok keşif, sonra çok kullanım.</p>')}`,
+      <p>Bıdık'ın bir ikilemi var. <b>Bildiğini mi kullansın</b>, yoksa <b>yeni bir süre mi denesin</b>? Hep bildiğini yaparsa daha iyisini hiç bulamayabilir. Hep yeni şey denerse bulduğu iyi süreyi kullanmaya vakit kalmaz.</p>
+      <p>Bu dengeyi tek bir sayı ayarlıyor: <b>keşif payı</b>. Bilim insanları ona <b>ε</b> (epsilon) der. Keşif payı %10 ise Bıdık her 10 mantıdan yaklaşık 1'inde defterine bakmadan rastgele bir süre dener; öteki 9'unda defterinde en çok alkış alan süreyi seçer.</p>
+      <p><b>Nasıl oynanır?</b> Kaydırıcıyla keşif payını seç, <b>300 mantı pişirsin</b> düğmesine bas. Her koşu boş defterle başlar ve sonucu aşağıdaki listeye eklenir. Sırayla %0, %10 ve %50 dene.</p>
+      <p>Önce tahmin et: Hiç keşfetmeyen mi, arada bir keşfeden mi, çok keşfeden mi en çok alkışı toplar?</p>
+      ${teacher('<p><b>Keşif–kullanım ikilemi</b> (exploration–exploitation). Kaydırıcı ε\'yi yüzde olarak gösterir: %10 = ε = 0,1. Bu bölümde her koşu aynı rastgele tohumla başlar; böylece yalnızca ε\'nin etkisi görülür. ε = 0 ile Bıdık ilk alkış aldığı 5 dakikada takılır: 300 denemede 209 alkış, 6 dakikayı hiç denemez (defterde 5 dk %71, ötekiler 0; sıfırı geçen tek çubuk hep kazanır). ε = 0,05 → 283; ε = 0,1 → 276; ε = 0,2 → 259; ε = 0,3 → 227; ε = 0,5 → 197 alkış. 1000 tohum üzerinden ortalamalar aynı sırayı verir: ε = 0 → 221 (koşuların yalnızca %34\'ünde 6 dakikayı bulur), ε = 0,1 → 257, ε = 0,5 → 190. Gerçek sistemlerde ε çoğunlukla zamanla küçültülür: önce çok keşif, sonra çok kullanım.</p>')}`,
     focus: 'bars',
     say: 'Hiç keşfetmezsem ne olur? Hep keşfedersem ne olur?',
     mood: 'curious',
     action: '300 mantı pişirsin',
     secondary: 'Listeyi temizle',
     stats: true,
-    controls: `<div class="sliders"><label>ε (keşif) <input type="range" id="sl-eps" min="0" max="0.5" step="0.05" value="0" /><output id="out-eps">0,00</output></label></div>`,
+    controls: `<div class="sliders"><label>Keşif payı (ε) <input type="range" id="sl-eps" min="0" max="0.5" step="0.05" value="0" /><output id="out-eps">%0</output></label></div>`,
     enter(c) {
       c.bars.visible = true;
       c.runs4 = [];
@@ -155,7 +158,7 @@ export const STEPS = [
       const out = c.$('#out-eps');
       sl.addEventListener('input', () => {
         const e = Number(sl.value);
-        out.textContent = fmtEps(e);
+        out.textContent = pctEps(e);
         c.kitchen.epsilon = e;
       });
       c.afterRun = () => {
@@ -167,7 +170,7 @@ export const STEPS = [
           last.eps === 0
             ? `Hiç keşfetmedim, ${last.best} dakikada takılıp kaldım. 6'yı denemedim bile!`
             : last.eps >= 0.4
-              ? 'Çok keşfettim! En iyiyi biliyorum ama yarı zamanım rastgele gitti.'
+              ? 'Çok keşfettim! En iyiyi biliyorum ama birçok mantı rastgele sürelere gitti.'
               : `${last.claps} alkış! Arada keşfetmek işe yarıyor.`,
           5
         );
@@ -309,18 +312,18 @@ export const QUIZ = [
     nope: 'Çubuklar süre başına alkış oranını tutuyor: uzun çubuk, çok alkış almış süre demek.',
   },
   {
-    q: 'ε = 0 olunca (hiç keşif yok) ne oldu?',
+    q: 'Keşif payı %0 olunca (hiç keşif yok) ne oldu?',
     options: ['İlk alkış aldığı süreye takıldı', 'Her seferinde rastgele denedi', 'Hiç mantı pişirmedi'],
     answer: 0,
     why: 'Bildin! Keşfetmeyince ilk alkışlanan süreye yapıştı; daha iyisini hiç denemedi.',
-    nope: 'Tam tersi: ε = 0 demek hiç rastgele denememek. Bıdık ilk alkış aldığı süreye takılıp kaldı.',
+    nope: 'Tam tersi: keşif payı %0 demek hiç rastgele denememek. Bıdık ilk alkış aldığı süreye takılıp kaldı.',
   },
   {
-    q: 'ε çok büyük olunca (0,5) ne oldu?',
+    q: 'Keşif payı çok büyük olunca (%50) ne oldu?',
     options: ['En çok alkışı topladı', 'Denemelerin yarısını rastgele sürelerde harcadı', 'Defteri kayboldu'],
     answer: 1,
     why: 'Evet! En iyiyi bilse bile yarı zamanını rastgele denemelere harcadı; alkış azaldı.',
-    nope: 'Hayır. ε = 0,5 ile denemelerin yarısı rastgele gitti; bu yüzden alkış sayısı düştü.',
+    nope: 'Hayır. Keşif payı %50 olunca denemelerin yarısı rastgele gitti; bu yüzden alkış sayısı düştü.',
   },
   {
     q: 'Küçük ve büyük mantılar karışık gelince çözüm neydi?',
