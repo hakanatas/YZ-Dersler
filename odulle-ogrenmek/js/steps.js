@@ -60,7 +60,7 @@ export const STEPS = [
     title: 'Sen dene: kaç dakika?',
     body: `
       <p>Şimdi sıra sende. Orta boy bir mantı var. Bir süre seç, müşteriyi izle. Sen de Bıdık gibi yalnızca alkışı ya da sessizliği göreceksin; mantının çiğ mi kaldığını, fazla mı piştiğini kimse söylemeyecek. Başka süreler de dene: 3 dakikada ne oluyor, 9 dakikada ne oluyor? Alkış hangi sürelerde geliyor?</p>
-      <p>Arkadaki <b>çubuklar</b> Bıdık'ın not defteri. Her süre için "kaç denemede alkış geldi?" oranını tutuyor. Çubuk ne kadar uzunsa o süre o kadar çok alkış almış. Aynı süreyi birkaç kez dene; çünkü her mantı birazcık farklı ve tek deneme yanıltabilir.</p>
+      <p>Arkadaki <b>çubuklar</b> Bıdık'ın not defteri. Her süre için "kaç denemede alkış geldi?" oranını tutuyor. Çubuk ne kadar uzunsa o süre o kadar çok alkış almış. Örneğin 5 ya da 7 dakikayı birkaç kez dene: bazen alkış, bazen sessizlik gelir, çünkü her mantı birazcık farklı. Tek deneme yanıltabilir.</p>
       ${teacher('<p>Her çubuk bir eylemin <b>değer tahmini</b>dir: o süreyle yapılan denemelerdeki ortalama ödül, Q(a) = alkış sayısı / deneme sayısı. Kod bunu her denemede artımlı olarak günceller: Q[a] += (r − Q[a]) / n[a]. Orta boy mantının boyu 0,3–0,7 arasında değiştiği için alkış olasılıkları süreye göre şöyledir: 4 dk %29, 5 dk %71, <b>6 dk %100</b>, 7 dk %71, 8 dk %29; 1–3 dakika ile 9–10 dakika hiç alkış almaz. Deneme sayısı arttıkça çubuklar bu olasılıklara yaklaşır.</p>')}`,
     focus: 'overview',
     say: 'Sen seç, ben pişireyim. Defterime de yazarım!',
@@ -70,8 +70,9 @@ export const STEPS = [
     controls: `<div class="chips" id="chips"></div>`,
     enter(c) {
       c.bars.visible = true;
-      c.selected = 6;
+      c.selected = 5;
       c.setMode('orta', 0.1, 2);
+      c.stove.setMinutes(c.selected, true);
       c.bindChips();
       c.score(0, 0, ['Alkış', 'Deneme']);
       c.afterCook = () => c.score(c.kitchen.bandit.claps, c.kitchen.count, ['Alkış', 'Deneme']);
