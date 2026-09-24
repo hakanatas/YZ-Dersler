@@ -67,6 +67,7 @@ export const STEPS = [
     body: `
       <p>Şimdi sıra sende. Orta boy bir mantı var. Bir süre seç, müşteriyi izle. Sen de Bıdık gibi yalnızca alkışı ya da sessizliği göreceksin; mantının çiğ mi kaldığını, fazla mı piştiğini kimse söylemeyecek. Başka süreler de dene: 3 dakikada ne oluyor, 9 dakikada ne oluyor? Alkış hangi sürelerde geliyor?</p>
       <p>Arkadaki <b>çubuklar</b> Bıdık'ın not defteri. Her süre için "kaç denemede alkış geldi?" oranını tutuyor. Çubuk ne kadar uzunsa o süre o kadar çok alkış almış. Örneğin 5 ya da 7 dakikayı birkaç kez dene: bazen alkış, bazen sessizlik gelir, çünkü her mantı birazcık farklı. Tek deneme yanıltabilir.</p>
+      <p><b>Dikkat:</b> Şimdilik bütün mantılar orta boy. Bulduğun en iyi süre yalnızca orta boy mantılar için geçerli; boy değişirse doğru süre de değişir. Bunu 5. bölümde göreceksin.</p>
       ${teacher('<p>Her çubuk bir eylemin <b>değer tahmini</b>dir: o süreyle yapılan denemelerdeki ortalama ödül, Q(a) = alkış sayısı / deneme sayısı. Kod bunu her denemede artımlı olarak günceller: Q[a] += (r − Q[a]) / n[a]. Orta boy mantının boyu 0,3–0,7 arasında değiştiği için alkış olasılıkları süreye göre şöyledir: 4 dk %29, 5 dk %71, <b>6 dk %100</b>, 7 dk %71, 8 dk %29; 1–3 dakika ile 9–10 dakika hiç alkış almaz. Deneme sayısı arttıkça çubuklar bu olasılıklara yaklaşır.</p>')}`,
     focus: 'overview',
     say: 'Sen seç, ben pişireyim. Defterime de yazarım!',
