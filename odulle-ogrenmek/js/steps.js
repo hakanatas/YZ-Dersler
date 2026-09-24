@@ -241,11 +241,13 @@ export const STEPS = [
     label: 'Yanlış alkış',
     title: 'Yanlış alkış: müşteri hıza alkışlarsa',
     body: `
-      <p>Bu sefer müşteri değişti. Yeni müşteri tada değil <b>hıza</b> alkışlıyor: mantı 3 dakikada ya da daha kısa sürede gelirse alkış, yoksa sessizlik. Bıdık'ın kuralı aynı: alkışı say, en çok alkış alan süreyi seç.</p>
-      <p>Ne olacağını tahmin et, sonra <b>"Hız müşterisiyle 200 mantı"</b> düğmesine bas. Bıdık 1–3 dakikayı öğreniyor ve <b>çiğ mantı</b> servis ediyor; müşteri de alkışlıyor! Bıdık yaramazlık yapmıyor: tam olarak ne için alkışlandıysa onu öğrendi. Yapay zeka "ne demek istediğimizi" değil, "neyi ödüllendirdiğimizi" öğrenir. Ödülü doğru tasarlamak işin en zor kısmı.</p>
-      ${teacher('<p><b>Ödül hilesi</b> (reward hacking) ya da <b>spesifikasyon oyunu</b> (specification gaming): ajan, tasarımcının niyetini değil, yazılı ödül fonksiyonunu en üst düzeye çıkarır. Burada ödül = (süre ≤ 3 dk); 1, 2 ve 3 dakika her zaman alkış alır, orta boy mantı (ideal 6 dk) bu sürelerde hep çiğ kalır. Sabit tohumlu koşu: 200 denemede 187 alkış, gerçekten kıvamında yalnızca 7 mantı (hepsi keşif sırasında rastgele denenen 4–7 dakikalar). Gerçek bir örnek: 2016\'da OpenAI, CoastRunners adlı tekne yarışı oyununda oyun puanını ödül olarak kullanan bir ajanın yarışı bitirmek yerine küçük bir koyda daireler çizip yeniden beliren hedefleri toplayarak insan oyunculardan daha yüksek puan aldığını bildirdi. Bu yüzden ödül tasarımı ve insan geri bildirimi, yapay zeka güvenliğinin ana konularındandır.</p>')}`,
+      <p>Bu sefer müşteri değişti. Yeni müşteri tada bakmıyor, <b>hıza</b> bakıyor: mantı 3 dakika ya da daha kısa sürede pişip gelirse alkışlıyor, yoksa sessiz kalıyor. Hatırla: orta boy mantı yaklaşık 6 dakikada kıvamına geliyor.</p>
+      <p>Bıdık müşterinin değiştiğini bilmiyor. Kuralı hep aynı: alkışları say, en çok alkış alan süreyi seç.</p>
+      <p><b>Önce tahmin et:</b> Bıdık hangi süreyi öğrenecek? Müşteri alkışlayacak mı? Mantılar lezzetli olacak mı? Sonra <b>Hız müşterisiyle 200 mantı</b> düğmesine bas.</p>
+      <p>Bu bölümde Bıdık'ın görmediği bir şeyi de sayıyoruz: kaç mantı <b>gerçekten kıvamında</b> pişti?</p>
+      ${teacher('<p><b>Ödül hilesi</b> (reward hacking) ya da <b>spesifikasyon oyunu</b> (specification gaming): ajan, tasarımcının niyetini değil, yazılı ödül fonksiyonunu en üst düzeye çıkarır. Burada ödül = (süre ≤ 3 dk); 1, 2 ve 3 dakika her zaman alkış alır, orta boy mantı (ideal 6 dk) bu sürelerde hep çiğ kalır. Sabit tohumlu koşu: 200 denemede 187 alkış, gerçekten kıvamında yalnızca 7 mantı (hepsi rastgele denenen 4, 6 ve 7 dakikalar: biri en başta, defter boşken; öteki altısı keşif sırasında). Bıdık 1 dakikaya yerleşir; 1, 2 ve 3 dakika aynı ölçüde alkış aldığı için hangisinde kalacağını ilk alkışlar belirler. Gerçek bir örnek: 2016\'da OpenAI, CoastRunners adlı tekne yarışı oyununda oyun puanını ödül olarak kullanan bir ajanın yarışı bitirmek yerine küçük bir koyda daireler çizip yeniden beliren hedefleri toplayarak insan oyunculardan daha yüksek puan aldığını bildirdi. Bu yüzden ödül tasarımı ve insan geri bildirimi, yapay zeka güvenliğinin ana konularındandır.</p>')}`,
     focus: 'stove',
-    say: 'Yeni müşteri hıza mı alkışlıyor? O zaman hızlı olurum!',
+    say: 'Yeni bir gün, yeni mantılar! Ben yine aynısını yapacağım: alkışları sayacağım.',
     mood: 'curious',
     action: 'Hız müşterisiyle 200 mantı',
     secondary: 'Her şeyi unut',
@@ -256,9 +258,10 @@ export const STEPS = [
       c.setMode('hiz', 0.1, 1);
       c.afterRun = () => {
         const k = c.kitchen;
-        c.readout(`<span class="big">${k.count} denemede ${k.bandit.claps} alkış</span>Ama gerçekten kıvamında olan mantı: <span class="bad">${k.tasty}</span>. Bıdık ${k.bestMinutes(0)} dakikayı seçti; mantılar çiğ, müşteri mutlu.<span class="row"><span>Bu bölümde mantının gerçek hâlini de sayıyoruz ("Gerçekten kıvamında" satırı). Bıdık bunu hiç görmüyor; o yalnızca alkışı sayıyor.</span></span>`);
-        c.say('Bir sürü alkış aldım! Ama… bu mantılar çiğ değil mi? Alkışlanan buysa, ben de bunu öğrendim.', 6);
-        c.bidik.react('surprised', 3);
+        const b = k.bestMinutes(0);
+        c.readout(`<span class="big">${k.count} denemede ${k.bandit.claps} alkış</span>Ama gerçekten kıvamında olan mantı yalnızca <span class="bad">${k.tasty}</span>. Bıdık ${b} dakikayı seçti: mantılar çiğ, müşteri yine de alkışlıyor.<span class="row"><span>Bıdık yaramazlık yapmadı; tam olarak ne için alkışlandıysa onu öğrendi. Kıvamı hiç görmüyor, yalnızca alkışı sayıyor.</span></span><span class="row"><span>Yapay zeka "ne demek istediğimizi" değil, "neyi ödüllendirdiğimizi" öğrenir. Ödülü doğru tasarlamak işin en zor kısmı.</span></span>`);
+        c.say(`Bir sürü alkış! ${b} dakika harika bir süreymiş!`, 6);
+        c.bidik.react('proud', 3);
       };
     },
     act(c) {
