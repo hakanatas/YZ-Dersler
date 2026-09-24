@@ -502,6 +502,9 @@ export function createLesson(lesson) {
       }
       return;
     }
+    // typing in a text box (the name on the completion card): letters, space and
+    // arrows belong to the box, not to the lesson shortcuts
+    if (e.target instanceof HTMLElement && (e.target.isContentEditable || e.target.matches('textarea, input:not([type=range]):not([type=checkbox]):not([type=radio]):not([type=button])'))) return;
     const onControl = e.target instanceof HTMLElement && e.target.matches('button, a, input, select, textarea');
     const custom = lesson.keys?.[e.key.toLowerCase()];
     switch (e.key) {
