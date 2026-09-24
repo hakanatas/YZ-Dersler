@@ -2,7 +2,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { parseMap, DEFAULT_MAP, bfs, randomWalk, toggleWall, countOpen, makeRng } from '../js/maze.js';
-import { DUMPLINGS, TREE, FEATURES, evaluate, filterRows, chefsOf, depthFor } from '../js/tree.js';
 
 import { STEPS } from '../js/steps.js';
 
@@ -96,14 +95,4 @@ test('random walk (60 steps): about 14% reach the pot, ~43 steps when they do', 
   for (const a of avgs) assert.ok(a > 41 && a < 46, `avg ${a}`);
   assert.match(steps, /ulaşma oranı yaklaşık %14/);
   assert.match(steps, /ortalama 43 adım/);
-});
-
-test('decision tree classifies all eight dumplings; "katlı" separates no chef', () => {
-  for (const row of DUMPLINGS) assert.equal(evaluate(TREE, row), row.chef);
-  assert.equal(DUMPLINGS.length, 8);
-  assert.deepEqual(DUMPLINGS.map((r) => depthFor(TREE, r)), [1, 1, 1, 1, 2, 2, 2, 2]);
-  for (const v of [0, 1]) assert.equal(chefsOf(filterRows(DUMPLINGS, { katli: v })).length, 3);
-  assert.equal(chefsOf(filterRows(DUMPLINGS, { kalin: 0 })).length, 1);
-  assert.equal(chefsOf(filterRows(DUMPLINGS, { kalin: 1, etli: 1 })).length, 1);
-  assert.equal(FEATURES.length, 3);
 });

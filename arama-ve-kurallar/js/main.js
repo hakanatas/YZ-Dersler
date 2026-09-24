@@ -2,7 +2,6 @@ import { createLesson, PALETTE, THREE, Ease } from '../../js/shell.js';
 import { createDumplingGeometry } from '../../js/dumpling-shape.js';
 import { parseMap, DEFAULT_MAP, bfs, randomWalk, toggleWall, same } from './maze.js';
 import { MazeFloor } from './floor.js';
-import { FEATURES, CHEFS, DUMPLINGS, TREE, filterRows, chefsOf, depthFor, chefById } from './tree.js';
 import { STEPS, QUIZ, RULES, EXAMPLES, BASE_MINUTES, METHODS, SITUATIONS } from './steps.js';
 
 const CELL = 0.8;
@@ -24,7 +23,7 @@ createLesson({
   steps: STEPS,
   quiz: QUIZ,
   focus: FOCUS,
-  finishLine: 'Kural, arama, karar ağacı: öğrenmeden de akıllı olunur.',
+  finishLine: 'Kural, arama, öğrenme: her iş için doğru yöntemi seç.',
   setup(c) {
     const { scene, sound, bidik, tweens } = c;
     bidik.scale.setScalar(0.85);
@@ -52,7 +51,7 @@ createLesson({
 
     const on = () => !c.state.uiHidden;
     c.addTag('Buharlı tencere', () => floor.cellToWorld(grid.goal, 0.95), on, 'tag--big');
-    c.addTag('Başlangıç', () => floor.cellToWorld(grid.start, 0.02).add(new THREE.Vector3(0, 0, 0.62)), () => on() && c.state.step >= 1 && c.state.step <= 3, 'tag--axis');
+    c.addTag('Başlangıç', () => floor.cellToWorld(grid.start, 0.02).add(new THREE.Vector3(0, 0, 0.62)), () => on() && c.state.step >= 1 && c.state.step <= 2, 'tag--axis');
 
     const sweet = new THREE.Color(PALETTE.sweet);
     const salty = new THREE.Color(PALETTE.salty);
@@ -70,9 +69,6 @@ createLesson({
       exIndex: 0,
       ruleStep: 0,
       minutes: BASE_MINUTES,
-      secret: null,
-      answers: {},
-      asked: 0,
 
       // ------------------------------------------------------------ maze
       resetMaze() {
@@ -134,7 +130,7 @@ createLesson({
             ['Adım', String(walk.count)],
             ['Sonuç', 'Ulaştı'],
           ]);
-          c.readout(`<span class="big">${walk.count} adımda ulaştı!</span>Şans işte. En kısa yol 10 adım; bir daha dene, çoğu zaman olmuyor.`);
+          c.readout(`<span class="big">${walk.count} adımda ulaştı!</span>Şans işte. En kısa yol 10 adım; bir daha dene, çoğu zaman olmuyor. Sonra <b>Aramayla bul</b> düğmesine bas.`);
           c.say('Buldum! Ama biraz dolandım galiba…', 4);
           c.celebrate();
         } else {
@@ -142,18 +138,23 @@ createLesson({
             ['Adım', String(walk.count)],
             ['Sonuç', 'Ulaşamadı'],
           ]);
-          c.readout(`<span class="big"><span class="bad">${RANDOM_STEPS} adımda ulaşamadı</span></span>Açık renkli kareler Bıdık'ın dolaştığı yerler. Daha akıllı bir yol lazım.`);
+          c.readout(`<span class="big"><span class="bad">${RANDOM_STEPS} adımda ulaşamadı</span></span>Açık renkli kareler Bıdık'ın dolaştığı yerler. Daha akıllı bir yol lazım: <b>Aramayla bul</b> düğmesine bas.`);
           c.say('Of, bacaklarım yoruldu ve tencere hâlâ uzakta!', 4);
           bidik.react('worried', 2.5);
           sound.play('grab', { volume: 0.5 });
         }
       },
-      async searchRun(fast = false) {
+      /** primary: the search sits on the main button (else on the second one, next to the random walk). */
+      async searchRun(fast = false, primary = true) {
         if (c.state.busy) return;
         const ctx = { cancelled: false };
         c.walkCtx = ctx;
         c.state.busy = true;
-        c.setAction('Arıyor…', true);
+        const label = (text, running = false) => {
+          if (primary) c.setAction(text, running);
+          else c.dom.action2.textContent = text;
+        };
+        label('Arıyor…', true);
         floor.clearTints();
         c.readout('');
         const r = bfs(grid);
@@ -186,7 +187,7 @@ createLesson({
             sound.play('grab', { volume: 0.5 });
             c.walkCtx = null;
             c.state.busy = false;
-            c.setAction('Yolu ara');
+            label('Yolu ara');
             return;
           }
           const len = r.path.length - 1;
@@ -211,7 +212,7 @@ createLesson({
         if (ctx.cancelled) return;
         c.walkCtx = null;
         c.state.busy = false;
-        c.setAction(fast ? 'Yolu ara' : 'Bir daha ara');
+        label(fast ? 'Yolu ara' : 'Bir daha ara');
         c.celebrate();
         c.say('Mantılar tencereye! Tek bir gereksiz adım bile atmadım.', 4);
       },
@@ -292,97 +293,6 @@ createLesson({
         c.say('Yeni mantı geldi. Kurallar aynı, sırayla bakalım.', 3);
       },
 
-      // ------------------------------------------------------------ tree
-      setupTreeGame() {
-        c.newSecret(true);
-      },
-      newSecret(quiet = false) {
-        c.secret = DUMPLINGS[Math.floor(Math.random() * DUMPLINGS.length)];
-        c.answers = {};
-        c.asked = 0;
-        const tree = c.$('#tree');
-        if (tree) tree.hidden = true;
-        c.renderTree();
-        c.readout('<span class="big">8 mantı, 3 usta</span>Bir soru seç; Bıdık evet ya da hayır desin.');
-        if (!quiet) {
-          c.say('Yeni bir gizli mantı seçtim. Hadi sor!', 3);
-          bidik.react('curious', 1.5);
-          sound.play('refill', { volume: 0.4 });
-        }
-      },
-      renderTree() {
-        const host = c.$('#tree-q');
-        const table = c.$('#dtable');
-        if (!host || !table) return;
-        const remaining = filterRows(DUMPLINGS, c.answers);
-        const keep = new Set(remaining.map((r) => r.id));
-        host.innerHTML = FEATURES.map((f) => {
-          const asked = f.key in c.answers;
-          return `<button type="button" class="btn" data-key="${f.key}" ${asked ? 'disabled' : ''}>${f.q}${asked ? ` <b>${c.answers[f.key] ? 'Evet' : 'Hayır'}</b>` : ''}</button>`;
-        }).join('');
-        host.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => c.askQuestion(b.dataset.key)));
-        const yn = (v) => (v ? '<span class="yes">evet</span>' : '<span class="no">hayır</span>');
-        table.innerHTML =
-          `<thead><tr><th>#</th>${FEATURES.map((f) => `<th>${f.short}</th>`).join('')}<th>usta</th></tr></thead><tbody>` +
-          DUMPLINGS.map((r) => {
-            const ch = chefById(r.chef);
-            return `<tr class="${keep.has(r.id) ? '' : 'is-out'}"><td>${r.id}</td>${FEATURES.map((f) => `<td>${yn(r[f.key])}</td>`).join('')}<td style="color:${ch.color};font-weight:600">${ch.short}</td></tr>`;
-          }).join('') +
-          '</tbody>';
-      },
-      askQuestion(key) {
-        if (!c.secret || key in c.answers) return;
-        const f = FEATURES.find((x) => x.key === key);
-        const ans = c.secret[key];
-        c.answers[key] = ans;
-        c.asked++;
-        c.renderTree();
-        const remaining = filterRows(DUMPLINGS, c.answers);
-        const chefs = chefsOf(remaining);
-        sound.play('pick', { volume: 0.5 });
-        c.say(`${f.q} ${ans ? 'Evet!' : 'Hayır.'}`, 3);
-        if (chefs.length === 1) {
-          const ch = chefById(chefs[0]);
-          const best = depthFor(TREE, c.secret);
-          c.readout(
-            `<span class="big" style="color:${ch.color}">${ch.name}!</span>${c.asked} soruda buldun; en az ${best} soru yeterdi.${c.asked > best ? ' Hangi soru boşa gitti?' : ' Daha kısası yok.'}`
-          );
-          c.celebrate();
-          c.setAction('Yeni gizli mantı');
-        } else {
-          c.readout(`<span class="big">${remaining.length} mantı, ${chefs.length} usta kaldı</span>${chefs.map((id) => chefById(id).short).join(', ')}. Bir soru daha sor.`);
-          bidik.react(ans ? 'happy' : 'thinking', 1.5);
-        }
-      },
-      showTree() {
-        const el = c.$('#tree');
-        if (!el) return;
-        el.hidden = false;
-        const path = new Set();
-        if (c.secret) {
-          let node = TREE;
-          while (!node.chef) {
-            path.add(node);
-            node = c.secret[node.key] ? node.yes : node.no;
-          }
-          path.add(node);
-        }
-        const render = (node) => {
-          const onPath = path.has(node) ? ' is-on' : '';
-          if (node.chef) {
-            const ch = chefById(node.chef);
-            return `<div class="tree__leaf${onPath}" style="--chef:${ch.color}">${ch.name}</div>`;
-          }
-          const f = FEATURES.find((x) => x.key === node.key);
-          return `<div class="tree__node${onPath}">${f.q}</div><div class="tree__branches"><div class="tree__branch"><span class="tree__edge">hayır</span>${render(node.no)}</div><div class="tree__branch"><span class="tree__edge">evet</span>${render(node.yes)}</div></div>`;
-        };
-        el.innerHTML = render(TREE);
-        el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        c.readout('<span class="big">Bıdık\'ın soru ağacı</span>Yukarıdan aşağı: en fazla iki soruyla usta bulunur. "Üstü katlı mı?" ağaçta yok; kimseyi ayırmıyor.');
-        c.say('İşte kafamdaki ağaç: önce hamur, sonra iç. Katlı mı diye hiç sormam!', 5);
-        sound.play('click', { volume: 0.5 });
-      },
-
       // ------------------------------------------------------------ compare
       buildCompare() {
         const host = c.$('#compare-host');
@@ -441,4 +351,4 @@ createLesson({
 });
 
 // exported for the console / tests
-export { grid, CHEFS };
+export { grid };

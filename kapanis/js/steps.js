@@ -20,7 +20,7 @@ export const CAN = [
   { text: 'Binlerce röntgen filminden öğrenip yeni bir filmde şüpheli bölgeyi işaretlemek', answer: 0, why: 'Yapabilir. Görüntü tanımanın gerçek bir kullanımı; yine de son kararı hekim verir ve modelin hangi verilerle eğitildiği önemlidir.' },
   { text: 'Hiç görmediği bir konuda kesin doğru bilgi vermek', answer: 1, why: 'Yapamaz. Verisinde olmayan şeyi bilemez; bilmediğinde de akıcı cümle üretebilir (Ders 04). Bu yüzden kaynak istenir.' },
   { text: 'Bir metni başka bir dile çevirmek', answer: 0, why: 'Yapabilir. Çeviri de "sıradaki kelime" oyununun bir çeşididir ve milyonlarca çeviri örneğiyle öğrenilir. Hata yapabilir, önemli metinlerde kontrol gerekir.' },
-  { text: 'Kendi kendine doğruyu yanlıştan ayırmak', answer: 1, why: 'Yapamaz. Model, örneklerinde ve ödülünde ne varsa onu öğrenir; neyin doğru olduğunu ona veri ve ödülle biz söyleriz (Ders 03 ve 06).' },
+  { text: 'Kendi kendine doğruyu yanlıştan ayırmak', answer: 1, why: 'Yapamaz. Model, örneklerinde ve ödülünde ne varsa onu öğrenir; neyin doğru olduğunu ona veri ve ödülle biz söyleriz. Dalgın usta yanlış etiketleyince Bıdık hangi etiketin yanlış olduğunu bilemedi (Ders 02); hıza alkışlanınca çiğ mantı verdi (Ders 06).' },
   { text: 'Sınıftaki herkesin fotoğrafını tanımak', answer: 2, why: 'Duruma göre. Herkesten yeterli ve çeşitli fotoğraf varsa evet; kimden az fotoğraf varsa onda yanılır (Ders 03). Ayrıca yüz tanıma, izin ve gizlilik gerektirir.' },
   { text: 'Ne için ödüllendirildiyse onu öğrenmek, "ne demek istediğimizi" değil', answer: 0, why: 'Yapabilir; hatta tam olarak bunu yapar. Hıza alkışlayan müşteri çiğ mantı aldı (Ders 06). Ödülü tasarlamak bizim işimiz.' },
 ];
@@ -29,9 +29,9 @@ export const STEPS = [
   {
     id: 'ozet',
     label: 'Özet',
-    title: 'Altı ders, tek fikir: tahmin et, yanıl, düzelt',
+    title: 'Altı ders, tek fikir: örneklerden öğrenmek',
     body: `
-      <p>Hatırlıyor musun? Her şey bir soruyla başladı: <i>mantı kaç dakika pişer?</i> Bıdık'a kural söylemedik, örnek gösterdik. Tahmin etti, yanıldı, iplerini azıcık düzeltti; yüzlerce kez. Bu döngü altı dersin hepsinin altında yatıyor.</p>
+      <p>Hatırlıyor musun? Her şey bir soruyla başladı: <i>mantı kaç dakika pişer?</i> Bıdık'a kural söylemedik, örnek gösterdik. Tahmin etti, yanıldı, iplerini azıcık düzeltti; yüzlerce kez. Sonraki derslerde de hep aynısı oldu: kimse Bıdık'a kuralı söylemedi. Ne bildiyse örneklerden, bir kitaptan ya da müşterinin alkışından öğrendi.</p>
       <p>Masaya bak: mantılar, ipler ve kelime karoları hepsi aynı mutfaktan. <b>"Bıdık hatırlasın"</b> düğmesine bas, Bıdık altı dersi tek tek hatırlasın.</p>
       ${teacher('<p>Serinin omurgası: (1) Öğrenme = örneklerden parametre ayarlama (Ders 01). (2) Genelleme, ezber ve veri kalitesi (Ders 02). (3) Verinin kapsamı ve adalet (Ders 03). (4) Dil modelleri olası devamı üretir, doğruyu değil (Ders 04). (5) Algı: resim sayılardır (Ders 05). (6) Ödülle öğrenme ve ödül tasarımı (Ders 06). Bu ders yeni model eğitmez; masadaki örtü Ders 01\'in eğitilmiş modeliyle boyanır.</p>')}`,
     focus: 'overview',
@@ -69,7 +69,7 @@ export const STEPS = [
     label: 'Yapabilir mi?',
     title: 'Ne yapabilir, ne yapamaz?',
     body: `
-      <p>Yapay zeka sihir değil, kural ezberleyen bir makine de değil. Örneklerden ve ödülden öğrenen bir tahmin makinesi. Bu bilgiyle karar ver: aşağıdakileri yapabilir mi, yapamaz mı, yoksa duruma göre mi?</p>
+      <p>Bu derslerde tanıdığımız yapay zeka sihir değil. Örneklerden ve ödülden öğrenen bir tahmin makinesi. Bu bilgiyle karar ver: aşağıdakileri yapabilir mi, yapamaz mı, yoksa duruma göre mi?</p>
       <div id="can-host"></div>
       ${teacher('<p>Amaç, öğrencinin iki uç yanılgıdan kurtulması: "her şeyi bilir" ve "hiçbir işe yaramaz". Doğru çerçeve: yeterli ve çeşitli veri olan, ödülü iyi tanımlanmış görevlerde güçlüdür; veri dışında, kaynak gerektiren ya da değer yargısı isteyen yerlerde insana bağlıdır. "Duruma göre" seçeneği tartışma için bilinçli olarak eklenmiştir.</p>')}`,
     focus: 'network',
@@ -111,7 +111,7 @@ export const STEPS = [
     body: `
       <p>Serinin son testi. On soru, her birinde tek doğru cevap. Soruların her dersten geldiğine dikkat et:</p>
       <div class="quiz" id="quiz"></div>
-      ${teacher('<p>Sorular ders sırasına göre değil, karışık verilmiştir; her dersten en az bir soru vardır. Puan, bir sonraki bölümdeki tamamlama kartına yazılır. Test tarayıcıda çalışır ve hiçbir yere gönderilmez; sınıfta kullanılacaksa sonuç öğrenciden sözlü ya da ekran görüntüsüyle alınır.</p>')}`,
+      ${teacher('<p>Sorular ders sırasıyla gelir; her dersten en az bir soru vardır. Puan, bir sonraki bölümdeki tamamlama kartına yazılır. Test tarayıcıda çalışır ve hiçbir yere gönderilmez; sınıfta kullanılacaksa sonuç öğrenciden sözlü ya da ekran görüntüsüyle alınır.</p>')}`,
     focus: 'overview',
     say: 'Son test! Ben altı derste çok çalıştım, sen de çalıştın. Hadi!',
     mood: 'curious',
@@ -149,7 +149,7 @@ export const QUIZ = [
     q: 'Bıdık mantıyı kaç dakika pişireceğini nasıl öğrendi?',
     options: ['Kuralı ona söyledik', 'Örneklere bakıp iplerini azıcık düzelte düzelte', 'Yemek kitabından ezberledi'],
     answer: 1,
-    why: 'Doğru! Tahmin et, yanıl, düzelt: altı dersin ortak fikri.',
+    why: 'Doğru! Tahmin et, yanıl, düzelt: Bıdık böyle öğrendi.',
     nope: 'Hayır. Kural söylemedik; Bıdık örneklere baka baka iplerini ayarladı.',
   },
   {

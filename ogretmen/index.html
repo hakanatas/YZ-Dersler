@@ -69,7 +69,7 @@
         <li><b>Model:</b> "Tek ekran + tahmin ettirme" en verimli kullanım: her düğmeye basmadan önce sınıfa "ne olacak?" diye sorun, sonra basın. Planlardaki "Durak" satırları bu anları gösterir.</li>
         <li><b>Öğretmen notları:</b> Her bölümün altındaki katlanır "Öğretmen notu" gerçek terimleri ve modelin tam olarak ne yaptığını yazar. Öğrencilere göstermek zorunlu değildir; meraklı öğrenciler için açılabilir.</li>
         <li><b>Testler:</b> Her dersin sonundaki bilgi testi ve Ders 07'deki final tarayıcıda kalır, hiçbir yere gönderilmez. Not vermek isterseniz çalışma kâğıtlarını kullanın.</li>
-        <li><b>Sıra:</b> 01 → 02 → 03 birbirine dayanır. 04, 05 ve 06 birbirinden bağımsızdır; 07 hepsini toplar. Ek ders (kurallar, arama, karar ağacı) 01'den sonra herhangi bir yerde işlenebilir; "yapay zeka = sinir ağı" yanılgısını kırmak için 07'den önce önerilir. Zaman kısıtlıysa 01, 02, 04 ve 07 dört saatlik çekirdek bir set oluşturur.</li>
+        <li><b>Sıra:</b> 01 → 02 → 03 birbirine dayanır. 04, 05 ve 06 birbirinden bağımsızdır; 07 hepsini toplar. Ek ders (kurallar ve arama) serinin sonunda, 07'den sonra isteğe bağlıdır: "her iş öğrenme ister mi?" sorusuyla "yapay zeka = öğrenen makine" genellemesini tamamlar. Zaman kısıtlıysa 01, 02, 04 ve 07 dört saatlik çekirdek bir set oluşturur.</li>
       </ul>
     </div>
 
@@ -81,7 +81,7 @@
       <li><a href="#d05"><b>05</b> Bıdık görüyor</a></li>
       <li><a href="#d06"><b>06</b> Bıdık ödülle öğreniyor</a></li>
       <li><a href="#d07"><b>07</b> Ne yapabilir, ne yapamaz?</a></li>
-      <li><a href="#dek"><b>Ek</b> Öğrenmeyen yapay zeka</a></li>
+      <li><a href="#dek"><b>Ek</b> Her yapay zeka öğrenir mi?</a></li>
     </ul>
 
     <!-- ============================================================ 01 -->
@@ -397,7 +397,7 @@
       <p class="link">Adres: <a href="../kapanis/">/kapanis/</a> · 6 bölüm · Ön koşul: Ders 01–06</p>
       <h3>Kazanımlar</h3>
       <ul>
-        <li>Altı dersin ortak fikrini ("tahmin et, yanıl, düzelt") ve her dersin ana kavramını özetler.</li>
+        <li>Altı dersin ortak fikrini (örneklerden öğrenmek: tahmin et, yanıl, düzelt) ve her dersin ana kavramını özetler.</li>
         <li>Günlük hayattaki yapay zeka örneklerini öğrendiği kavramlarla eşler.</li>
         <li>Yapay zekanın neyi yapabildiğine, neyi yapamadığına gerekçeli karar verir; dört çalışma kuralını sayar.</li>
       </ul>
@@ -444,32 +444,30 @@
 
     <!-- ============================================================ EK -->
     <section class="lesson" id="dek">
-      <h2><small>Ek ders · 40 dk</small>Öğrenmeyen yapay zeka: kurallar, arama, karar ağacı</h2>
-      <p class="link">Adres: <a href="../arama-ve-kurallar/">/arama-ve-kurallar/</a> · 7 bölüm · Ön koşul: Ders 01</p>
+      <h2><small>Ek ders · 30 dk</small>Her yapay zeka öğrenir mi? Kurallar ve arama</h2>
+      <p class="link">Adres: <a href="../arama-ve-kurallar/">/arama-ve-kurallar/</a> · 5 bölüm · Ön koşul: Ders 01–07 (isteğe bağlı ek)</p>
       <h3>Kazanımlar</h3>
       <ul>
-        <li>Yapay zekanın yalnızca öğrenen sistemlerden ibaret olmadığını; kural tabanlı sistemleri ve aramayı örnekle açıklar.</li>
-        <li>Genişlik öncelikli aramanın seçenekleri sırayla denediğini ve en kısa yolu bulduğunu gösterir.</li>
-        <li>Bir karar ağacını sorular olarak okur; verilen bir durum için kural, arama ve öğrenmeden hangisinin uygun olduğuna karar verir.</li>
+        <li>Her yapay zekanın öğrenmediğini; kural tabanlı sistemleri ve aramayı örnekle açıklar.</li>
+        <li>Rastgele denemeyle aramayı karşılaştırır; genişlik öncelikli aramanın en kısa yolu neden bulduğunu açıklar.</li>
+        <li>Verilen bir iş için kural, arama ve öğrenmeden hangisinin uygun olduğuna gerekçeli karar verir.</li>
       </ul>
       <h3>Ders akışı</h3>
       <table>
         <tr><th>Dakika</th><th>Etkinlik</th></tr>
-        <tr><td>0–5</td><td>Giriş: "Hesap makinesi yapay zeka mı? Navigasyon? Satranç programı?" Kısa oylama; ders sonunda tekrar sorulacak.</td></tr>
-        <tr><td>5–11</td><td>Bölüm 1. Üç kuralı sırayla uygulayın; iki farklı mantı deneyin. <b>Durak:</b> "Defterde olmayan bir mantı gelse ne olur?" Kırılganlık fikri; MYCIN'i bir cümleyle anın.</td></tr>
-        <tr><td>11–16</td><td>Bölüm 2. "Rastgele yürüsün"e üç kez basın; kaç adımda vardığını (ya da varamadığını) tahtaya yazın. <b>Durak:</b> "Daha akıllı bir yol var mı?"</td></tr>
-        <tr><td>16–23</td><td>Bölüm 3. Aramayı başlatın; halkaların büyümesini izletin. Sonuç: 36 kareye bakar, 10 adımlık yol. "Neden en kısa olduğundan eminiz?" (yakından uzağa gidiyor).</td></tr>
-        <tr><td>23–29</td><td>Bölüm 4. Bir öğrenci dolap koysun: tencere tarafındaki komşuya dolap → 14 adım; diğer komşuya da → "yol yok". Navigasyon uygulamalarıyla bağ kurun.</td></tr>
-        <tr><td>29–35</td><td>Bölüm 5. Sınıfça "20 soru" oynayın; en az soruyla bulmaya çalışın (iki soru yeter). "Ağacı göster" ile ağacı okuyun. <b>Durak:</b> "Üstü katlı mı? sorusu neden ağaçta yok?"</td></tr>
-        <tr><td>35–40</td><td>Bölüm 6 eşleştirme ve Bölüm 7 bilgi testi; giriş oylamasına dönüş: cevaplar değişti mi?</td></tr>
+        <tr><td>0–4</td><td>Giriş: "Hesap makinesi yapay zeka mı? Navigasyon? Satranç programı? Hepsi öğrenerek mi çalışır?" Kısa oylama; ders sonunda tekrar sorulacak.</td></tr>
+        <tr><td>4–10</td><td>Bölüm 1. Üç kuralı sırayla uygulayın; iki farklı mantı deneyin. <b>Durak:</b> "Defterde olmayan bir mantı gelse ne olur?" Kırılganlık fikri; MYCIN'i bir cümleyle anın.</td></tr>
+        <tr><td>10–18</td><td>Bölüm 2. Önce "Bıdık rastgele yürüsün"e üç kez basın; kaç adımda vardığını (ya da varamadığını) tahtaya yazın. <b>Durak:</b> "Daha akıllı bir yol var mı?" Sonra "Aramayla bul": halkaların büyümesini izletin. Sonuç: 36 kareye bakar, 10 adımlık yol. "Neden en kısa olduğundan eminiz?" (yakından uzağa gidiyor).</td></tr>
+        <tr><td>18–23</td><td>Bölüm 3. Bir öğrenci dolap koysun: tencere tarafındaki komşuya dolap → 14 adım; diğer komşuya da → "yol yok". Navigasyon uygulamalarıyla bağ kurun.</td></tr>
+        <tr><td>23–30</td><td>Bölüm 4 eşleştirme ve Bölüm 5 bilgi testi; giriş oylamasına dönüş: cevaplar değişti mi?</td></tr>
       </table>
       <div class="grid2">
         <div>
           <h3>Tartışma soruları</h3>
           <ul>
             <li>Satranç programı hem arama hem öğrenme kullanır. Hangi işi hangisi yapar?</li>
-            <li>Karar ağacının "neden?" sorusuna cevabı var, sinir ağının yok. Bu ne zaman önemli olur (örneğin hastanede)?</li>
-            <li>Kuralı insan yazınca kimin sorumluluğu? Model öğrenince?</li>
+            <li>Kural tabanlı bir sistemin her kararı hangi kuraldan geldiği bellidir. Bu ne zaman önemli olur (örneğin hastanede)?</li>
+            <li>Kuralı insan yazınca yanlış karardan kim sorumlu? Model öğrenince?</li>
           </ul>
         </div>
         <div>
@@ -477,6 +475,7 @@
           <ul>
             <li>"Kural tabanlı program yapay zeka değildir." Tarihsel olarak yapay zekanın ilk biçimi; şeffaf ama kırılgan.</li>
             <li>"Arama rastgele deniyor." Hayır: yakından uzağa, sırayla; bu yüzden en kısa yolu garanti eder.</li>
+            <li>"Her iş için öğrenme gerekir." Koşul netse bir kural, seçenekler ve hedef belliyse arama yeter.</li>
           </ul>
         </div>
       </div>
@@ -486,10 +485,9 @@
           <li>Kural tabanlı sistemin güçlü ve zayıf yanını birer cümleyle yaz.</li>
           <li>Rastgele yürüyüş ile arama arasındaki fark nedir? Arama neden en kısa yolu bulur?</li>
           <li>Labirentte dolap eklemek yolu nasıl etkiledi? "Yol yok" ne zaman oldu?</li>
-          <li>Karar ağacında "Üstü katlı mı?" sorusu neden yok?</li>
           <li>Şu üç iş için yöntem seç ve gerekçele: fırın 200 dereceyi geçince kapansın; şehirler arası en kısa yol; fotoğrafta kedi var mı?</li>
         </ol>
-        <p class="key"><b>Cevap anahtarı:</b> 1) Güçlü: şeffaf, her karar hangi kuraldan geldi bellidir; zayıf: her kuralı insan yazar, defterde olmayan durumda çaresizdir. 2) Rastgele yürüyüş şansa bağlıdır (60 adımda yaklaşık %14 varır); arama başlangıçtan uzaklığa göre sırayla, her kareye bir kez bakar; hedefe ilk ulaşan yol en kısa olandır (36 kare, 10 adım). 3) Kısa yol kapanınca 14 adımlık alt koridora geçti; iki komşu kare de kapanınca hiçbir yol kalmadı. 4) Hiçbir ustayı diğerinden ayırmaz: her ustanın hem katlı hem katsız mantısı var. 5) Kural (koşul net ve ölçülebilir); arama (seçenekler ve hedef belli, en iyisi aranıyor); öğrenme (kural yazılamaz, örnek çok).</p>
+        <p class="key"><b>Cevap anahtarı:</b> 1) Güçlü: şeffaf, her karar hangi kuraldan geldi bellidir; zayıf: her kuralı insan yazar, defterde olmayan durumda çaresizdir. 2) Rastgele yürüyüş şansa bağlıdır (60 adımda yaklaşık %14 varır); arama başlangıçtan uzaklığa göre sırayla, her kareye bir kez bakar; hedefe ilk ulaşan yol en kısa olandır (36 kare, 10 adım). 3) Kısa yol kapanınca 14 adımlık alt koridora geçti; iki komşu kare de kapanınca hiçbir yol kalmadı. 4) Kural (koşul net ve ölçülebilir); arama (seçenekler ve hedef belli, en iyisi aranıyor); öğrenme (kural yazılamaz, örnek çok).</p>
       </div>
     </section>
 
